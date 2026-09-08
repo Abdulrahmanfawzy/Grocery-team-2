@@ -1,0 +1,7 @@
+{
+  "rules": {
+    "import/no-duplicates": "error",
+    "import/no-self-import": "error",
+    "import/no-cycle": "error"
+  }
+}
