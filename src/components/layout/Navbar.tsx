@@ -20,7 +20,7 @@ export const Navbar = ({ name, Logo }: Propstype) => {
   const [open, setOpen] = useState(false)
 
   return (
-    <header className="w-full bg-white font-sans pt-6 lg:pt-10">
+    <header className="w-full bg-hovered font-sans pt-6 lg:pt-10">
       <nav className="container mx-auto px-6 sm:px-10 lg:px-16 pb-6 lg:pb-10 flex items-center justify-between lg:justify-between gap-4 lg:gap-8 border-b border-gray-100">
         {/*  Logo */}
         <Link to="/" className="shrink-0 flex items-center">
@@ -53,7 +53,7 @@ export const Navbar = ({ name, Logo }: Propstype) => {
         {/* Desktop Right Action Items */}
         <div className="hidden lg:flex items-center gap-4">
           <Link
-            to="/profiledashboard"
+            to="/cart"
             className="flex items-center text-sm sm:text-base font-medium gap-2 text-gray-700 hover:text-[#112D4E] transition-colors"
           >
             <ShoppingCart className="w-5 h-5 text-[#112D4E]" />
@@ -105,7 +105,7 @@ export const Navbar = ({ name, Logo }: Propstype) => {
                       Categories
                     </Link>
                     <Link
-                      to="/profiledashboard"
+                      to="/cart"
                       onClick={() => setOpen(false)}
                       className="font-medium flex items-center gap-3 text-sm  hover:text-app-main py-2 border-b border-gray-50"
                     >
