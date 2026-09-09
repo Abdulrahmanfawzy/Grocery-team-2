@@ -1,26 +1,26 @@
 import { Link, useLocation } from 'react-router-dom'
-import { ROUTES } from '@/constants'
+// import { ROUTES } from '@/constants'
 import { cn } from '@/lib/utils'
-import { useAppSelector } from '@/store'
+// import { useAppSelector } from '@/store'
 
-const navItems = [
-  { label: 'Dashboard', path: ROUTES.DASHBOARD },
-  { label: 'Products', path: ROUTES.PRODUCTS },
-  { label: 'Users', path: ROUTES.USERS },
-  { label: 'Orders', path: ROUTES.ORDERS },
-]
+// const navItems = [
+//   { label: 'Dashboard', path: ROUTES.DASHBOARD },
+//   { label: 'Products', path: ROUTES.PRODUCTS },
+//   { label: 'Users', path: ROUTES.USERS },
+//   { label: 'Orders', path: ROUTES.ORDERS },
+// ]
 
 export function Sidebar() {
   const location = useLocation()
-  const { isAuthenticated } = useAppSelector((state) => state.auth)
+  // const { isAuthenticated } = useAppSelector((state) => state.auth)
 
-  if (!isAuthenticated) return null
+  // if (!isAuthenticated) return null
 
   return (
     <aside className="w-64 border-r bg-muted/30">
       <div className="flex h-full flex-col p-4">
         <div className="space-y-1">
-          {navItems.map((item) => (
+          {/* {navItems.map((item) => (
             <Link
               key={item.path}
               to={item.path}
@@ -33,7 +33,7 @@ export function Sidebar() {
             >
               {item.label}
             </Link>
-          ))}
+          ))} */}
         </div>
       </div>
     </aside>
