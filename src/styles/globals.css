@@ -14,6 +14,7 @@
   --color-app-grey: var(--app-grey);
   --color-app-black: var(--app-black);
   --color-app-silver: var(--app-silver);
+  --color-app-light-gray: var(--app-light-gray);
   --color-app-main: var(--app-main);
   --font-zain: var(--font-zain);
   --color-app-hovered :var(--app-hovered);
@@ -70,6 +71,7 @@
   --app-grey: oklch(73.481% 0.00008 271.152);
   --app-black: #0E1112;
   --app-silver: #BCB8B1;
+  --app-light-gray:#DAD8D8;
 
   --app-main: #014162;
   --app-hovered :#F7FCFF ;
