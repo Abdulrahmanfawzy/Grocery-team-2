@@ -1,5 +1,7 @@
 @import "tailwindcss";
 /* @import "tw-animate-css"; */
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -11,7 +13,9 @@
   --color-app-grey: var(--app-grey);
 
   --font-zain: var(--font-zain);
-
+--font-sora: 'Sora', sans-serif;
+  
+  --color-app-main: var(--app-main);
   /* Shadcn vars */
 
   --color-background: var(--background);
