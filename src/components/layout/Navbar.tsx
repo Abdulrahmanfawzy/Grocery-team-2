@@ -43,10 +43,26 @@ export const Navbar = ({ name, Logo }: Propstype) => {
             <img src={Categories} alt="" className="w-5 h-5" />
             Categories
           </Link>
+          <div className="hidden items-center gap-4 lg:flex">
+            <Link
+              to="/"
+              className="flex items-center gap-2 text-sm font-medium text-gray-700 transition-colors hover:text-[#112D4E] sm:text-base"
+            >
+              <img src={Home} alt="" className="h-4 w-4" />
+              Home
+            </Link>
+            <Link
+              to="/categories"
+              className="flex items-center gap-2 text-sm font-medium text-gray-700 transition-colors hover:text-[#112D4E] sm:text-base"
+            >
+              <img src={Categories} alt="" className="h-5 w-5" />
+              Categories
+            </Link>
+          </div>
         </div>
 
-        {/* Desktop Search Bar */}
-        <div className="hidden lg:block flex-1 max-w-md xl:max-w-xl mx-4">
+        {/* Search Bar — hidden on small mobile, visible from md up */}
+        <div className="hidden min-w-0 flex-1 md:block">
           <SearchInput />
         </div>
 
@@ -65,26 +81,27 @@ export const Navbar = ({ name, Logo }: Propstype) => {
           </Button>
         </div>
 
-        <div className="lg:hidden">
-          <Drawer open={open} onOpenChange={setOpen} swipeDirection="right">
-            <DrawerTrigger className="p-2 rounded-lg text-app-main hover:bg-gray-100 transition-colors focus:outline-none">
-              <Menu className="w-6 h-6" />
-            </DrawerTrigger>
+          {/* Mobile Menu Trigger */}
+          <div className="lg:hidden">
+            <Drawer open={open} onOpenChange={setOpen} swipeDirection="right">
+              <DrawerTrigger className="rounded-lg p-2 text-app-main transition-colors hover:bg-gray-100 focus:outline-none">
+                <Menu className="h-6 w-6" />
+              </DrawerTrigger>
 
-            <DrawerContent className="p-0">
-              <DrawerHeader className="flex flex-row items-center p-4 justify-between border-b ">
-                <DrawerTitle>
-                  <img src={Logo} alt="Logo" className="h-7 w-auto" />
-                </DrawerTitle>
-                <DrawerClose className="p-1 rounded-md text-gray-500 hover:bg-gray-100 transition-colors">
-                  <X width={30} className="bg-red-500 rounded-md text-white" />
-                </DrawerClose>
-              </DrawerHeader>
+              <DrawerContent className="p-0">
+                <DrawerHeader className="flex flex-row items-center justify-between border-b p-4">
+                  <DrawerTitle>
+                    <img src={Logo} alt="Logo" className="h-7 w-auto" />
+                  </DrawerTitle>
+                  <DrawerClose className="rounded-md p-1 text-gray-500 transition-colors hover:bg-gray-100">
+                    <X width={20} className="rounded-md bg-red-500 p-1 text-white" />
+                  </DrawerClose>
+                </DrawerHeader>
 
-              <div className="p-6 flex flex-col justify-between h-full space-y-6">
-                <div className="space-y-6">
-                  {/* Search Input for Mobile */}
-                  <SearchInput />
+                <div className="flex h-full flex-col justify-between space-y-6 p-6">
+                  <div className="space-y-6">
+                    {/* Search Input for Mobile */}
+                    <SearchInput />
 
                   {/* Navigation Links */}
                   <div className="flex flex-col space-y-3 pt-2">
@@ -113,21 +130,21 @@ export const Navbar = ({ name, Logo }: Propstype) => {
                       MY Cart
                     </Link>
                   </div>
-                </div>
 
-                {/* Profile Button */}
-                <div className="pt-4 border-t mt-auto">
-                  <Button
-                    variant="primary"
-                    className="w-full flex items-center justify-center gap-2 py-2.5"
-                  >
-                    <img src={ProfileIcon} alt="" className="w-4 h-4" />
-                    <span>{name ? `${name} Profile` : 'Profile'}</span>
-                  </Button>
+                  {/* Profile Button */}
+                  <div className="mt-auto border-t pt-4">
+                    <Button
+                      variant="primary"
+                      className="flex w-full items-center justify-center gap-2 py-2.5"
+                    >
+                      <img src={ProfileIcon} alt="" className="h-4 w-4" />
+                      <span>{name ? `${name} Profile` : 'Profile'}</span>
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            </DrawerContent>
-          </Drawer>
+              </DrawerContent>
+            </Drawer>
+          </div>
         </div>
       </nav>
     </header>

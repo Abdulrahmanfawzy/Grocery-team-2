@@ -1,7 +1,7 @@
-@import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+@import '@fontsource-variable/geist';
 /* @import "tw-animate-css"; */
 
 @custom-variant dark (&:is(.dark *));
@@ -16,12 +16,11 @@
   --color-app-silver: var(--app-silver);
   --color-app-light-gray: var(--app-light-gray);
   --color-app-main: var(--app-main);
+  --color-app-error: var(--app-error);
   --font-zain: var(--font-zain);
-  --color-app-hovered :var(--app-hovered);
-
-  /* Shadcn vars */
-
-  --color-background: var(--background);
+  --color-app-hovered: var(--app-hovered);
+  --color-app-linera: var(--app-linera);
+  /* Shadcn vars */ --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
@@ -74,7 +73,9 @@
   --app-light-gray:#DAD8D8;
 
   --app-main: #014162;
-  --app-hovered :#F7FCFF ;
+  --app-hovered: #f7fcff;
+  --app-linera: #253d4e;
+  --app-error: #F35244;
 
   /* Shadcn */
   --background: oklch(1 0 0);
