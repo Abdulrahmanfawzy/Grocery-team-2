@@ -12,6 +12,9 @@
   --color-app-watermelon: var(--app-watermelon);
   --color-app-yellow: var(--app-yellow);
   --color-app-grey: var(--app-grey);
+  --color-app-black: var(--app-black);
+  --color-app-silver: var(--app-silver);
+  --color-app-light-gray: var(--app-light-gray);
   --color-app-main: var(--app-main);
   --color-app-error: var(--app-error);
   --font-zain: var(--font-zain);
@@ -65,6 +68,10 @@
   --app-watermelon: oklch(71.506% 0.17846 27.948);
   --app-yellow: oklch(86.52% 0.17676 90.387);
   --app-grey: oklch(73.481% 0.00008 271.152);
+  --app-black: #0E1112;
+  --app-silver: #BCB8B1;
+  --app-light-gray:#DAD8D8;
+
   --app-main: #014162;
   --app-hovered: #f7fcff;
   --app-linera: #253d4e;
