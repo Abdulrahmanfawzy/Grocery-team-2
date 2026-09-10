@@ -1,0 +1,72 @@
+import Strawberry from '@/assets/Strw.png'
+import Potato from '@/assets/Batoto.png'
+import type { ProductHotDeal } from '@/types/global'
+
+export const hotDealsProducts: ProductHotDeal[] = [
+  {
+    id: 1,
+    image: Potato,
+    category: 'Vegetables',
+    name: 'Redish 500g',
+    rating: 5,
+    vendor: 'Mr.food',
+    price: 12,
+    originalPrice: 15.99,
+  },
+
+
+
+  {
+    id: 3,
+    image: Strawberry,
+    category: 'Fruits',
+    name: 'Strawberry 250g',
+    rating: 5,
+    vendor: 'Mr.food',
+    price: 14,
+    originalPrice: 18.5,
+  },
+  
+
+
+  {
+    id: 5,
+    image: Potato,
+    category: 'Coffe & teas',
+    name: 'Green Tea 100g',
+    rating: 5,
+    vendor: 'Tea House',
+    price: 9,
+    originalPrice: 12.5,
+  },
+  {
+    id: 6,
+    image: Potato,
+    category: 'Coffe & teas',
+    name: 'Arabica Coffee 250g',
+    rating: 4,
+    vendor: 'Tea House',
+    price: 18,
+    originalPrice: 22.99,
+  },
+  {
+    id: 7,
+    image: Potato,
+    category: 'Meat',
+    name: 'Chicken Breast 1kg',
+    rating: 5,
+    vendor: 'Butcher Co',
+    price: 24,
+    originalPrice: 29.99,
+  },
+  {
+    id: 8,
+    image: Potato,
+    category: 'Meat',
+    name: 'Beef Mince 500g',
+    rating: 4,
+    vendor: 'Butcher Co',
+    price: 21,
+    originalPrice: 26.5,
+  },
+]
