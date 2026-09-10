@@ -34,8 +34,8 @@ const CartProducts = ({ products, setProducts }: CartProductsProps) => {
     <div className="w-full">
       <h4 className="text-[20px] font-medium text-app-black mt-6">Products In Cart</h4>
 
-      <div className="h-87 w-full rounded-md border border-gray-200 bg-white mt-4">
-         <ScrollArea className="h-full w-full">
+      <div className="mt-4 w-full rounded-md border border-gray-200 bg-white">
+         <ScrollArea className="h-[300px] w-full sm:h-[420px]">
         <div className="my-3 grid grid-cols-1 sm:grid-cols-2">
           {/* Product */}
 

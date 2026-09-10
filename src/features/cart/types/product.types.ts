@@ -5,4 +5,9 @@ export interface Product {
   quantity: number;
   image: string;
   inStock: boolean;
+  oldPrice?: number;
+  rating?: number;
+  isNew?: boolean;
+  reviews?: number;
+  discount?: number; 
 }

@@ -4,15 +4,10 @@ import CartSummary from "../components/cartSummary"
 import { useState } from "react";
 import sasuImage from "../../../assets/sagu.svg"
 import eggImage from "../../../assets/Eggs.svg"
+import type { Product } from "../types/product.types";
+import MoreToExplore from "../components/moreToExplore";
 
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  quantity: number;
-  image: string;
-  inStock: boolean;
-}
+
 
 const CartPage = ({ }: Product) => {
      const [products, setProducts] = useState([
@@ -92,13 +87,15 @@ const CartPage = ({ }: Product) => {
                 />
                 
                 {/* prodcuts cart */}
-                 <CartProducts
-          products={products}
-          setProducts={setProducts}
-        />
+                <CartProducts
+                   products={products}
+                   setProducts={setProducts}
+                 />
                 
                 {/* product sumamry */}
-                <CartSummary  products={products}/>
+                <CartSummary products={products} />
+                {/* More to explore */}
+                <MoreToExplore />
 
 
             </div>
