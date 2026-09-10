@@ -1,76 +1,14 @@
 
-import sasuImage from "../../../assets/sagu.svg"
-import eggImage from "../../../assets/Eggs.svg"
+
+import type { Product } from "../types/product.types";
 import ProductCard from "./productCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useState } from "react";
-const CartProducts = () => {
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      name: "Premium Organic Orange - 1KG",
-      price: 20,
-      quantity: 1,
-      image: sasuImage,
-      inStock: true,
-    },
-    {
-      id: 2,
-      name: "Free Range Eggs - 12 Pieces",
-      price: 15,
-      quantity: 2,
-      image: eggImage,
-      inStock: true,
-    },
-    {
-      id: 3,
-      name: "Fresh Organic Milk - 1L",
-      price: 18,
-      quantity: 1,
-      image: eggImage,
-      inStock: true,
-    },
-    {
-      id: 4,
-      name: "Organic Banana - 1KG",
-      price: 12,
-      quantity: 3,
-      image: sasuImage,
-      inStock: true,
-    },
-    {
-      id: 5,
-      name: "Fresh Farm Eggs - 6 Pieces",
-      price: 10,
-      quantity: 1,
-      image: sasuImage,
-      inStock: false,
-    },
-    {
-      id: 6,
-      name: "Premium Fresh Orange - 2KG",
-      price: 30,
-      quantity: 2,
-      image: eggImage,
-      inStock: true,
-    },
-    {
-      id: 7,
-      name: "Organic Spinach - 200G",
-      price: 8,
-      quantity: 1,
-      image: eggImage,
-      inStock: true,
-    },
-    {
-      id: 8,
-      name: "Fresh Organic Carrots - 500G",
-      price: 6,
-      quantity: 2,
-      image: sasuImage,
-      inStock: true,
-    }
-  ]);
+interface CartProductsProps {
+  products: Product[];
+  setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
+}
+const CartProducts = ({ products, setProducts }: CartProductsProps) => {
+ 
 
   const increaseQuantity = (productId: number) => {
     setProducts((currentProducts) => currentProducts.map((product) => (
