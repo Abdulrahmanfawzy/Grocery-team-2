@@ -1,4 +1,7 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+@import '@fontsource-variable/geist';
 /* @import "tw-animate-css"; */
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
@@ -14,7 +17,11 @@
   --color-app-watermelon: var(--app-watermelon);
   --color-app-yellow: var(--app-yellow);
   --color-app-grey: var(--app-grey);
-
+  --color-app-black: var(--app-black);
+  --color-app-silver: var(--app-silver);
+  --color-app-light-gray: var(--app-light-gray);
+  --color-app-main: var(--app-main);
+  --color-app-error: var(--app-error);
   --font-zain: var(--font-zain);
 --font-sora: 'Sora', sans-serif;
 
@@ -22,6 +29,9 @@
   /* Shadcn vars */
 
   --color-background: var(--background);
+  --color-app-hovered: var(--app-hovered);
+  --color-app-linera: var(--app-linera);
+  /* Shadcn vars */ --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
@@ -69,6 +79,14 @@
   --app-watermelon: oklch(71.506% 0.17846 27.948);
   --app-yellow: oklch(86.52% 0.17676 90.387);
   --app-grey: oklch(73.481% 0.00008 271.152);
+  --app-black: #0E1112;
+  --app-silver: #BCB8B1;
+  --app-light-gray:#DAD8D8;
+
+  --app-main: #014162;
+  --app-hovered: #f7fcff;
+  --app-linera: #253d4e;
+  --app-error: #F35244;
 
   /* Shadcn */
   --background: oklch(1 0 0);
@@ -163,3 +181,4 @@
     @apply font-sans;
   }
 }
+
