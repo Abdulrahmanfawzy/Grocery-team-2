@@ -4,13 +4,13 @@ import { cn } from '@/lib/utils'
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'destructive' | 'outline' | 'ghost' | 'link'
   size?: 'sm' | 'md' | 'lg' | 'icon'
-  children: ReactNode
+  children?: ReactNode
   isLoading?: boolean
 }
 
 const buttonVariants = {
   primary: 'bg-[#014162] text-primary-foreground hover:bg-primary/90',
-  secondary: 'bg-[#] text-secondary-foreground hover:bg-secondary/80',
+  secondary: 'bg-[#D9D9D9] text-secondary-foreground font-bold text-base hover:bg-app-main hover:text-white',
   destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
   outline: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
   ghost: 'hover:bg-accent hover:text-accent-foreground',
@@ -20,7 +20,7 @@ const buttonVariants = {
 const buttonSizes = {
   sm: 'h-9 px-3',
   md: 'h-10 px-4 py-2',
-  lg: 'h-11 px-8',
+  lg: 'h-12 px-[75px]',
   icon: 'h-10 w-10',
 }
 

@@ -1,23 +1,32 @@
-@import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
-/* @import "tw-animate-css"; */
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap');
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+@import '@fontsource-variable/geist';
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-app-main: var(--app-main);
+  --color-app-main: var(--app-main);  
   --color-app-secondary: var(--app-secondary);
   --color-app-watermelon: var(--app-watermelon);
   --color-app-yellow: var(--app-yellow);
   --color-app-grey: var(--app-grey);
+  --color-app-black: var(--app-black);
+  --color-app-silver: var(--app-silver);
+  --color-app-light-gray: var(--app-light-gray);
   --color-app-main: var(--app-main);
+  --color-app-error: var(--app-error);
   --font-zain: var(--font-zain);
-  --color-app-hovered :var(--app-hovered);
+  --font-sora: 'Sora', sans-serif;
 
+  --color-app-main: var(--app-main);
   /* Shadcn vars */
 
+  --color-background: var(--background);
+  --color-app-hovered: var(--app-hovered);
+  --color-app-linera: var(--app-linera);
+  /* Shadcn vars */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -61,13 +70,24 @@
 }
 
 :root {
+<<<<<<< Updated upstream
+=======
+  --app-primary: #014162;
+  --app-secondary :#BCB8B1 ;
+>>>>>>> Stashed changes
   --app-main: oklch(59.754% 0.11465 170.114);
   --app-secondary: oklch(77.704% 0.17286 66.053);
   --app-watermelon: oklch(71.506% 0.17846 27.948);
   --app-yellow: oklch(86.52% 0.17676 90.387);
   --app-grey: oklch(73.481% 0.00008 271.152);
+  --app-black: #0E1112;
+  --app-silver: #BCB8B1;
+  --app-light-gray: #DAD8D8;
+
   --app-main: #014162;
-  --app-hovered :#F7FCFF ;
+  --app-hovered: #f7fcff;
+  --app-linera: #253d4e;
+  --app-error: #F35244;
 
   /* Shadcn */
   --background: oklch(1 0 0);
@@ -143,7 +163,7 @@
 }
 
 @utility box-container {
-  @apply container mx-auto w-full px-5 md:px-2 lg:px-5 2xl:max-w-[85%];
+  @apply container mx-auto w-full 2xl:max-w-[95%];
 }
 
 @utility form-triggers {
@@ -158,6 +178,7 @@
   body {
     @apply bg-background text-foreground;
   }
+
   html {
     @apply font-sans;
   }
