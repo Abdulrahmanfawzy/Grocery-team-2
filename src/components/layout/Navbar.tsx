@@ -21,7 +21,7 @@ export const Navbar = ({ name, Logo }: Propstype) => {
 
   return (
     <header className="w-full bg-white font-sans pt-6 lg:pt-10">
-      <nav className="container mx-auto flex justify-between items-center gap-4 border-b border-gray-100 px-4 pb-6 sm:px-6 lg:gap-6 lg:px-8 lg:pb-10">
+      <nav className="box-container flex justify-between items-center gap-4 border-b border-gray-100 px-4 pb-6 sm:px-6 lg:gap-6 lg:pb-10">
         {/* Logo + Desktop Navigation Links */}
         <div className="flex shrink-0 items-center gap-6 lg:gap-8">
           <Link to="/" className="flex items-center">
