@@ -1,5 +1,6 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { MainLayout } from '@/components/layout';
+<<<<<<< Updated upstream
 import CartPage from '@/features/cart/pages/CartPage';
 import HomePage from '@/features/home';
 
@@ -9,6 +10,11 @@ import ForgotPassword from '@/auth/ForgotPassword';
 import VerifyOTP from '@/auth/VerifyOTP';
 import ResetPassword from '@/auth/ResetPassword';
 import Signup from '@/auth/Signup';
+=======
+import HomePage from '@/pages/HomePage';
+import ProductList from '@/pages/ProductList';
+import ProductDetails from '@/pages/ProductDetails';
+>>>>>>> Stashed changes
 
 export function AppRoutes() {
   return (
@@ -24,7 +30,12 @@ export function AppRoutes() {
       {/* Main App Routes (Inside MainLayout) */}
       <Route element={<MainLayout />}>
         <Route index element={<HomePage />} />
+<<<<<<< Updated upstream
         <Route path="/cart" element={<CartPage />} />
+=======
+        <Route path="/productlist" element={<ProductList />} />
+        <Route path="/productdetails/:id" element={<ProductDetails />} />
+>>>>>>> Stashed changes
       </Route>
     </Routes>
   );

@@ -7,7 +7,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-app-main: var(--app-main);
+  --color-app-main: var(--app-main);  
   --color-app-secondary: var(--app-secondary);
   --color-app-watermelon: var(--app-watermelon);
   --color-app-yellow: var(--app-yellow);
@@ -70,6 +70,11 @@
 }
 
 :root {
+<<<<<<< Updated upstream
+=======
+  --app-primary: #014162;
+  --app-secondary :#BCB8B1 ;
+>>>>>>> Stashed changes
   --app-main: oklch(59.754% 0.11465 170.114);
   --app-secondary: oklch(77.704% 0.17286 66.053);
   --app-watermelon: oklch(71.506% 0.17846 27.948);
