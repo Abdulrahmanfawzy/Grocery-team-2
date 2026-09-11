@@ -4,13 +4,12 @@ import CartSummary from "../components/cartSummary"
 import { useState } from "react";
 import sasuImage from "../../../assets/sagu.svg"
 import eggImage from "../../../assets/Eggs.svg"
-import type { Product } from "../types/product.types";
 import MoreToExplore from "../components/moreToExplore";
 
 
 
-const CartPage = ({ }: Product) => {
-     const [products, setProducts] = useState([
+const CartPage = () => {
+  const [products, setProducts] = useState([
     {
       id: 1,
       name: "Premium Organic Orange - 1KG",
@@ -76,31 +75,31 @@ const CartPage = ({ }: Product) => {
       inStock: true,
     }
   ]);
-    return (
-        <div className="bg-white min-h-screen">
-            <div className="container mx-auto px-6 sm:px-10 lg:px-16 py-6 lg:py-10 ">
+  return (
+    <div className="bg-white min-h-screen">
+      <div className="container mx-auto px-6 sm:px-10 lg:px-16 py-6 lg:py-10 ">
 
-                <Breadcrumb
-                    items={[{ label: "Home", path: "/" }
-                        , { label: "Cart" }]}
+        <Breadcrumb
+          items={[{ label: "Home", path: "/" }
+            , { label: "Cart" }]}
 
-                />
-                
-                {/* prodcuts cart */}
-                <CartProducts
-                   products={products}
-                   setProducts={setProducts}
-                 />
-                
-                {/* product sumamry */}
-                <CartSummary products={products} />
-                {/* More to explore */}
-                <MoreToExplore />
+        />
+
+        {/* prodcuts cart */}
+        <CartProducts
+          products={products}
+          setProducts={setProducts}
+        />
+
+        {/* product sumamry */}
+        <CartSummary products={products} />
+        {/* More to explore */}
+        <MoreToExplore />
 
 
-            </div>
-        </div>
-    )
+      </div>
+    </div>
+  )
 }
 
 export default CartPage
