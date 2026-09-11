@@ -1,30 +1,46 @@
-    import { useProductFilter } from '@/hooks/useProductFilter';
-    import { Link } from 'react-router-dom'; 
-    import { useState, useEffect } from 'react';
-    // 1. Mock Data تجريبية
-    const MOCK_PRODUCTS = [
-    { id: 1, name: 'Fresh Peach', category: 'Vegetables', price: 32, image: '/Banner.jpg', brand: 'Brand A' , productType: 'Fresh' , availableProduct: 'in stock', oldPrice: 45   },
-    { id: 2, name: 'Organic Pineapple', category: 'Fruits', price: 45, image: '/Banner.jpg', brand: 'Brand B' , productType: 'Organic' , availableProduct: 'out of stock', oldPrice: 60  },
-    { id: 3, name: 'Fresh Broccoli', category: 'Vegetables', price: 20, image: '/Banner.jpg', brand: 'Brand C' , productType: 'frozen' , availableProduct: 'in stock', oldPrice: 30  },
-    { id: 4, name: 'Fresh Milk', category: 'Dairy', price: 15, image: '/Banner.jpg', brand: 'Brand A'  , productType: 'Fresh' , availableProduct: 'out of stock', oldPrice: 25  },
-    ];
+import { useProductFilter } from '@/hooks/useProductFilter';
+import { Link } from 'react-router-dom'; 
+import { useState, useEffect } from 'react';
 
-    export default function ProductList() {
-    const { searchQuery, selectedCategory, selectedBrand, selectedProductType, setCategory, setBrand, setProductType, availableProduct, setAvailableProduct , setSearch,  minPrice, maxPrice } = useProductFilter();
+// 1. Mock Data تجريبية
+const MOCK_PRODUCTS = [
+  { id: 1, name: 'Fresh Peach', category: 'Vegetables', price: 32, image: '/Banner.jpg', brand: 'Brand A' , productType: 'Fresh' , availableProduct: 'in stock', oldPrice: 45   },
+  { id: 2, name: 'Organic Pineapple', category: 'Fruits', price: 45, image: '/Banner.jpg', brand: 'Brand B' , productType: 'Organic' , availableProduct: 'out of stock', oldPrice: 60  },
+  { id: 3, name: 'Fresh Broccoli', category: 'Vegetables', price: 20, image: '/Banner.jpg', brand: 'Brand C' , productType: 'frozen' , availableProduct: 'in stock', oldPrice: 30  },
+  { id: 4, name: 'Fresh Milk', category: 'Dairy', price: 15, image: '/Banner.jpg', brand: 'Brand A'  , productType: 'Fresh' , availableProduct: 'out of stock', oldPrice: 25  },
+];
+
+export default function ProductList() {
+  const {
+    searchQuery,
+    selectedCategory,
+    selectedBrand,
+    selectedProductType,
+    setCategory,
+    setBrand,
+    setProductType,
+    availableProduct,
+    setAvailableProduct,
+    setSearch,
+    minPrice,
+    maxPrice,
+    setPriceRange,
+  } = useProductFilter();
     
-    const filteredProducts = MOCK_PRODUCTS.filter((product) => {
-        const matchesCategory = selectedCategory === 'all' || product.category.toLowerCase() === selectedCategory.toLowerCase();
-        const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
-        const matchesBrand = selectedBrand === 'all' || product.brand.toLowerCase() === selectedBrand.toLowerCase();
-        const matchesProductType = selectedProductType === 'all' || product.productType.toLowerCase() === selectedProductType.toLowerCase();
-        const matchesAvailableProduct = availableProduct === 'all' || product.availableProduct.toLowerCase() === availableProduct.toLowerCase();
-        const min = minPrice ? Number(minPrice) : 0;
-        const max = maxPrice ? Number(maxPrice) : Infinity;
-        const matchesPrice = product.price >= min && product.price <= max;
-        return matchesCategory && matchesSearch && matchesBrand && matchesProductType && matchesAvailableProduct && matchesPrice;
-    });
-    const targetDate = new Date('2026-12-31T23:59:59').getTime();
-    const [timeLeft, setTimeLeft] = useState({
+  const filteredProducts = MOCK_PRODUCTS.filter((product) => {
+    const matchesCategory = selectedCategory === 'all' || product.category.toLowerCase() === selectedCategory.toLowerCase();
+    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesBrand = selectedBrand === 'all' || product.brand.toLowerCase() === selectedBrand.toLowerCase();
+    const matchesProductType = selectedProductType === 'all' || product.productType.toLowerCase() === selectedProductType.toLowerCase();
+    const matchesAvailableProduct = availableProduct === 'all' || product.availableProduct.toLowerCase() === availableProduct.toLowerCase();
+    const min = minPrice ? Number(minPrice) : 0;
+    const max = maxPrice ? Number(maxPrice) : Infinity;
+    const matchesPrice = product.price >= min && product.price <= max;
+    return matchesCategory && matchesSearch && matchesBrand && matchesProductType && matchesAvailableProduct && matchesPrice;
+  });
+
+  const targetDate = new Date('2026-12-31T23:59:59').getTime();
+  const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
     minutes: 0,
@@ -56,33 +72,40 @@
     return () => clearInterval(interval);
   }, [targetDate]);
 
-  // دالة بسيطة عشان لو الرقم أقل من 10 تزود قبله صفر (مثلاً 9 تبقى 09)
   const formatNumber = (num: number) => String(num).padStart(2, '0');
 
-
-
-      function setPriceRange(minPrice: string, value: string): void {
-        throw new Error('Function not implemented.');
-      }
-
-return (
+  return (
     <div className="container mx-auto px-4 sm:px-6 py-8 bg-white overflow-x-hidden">
       
-      {/* Banner Section */}
-      <div className="relative h-[40vh] sm:h-[50vh] md:h-[60vh] w-full bg-cover bg-center rounded-lg overflow-hidden mb-8">
-        <img src="/Banner.jpg" alt="Banner" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-[#08415F]/80 flex flex-col items-center justify-center text-center px-4">
-          <h1 className="absolute top-80 left-70 transform -translate-x-1/2 -translate-y-1/2 text-white text-xl sm:text-2xl md:text-3xl font-bold mb-2">
-            // Welcome To Our Company
-          </h1>
-          <h1 className="absolute top-90 left-20 text-[#08ABFF] text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-            Shop
-          </h1>
-          <div className="flex items-center gap-2 text-sm font-bold text-white">
-            <Link to='/HomePage' className=" absolute top-95 right-50 hover:text-[#08ABFF] transition">Home</Link>
-            <span className=" absolute top-95 right-43 text-[#08ABFF]">|</span>
-            <Link to='/ProductList' className=" absolute top-95 right-30 text-[#08ABFF]">Shop</Link>
+{/* Banner Section */}
+      <div className="relative h-[300px] sm:h-[350px] md:h-[400px] w-full bg-cover bg-center rounded-2xl overflow-hidden mb-8 flex items-center">
+        <img src="/Banner.jpg" alt="Banner" className="absolute inset-0 w-full h-full object-cover" />
+        
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-[#08415F]/85 flex flex-col justify-center px-6 sm:px-12 z-10">
+          
+          {/* Main Content Container (Row for Desktop, Column for Mobile) */}
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between w-full gap-4">
+            
+            {/* Left Side: Welcome & Shop Title */}
+            <div>
+              <p className="text-white/80 text-xs sm:text-sm md:text-base font-semibold tracking-widest mb-1">
+                // Welcome To Our Company
+              </p>
+              <h1 className="text-[#08ABFF] text-3xl sm:text-4xl md:text-5xl font-bold">
+                Shop
+              </h1>
+            </div>
+
+            {/* Right Side: Home | Shop Links */}
+            <div className="flex items-center gap-2 text-sm font-semibold text-white">
+              <Link to='/HomePage' className="hover:text-[#08ABFF] transition">Home</Link>
+              <span className="text-[#08ABFF]">|</span>
+              <Link to='/ProductList' className="text-[#08ABFF]">Shop</Link>
+            </div>
+
           </div>
+
         </div>
       </div>
 
@@ -90,13 +113,13 @@ return (
       <div className="flex flex-col lg:flex-row gap-8">
         
         {/* Sidebar for Filters */}
-        <aside className="w-full lg:w-1/4 bg-blue-200/10 p-4 sm:p-6 rounded-lg shadow-sm border border-gray-100">
-          <h3 className="font-bold text-lg mb-2">Categories</h3>
-          <ul className="space-y-2 text-gray-600">
+        <aside className="w-full lg:w-1/4 bg-blue-50/50 p-4 sm:p-6 rounded-xl shadow-sm border border-gray-100 h-fit">
+          <h3 className="font-bold text-lg mb-2 text-gray-800">Categories</h3>
+          <ul className="space-y-2 text-gray-600 text-sm">
             {['Vegetables', 'Fruits', 'Dairy & Eggs', 'Bakery', 'Seafood', 'Meats'].map((cat) => (
               <li 
                 key={cat}
-                className={`cursor-pointer hover:text-black transition-all ${selectedCategory === cat ? 'font-bold text-primary' : ''}`}
+                className={`cursor-pointer hover:text-black transition-all ${selectedCategory === cat ? 'font-bold text-[#08415F]' : ''}`}
                 onClick={() => setCategory(cat)}
               >
                 {cat}
@@ -106,7 +129,7 @@ return (
           <hr className="my-4 border-gray-200" />
           
           {/* Brands Section */}
-          <div className='space-y-2 text-gray-600 mb-3'>
+          <div className='space-y-2 text-gray-600 mb-3 text-sm'>
             <h3 className='font-bold text-black text-lg mb-2'>Brand</h3>
             {['Brand A', 'Brand B', 'Brand C'].map((brand) => (
               <label key={brand} className="flex items-center gap-2 cursor-pointer w-full">
@@ -114,9 +137,9 @@ return (
                   type="checkbox"
                   checked={selectedBrand === brand}
                   onChange={(e) => setBrand(e.target.checked ? brand : 'all')}
-                  className="rounded border-gray-300 text-primary focus:ring-primary cursor-pointer"
+                  className="rounded border-gray-300 text-[#08415F] focus:ring-[#08415F] cursor-pointer"
                 />
-                <span className={`hover:text-black ${selectedBrand === brand ? 'font-bold text-primary' : 'text-gray-600'}`}>
+                <span className={`hover:text-black ${selectedBrand === brand ? 'font-bold text-[#08415F]' : 'text-gray-600'}`}>
                   {brand}
                 </span>
               </label>
@@ -125,7 +148,7 @@ return (
           <hr className="my-4 border-gray-200" />
 
           {/* Product Type Section */}
-          <div className='space-y-2 text-gray-600 mb-3'>
+          <div className='space-y-2 text-gray-600 mb-3 text-sm'>
             <h3 className='font-bold text-black text-lg mb-2'>Product Type</h3>
             {['Fresh', 'Organic', 'Frozen'].map((type) => (
               <label key={type} className="flex items-center gap-2 cursor-pointer w-full">
@@ -133,9 +156,9 @@ return (
                   type="checkbox"
                   checked={selectedProductType === type}
                   onChange={(e) => setProductType(e.target.checked ? type : 'all')}
-                  className="rounded border-gray-300 text-primary focus:ring-primary cursor-pointer"
+                  className="rounded border-gray-300 text-[#08415F] focus:ring-[#08415F] cursor-pointer"
                 />
-                <span className={`hover:text-black ${selectedProductType === type ? 'font-bold text-primary' : 'text-gray-600'}`}>
+                <span className={`hover:text-black ${selectedProductType === type ? 'font-bold text-[#08415F]' : 'text-gray-600'}`}>
                   {type}
                 </span>
               </label>
@@ -144,16 +167,16 @@ return (
           <hr className="my-4 border-gray-200" />
 
           {/* Available Product Section */}
-          <div className='space-y-2 text-gray-600 mb-3'>
+          <div className='space-y-2 text-gray-600 mb-3 text-sm'>
             <h3 className='font-bold text-black text-lg mb-2'>Available Product</h3>
             <label className="flex items-center gap-2 cursor-pointer w-full">
               <input 
                 type="checkbox"
                 checked={availableProduct === 'in stock'}
                 onChange={(e) => setAvailableProduct(e.target.checked ? 'in stock' : 'all')}
-                className="rounded border-gray-300 text-primary focus:ring-primary cursor-pointer"
+                className="rounded border-gray-300 text-[#08415F] focus:ring-[#08415F] cursor-pointer"
               />
-              <span className={`hover:text-black ${availableProduct === 'in stock' ? 'font-bold text-primary' : 'text-gray-600'}`}>
+              <span className={`hover:text-black ${availableProduct === 'in stock' ? 'font-bold text-[#08415F]' : 'text-gray-600'}`}>
                 In Stock
               </span>
             </label>
@@ -162,9 +185,9 @@ return (
                 type="checkbox"
                 checked={availableProduct === 'out of stock'}
                 onChange={(e) => setAvailableProduct(e.target.checked ? 'out of stock' : 'all')}
-                className="rounded border-gray-300 text-primary focus:ring-primary cursor-pointer"
+                className="rounded border-gray-300 text-[#08415F] focus:ring-[#08415F] cursor-pointer"
               />
-              <span className={`hover:text-black ${availableProduct === 'out of stock' ? 'font-bold text-primary' : 'text-gray-600'}`}>
+              <span className={`hover:text-black ${availableProduct === 'out of stock' ? 'font-bold text-[#08415F]' : 'text-gray-600'}`}>
                 Out of Stock
               </span>
             </label>
@@ -183,8 +206,7 @@ return (
                 className="w-full bg-transparent focus:outline-none text-sm"
               />
             </div>
-            <div className='search-icon w-[50px] h-[45px] rounded-r-md bg-primary flex items-center justify-center shrink-0 cursor-pointer'>
-              {/* استبدل الـ SVG لو مش عندك الـ SearchIcon */}
+            <div className='w-[50px] h-[45px] rounded-r-md bg-[#08415F] flex items-center justify-center shrink-0 cursor-pointer'>
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
@@ -193,60 +215,75 @@ return (
           <hr className="my-4 border-gray-200" />
 
           {/* Filter by Price Section */}
-          <div> 
-            <h3 className='font-bold text-black text-lg mb-2'>Filter by Price</h3>
-            <div className='flex justify-between text-gray-600 text-sm mb-2'>
-              <span>Your range:</span>
-              <span className="font-semibold text-black">£{minPrice} - £{maxPrice}</span>
-            </div>
-            <div className="space-y-3">
-              <input 
-                type='range' 
-                min={0} 
-                max={100} 
-                value={maxPrice}
-                onChange={(e) => setPriceRange(minPrice, e.target.value)}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary" 
-              />
-            </div>
+          <h3 className='font-bold text-black text-lg mb-2'>Filter By Price</h3>
+          <div className="relative w-full h-6 mb-2">
+            <div className="absolute top-2 left-0 w-full h-2 bg-gray-200 rounded-full" />
+            <input
+              type="range"
+              min={0}
+              max={200}
+              value={minPrice}
+              onChange={(e) => {
+                const value = Number(e.target.value);
+                if (value <= maxPrice) setPriceRange(value, maxPrice);
+              }}
+              className="absolute w-full h-2 top-2 appearance-none bg-transparent pointer-events-none cursor-pointer accent-[#08415F] z-20 [&::-webkit-slider-thumb]:pointer-events-auto"
+            />
+            <input
+              type="range"
+              min={0}
+              max={200}
+              value={maxPrice}
+              onChange={(e) => {
+                const value = Number(e.target.value);
+                if (value >= minPrice) setPriceRange(minPrice, value);
+              }}
+              className="absolute w-full h-2 top-2 appearance-none bg-transparent pointer-events-none cursor-pointer accent-[#08415F] z-10 [&::-webkit-slider-thumb]:pointer-events-auto"
+            />
           </div>
+          <div className="flex justify-between text-xs text-gray-500 font-medium">
+            <span>£{minPrice}</span>
+            <span>£{maxPrice}</span>
+          </div>
+
         </aside>
 
         {/* Products Grid Section */}
         <main className="w-full lg:w-3/4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
             {filteredProducts.length > 0 ? (
               filteredProducts.map((product) => (
                 <div
                   key={product.id}
-                  className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm flex flex-col justify-between"
+                  className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm flex flex-col justify-between hover:shadow-md transition"
                 >
                   {/* Image & Tags Section */}
                   <div className="relative">
                     <div className="absolute top-2 left-2 z-10 flex flex-wrap gap-1.5">
                       <span className="inline-flex items-center justify-center rounded bg-[#014162] px-2 py-0.5 text-xs font-normal text-white">
-                        In Stock
+                        {product.availableProduct}
                       </span>
                     </div>
                     <Link to={`/ProductDetails/${product.id}`}>
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="h-48 w-full object-cover rounded-md"
-                    />
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="h-48 w-full object-cover rounded-lg"
+                      />
                     </Link>
                   </div>
                   
-
                   {/* Product Info */}
                   <div className="my-3">
-                    <p className="text-gray-500 text-sm">{product.category}</p>
+                    <p className="text-gray-400 text-xs uppercase tracking-wider">{product.category}</p>
                     <h3 className="font-semibold text-gray-800 mt-1">{product.name}</h3>
                     
                     <div className="flex items-center gap-2 mt-1">
                       <span className="text-gray-800 font-bold">£{product.price}</span>
-                      <span className="text-gray-400 text-sm line-through">{product?.oldPrice}</span>              
-                            </div>
+                      {product?.oldPrice && (
+                        <span className="text-gray-400 text-sm line-through">£{product.oldPrice}</span>              
+                      )}
+                    </div>
 
                     <div className="flex items-center gap-1 mt-2">
                       <div className="flex items-center text-amber-400">
@@ -260,23 +297,24 @@ return (
                     </div>
                   </div>
 
-                  {/* Action Row */}
+                  {/* Action Row - Fixed alignment and spacing */}
                   <div className="flex items-center justify-between gap-2 mt-2">
-                    <button className="flex-1 flex items-center justify-center rounded-lg bg-primary px-3 py-2 text-sm font-medium text-white transition hover:bg-[#01304a]">
+                    <button className="flex-1 flex items-center justify-center rounded-lg bg-[#08415F] px-3 py-2 text-sm font-medium text-white transition hover:bg-[#01304a]">
                       Add To Cart
                     </button>
 
-                    <div className="flex items-center rounded-lg border border-gray-200 bg-white px-2 py-1 gap-2">
-                      <button aria-label="Delete" className="text-gray-400 hover:text-red-600 px-1">
+                    <div className="flex items-center justify-between w-28 rounded-lg border border-gray-200 bg-white px-2 py-1.5">
+                      <button aria-label="Delete" className="text-gray-400 hover:text-red-600">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6l1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                         </svg>
                       </button>
-                      <div className="h-4 w-[1px] bg-gray-200" />
-                      <div className="flex items-center gap-2 px-1">
-                        <span className="text-sm font-medium text-gray-700">1</span>
-                        <button className="text-gray-400 hover:text-black">+</button>
-                      </div>
+
+                      <span className="text-sm font-medium text-gray-700">1</span>
+
+                      <button className="text-gray-400 hover:text-black font-bold px-1">
+                        +
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -331,9 +369,9 @@ return (
           </div>
 
           <div className="mt-8">
-            <button className="inline-flex items-center gap-1 rounded-full bg-[#014162] border border-white/30 px-6 py-2.5 text-sm font-medium text-white transition hover:bg-[#01304a]"><Link to='/HomePage' >
-              Shop now <span className="text-lg leading-none">&gt;</span></Link>
-            </button>
+            <Link to='/HomePage' className="inline-flex items-center gap-1 rounded-full bg-[#014162] border border-white/30 px-6 py-2.5 text-sm font-medium text-white transition hover:bg-[#01304a]">
+              Shop now <span className="text-lg leading-none">&gt;</span>
+            </Link>
           </div>
         </div>
 
@@ -362,4 +400,4 @@ return (
 
     </div>
   );
-    }
+}

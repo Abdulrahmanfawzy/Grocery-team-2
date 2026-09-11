@@ -120,13 +120,13 @@ export default function ProductDetails() {
               </div>
             
             {/* Bottom action row container */}
-            <div className="flex items-center w-130 justify-between gap-4 mt-8 pt-4 border-t border-gray-100">
+            <div className="flex items-center w-130 justify-between gap-4  mt-8 pt-4 border-t border-gray-100">
               {/* Primary call to action button for cart submission */}
-              <button className="flex-1 w- flex items-center justify-center rounded-lg bg-primary gap-2 px-6 py-3 text-sm font-medium text-white transition hover:bg-[#01304a]">
+              <button className="flex-1 w- flex items-center justify-center bg-primary rounded-lg  gap-2 px-6 py-3 text-sm font-medium text-white transition hover:bg-[#01304a]">
                 <ShoppingCart className='w-5 h-5 ' />
                 Add To Cart <ChevronRight />
               </button>
-              <button className="flex-1 w- flex items-center justify-center rounded-lg bg-[#DBDBDB] gap-2 px-6 py-3 text-sm font-medium text-primary transition hover:bg-[#01304a]">
+              <button className="flex-1 w- flex items-center justify-center rounded-lg  gap-2 px-6 py-3 text-sm font-medium text-primary transition hover:bg-[#01304a]">
                 <Heart className='w-5 h-5 ' /> Add to favourite
               </button>
 
