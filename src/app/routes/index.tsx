@@ -2,6 +2,7 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import { MainLayout } from '@/components/layout';
 import HomePage from '@/pages/HomePage';
 import CartPage from '@/features/cart/pages/CartPage';
+import HomePage from '@/features/home';
 
 // Auth Pages Imports
 import Signup from '@/auth/signup'; 

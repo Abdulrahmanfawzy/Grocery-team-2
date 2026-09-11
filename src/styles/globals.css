@@ -31,7 +31,8 @@
   --color-background: var(--background);
   --color-app-hovered: var(--app-hovered);
   --color-app-linera: var(--app-linera);
-  /* Shadcn vars */ --color-background: var(--background);
+  /* Shadcn vars */
+  --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
@@ -81,7 +82,7 @@
   --app-grey: oklch(73.481% 0.00008 271.152);
   --app-black: #0E1112;
   --app-silver: #BCB8B1;
-  --app-light-gray:#DAD8D8;
+  --app-light-gray: #DAD8D8;
 
   --app-main: #014162;
   --app-hovered: #f7fcff;
@@ -162,7 +163,7 @@
 }
 
 @utility box-container {
-  @apply container mx-auto w-full px-5 md:px-2 lg:px-5 2xl:max-w-[85%];
+  @apply container mx-auto w-full 2xl:max-w-[95%];
 }
 
 @utility form-triggers {
@@ -177,6 +178,7 @@
   body {
     @apply bg-background text-foreground;
   }
+
   html {
     @apply font-sans;
   }
