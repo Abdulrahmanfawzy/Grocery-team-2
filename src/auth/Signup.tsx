@@ -50,9 +50,9 @@ export default function Signup() {
     <div className="flex min-h-screen w-full items-center justify-center bg-gray-100 p-4 font-sans">
       {/* Main Container */}
       <div className="flex w-full max-w-[1000px] overflow-hidden rounded-3xl bg-white shadow-md">
-        
+
         {/* Left Side */}
-        <div 
+        <div
           className="hidden w-1/2 items-center justify-center bg-[#003B5C] bg-cover bg-center p-8 lg:flex"
           style={{ backgroundImage: "url('/Rectangle 1.svg')" }}
         >
@@ -60,7 +60,7 @@ export default function Signup() {
 
         {/* Right Side */}
         <div className="flex w-full flex-col justify-center p-6 sm:p-10 lg:w-1/2">
-          
+
           {/* Header */}
           <div className="mb-6">
             <h1 className="font-sora text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
@@ -73,7 +73,7 @@ export default function Signup() {
 
           {/* Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            
+
             {/* Username Input */}
             <Controller
               name="userName"
@@ -86,9 +86,9 @@ export default function Signup() {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                       </svg>
                     </span>
-                    <input 
+                    <input
                       {...field}
-                      type="text" 
+                      type="text"
                       placeholder="Username"
                       className="w-full rounded-sm border border-gray-200 py-2.5 pl-11 pr-4 text-xs text-gray-800 placeholder-gray-600 outline-none transition focus:border-[#014162] focus:ring-.5 focus:ring-[#014162]"
                     />

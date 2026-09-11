@@ -49,7 +49,7 @@ export default function ResetPassword() {
     <div className="flex min-h-screen w-full items-center justify-center bg-[#F4F5F7] p-4 font-sans">
       {/* Main Container Card */}
       <div className="relative flex w-full max-w-[650px] min-h-[520px] flex-col items-center justify-center rounded-[32px] bg-white p-8 shadow-xl">
-        
+
         {/* Back Button */}
         <Link
           to="/forgot-password"
@@ -63,7 +63,7 @@ export default function ResetPassword() {
 
         {/* Content Box */}
         <div className="flex w-full max-w-[340px] flex-col items-center text-center">
-          
+
           {/* Header */}
           <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
             Reset your password
@@ -74,7 +74,7 @@ export default function ResetPassword() {
 
           {/* Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="mt-6 w-full text-left space-y-4">
-            
+
             {/* New Password */}
             <Controller
               name="newPassword"
@@ -136,11 +136,10 @@ export default function ResetPassword() {
             {/* Password Validation Hints */}
             <div className="pt-1 space-y-2">
               <p className="text-[11px] font-medium text-gray-600">Your password must contain:</p>
-              
+
               <div className="flex items-center gap-2 text-[11px]">
-                <div className={`flex h-4 w-4 items-center justify-center rounded-full border transition-colors ${
-                  isMinLength ? 'border-emerald-500 bg-emerald-50 text-emerald-600' : 'border-gray-300 bg-gray-50 text-gray-400'
-                }`}>
+                <div className={`flex h-4 w-4 items-center justify-center rounded-full border transition-colors ${isMinLength ? 'border-emerald-500 bg-emerald-50 text-emerald-600' : 'border-gray-300 bg-gray-50 text-gray-400'
+                  }`}>
                   <svg className="h-2.5 w-2.5" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                   </svg>
@@ -151,9 +150,8 @@ export default function ResetPassword() {
               </div>
 
               <div className="flex items-center gap-2 text-[11px]">
-                <div className={`flex h-4 w-4 items-center justify-center rounded-full border transition-colors ${
-                  hasNumber ? 'border-emerald-500 bg-emerald-50 text-emerald-600' : 'border-gray-300 bg-gray-50 text-gray-400'
-                }`}>
+                <div className={`flex h-4 w-4 items-center justify-center rounded-full border transition-colors ${hasNumber ? 'border-emerald-500 bg-emerald-50 text-emerald-600' : 'border-gray-300 bg-gray-50 text-gray-400'
+                  }`}>
                   <svg className="h-2.5 w-2.5" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                   </svg>

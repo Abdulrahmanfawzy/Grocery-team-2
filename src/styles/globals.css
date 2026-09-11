@@ -1,13 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 @import '@fontsource-variable/geist';
-/* @import "tw-animate-css"; */
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap');
-@import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -23,7 +18,7 @@
   --color-app-main: var(--app-main);
   --color-app-error: var(--app-error);
   --font-zain: var(--font-zain);
---font-sora: 'Sora', sans-serif;
+  --font-sora: 'Sora', sans-serif;
 
   --color-app-main: var(--app-main);
   /* Shadcn vars */
@@ -183,4 +178,3 @@
     @apply font-sans;
   }
 }
-
