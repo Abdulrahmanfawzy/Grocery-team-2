@@ -1,29 +1,47 @@
-import React, { useState } from 'react';
+
 import { Link, useNavigate } from 'react-router-dom';
+import { useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+
+const resetPasswordSchema = z
+  .object({
+    newPassword: z
+      .string()
+      .min(1, 'Password is required')
+      .min(6, 'Password must be at least 6 characters')
+      .regex(/\d/, 'Password must contain at least one number'),
+    confirmPassword: z.string().min(1, 'Please confirm your password'),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  });
+
+type ResetPasswordFormValues = z.infer<typeof resetPasswordSchema>;
 
 export default function ResetPassword() {
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
 
-  
-  const isMinLength = newPassword.length >= 6;
-  const hasNumber = /\d/.test(newPassword);
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<ResetPasswordFormValues>({
+    resolver: zodResolver(resetPasswordSchema),
+    defaultValues: {
+      newPassword: '',
+      confirmPassword: '',
+    },
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const watchNewPassword = watch('newPassword', '');
+  const isMinLength = watchNewPassword.length >= 6;
+  const hasNumber = /\d/.test(watchNewPassword);
 
-    if (newPassword !== confirmPassword) {
-      alert('Passwords do not match!');
-      return;
-    }
-
-    if (!isMinLength || !hasNumber) {
-      alert('Please meet all password requirements.');
-      return;
-    }
-
-    console.log('Password reset successfully!');
+  const onSubmit = (data: ResetPasswordFormValues) => {
+    console.log('Password reset successfully with:', data);
     navigate('/login');
   };
 
@@ -55,51 +73,65 @@ export default function ResetPassword() {
           </p>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="mt-6 w-full text-left space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="mt-6 w-full text-left space-y-4">
             
             {/* New Password */}
-            <div>
-              <label className="block text-xs font-medium text-gray-700 mb-1">
-                New Password
-              </label>
-              <div className="relative w-full">
-                <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400">
-                  <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-                  </svg>
-                </span>
-                <input
-                  type="password"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  placeholder="*************"
-                  required
-                  className="w-full rounded-xl border border-gray-200 py-2.5 pl-10 pr-4 text-xs text-gray-800 placeholder-gray-400 outline-none transition focus:border-[#014162] focus:ring-1 focus:ring-[#014162]"
-                />
-              </div>
-            </div>
+            <Controller
+              name="newPassword"
+              control={control}
+              render={({ field }) => (
+                <div>
+                  <label className="block text-xs font-medium text-gray-700 mb-1">
+                    New Password
+                  </label>
+                  <div className="relative w-full">
+                    <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400">
+                      <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                      </svg>
+                    </span>
+                    <input
+                      {...field}
+                      type="password"
+                      placeholder="*************"
+                      className="w-full rounded-xl border border-gray-200 py-2.5 pl-10 pr-4 text-xs text-gray-800 placeholder-gray-400 outline-none transition focus:border-[#014162] focus:ring-1 focus:ring-[#014162]"
+                    />
+                  </div>
+                  {errors.newPassword && (
+                    <p className="mt-1 text-xs text-red-500">{errors.newPassword.message}</p>
+                  )}
+                </div>
+              )}
+            />
 
             {/* Confirm New Password */}
-            <div>
-              <label className="block text-xs font-medium text-gray-700 mb-1">
-                Confirm New Password
-              </label>
-              <div className="relative w-full">
-                <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400">
-                  <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </span>
-                <input
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder="*************"
-                  required
-                  className="w-full rounded-xl border border-gray-200 py-2.5 pl-10 pr-4 text-xs text-gray-800 placeholder-gray-400 outline-none transition focus:border-[#014162] focus:ring-1 focus:ring-[#014162]"
-                />
-              </div>
-            </div>
+            <Controller
+              name="confirmPassword"
+              control={control}
+              render={({ field }) => (
+                <div>
+                  <label className="block text-xs font-medium text-gray-700 mb-1">
+                    Confirm New Password
+                  </label>
+                  <div className="relative w-full">
+                    <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400">
+                      <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </span>
+                    <input
+                      {...field}
+                      type="password"
+                      placeholder="*************"
+                      className="w-full rounded-xl border border-gray-200 py-2.5 pl-10 pr-4 text-xs text-gray-800 placeholder-gray-400 outline-none transition focus:border-[#014162] focus:ring-1 focus:ring-[#014162]"
+                    />
+                  </div>
+                  {errors.confirmPassword && (
+                    <p className="mt-1 text-xs text-red-500">{errors.confirmPassword.message}</p>
+                  )}
+                </div>
+              )}
+            />
 
             {/* Password Validation Hints */}
             <div className="pt-1 space-y-2">
