@@ -6,18 +6,18 @@ import { Star, ShoppingCart } from 'lucide-react'
 
 const DailyBest = ({ title }: Propstype) => {
   return (
-    <section className="w-full">
+    <section className="w-full max-w-[85%] mx-auto ">
       <main className="container mx-auto flex flex-col gap-8 px-4">
-      <div className="flex w-full flex-col items-start gap-2 xs:gap-3 sm:flex-row sm:items-center sm:gap-4 md:gap-10">
-  <h2 className="text-xl font-bold text-app-linera xs:text-2xl md:ml-10 md:text-3xl">
-    {title}
-  </h2>
-  <p className="w-full rounded-md bg-app-error px-2 py-2 text-center text-xs whitespace-nowrap text-white xs:text-sm sm:w-auto sm:px-4 sm:text-base md:px-10 md:text-[18px] lg:px-10">
-    Expires in: 10 : 56 : 21
-  </p>
-</div>
-        <div className="Product flex flex-wrap justify-center gap-3.5">
-          {hotDealsProducts.map((product, index) => {
+        <div className="flex w-full flex-col items-start gap-2 xs:gap-3 sm:flex-row sm:items-center sm:gap-4 md:gap-10">
+          <h2 className="text-xl font-bold text-app-linera xs:text-2xl md:ml-10 md:text-3xl">
+            {title}
+          </h2>
+          <p className="w-full rounded-md bg-app-error px-2 py-2 text-center text-xs whitespace-nowrap text-white xs:text-sm sm:w-auto sm:px-4 sm:text-base md:px-10 md:text-[18px] lg:px-10">
+            Expires in: 10 : 56 : 21
+          </p>
+        </div>
+        <div className="Product flex flex-wrap justify-center gap-4 ">
+          {hotDealsProducts.slice(0, 6).map((product, index) => {
             const discount = Math.round(
               ((product.originalPrice - product.price) / product.originalPrice) * 100,
             )
@@ -29,7 +29,7 @@ const DailyBest = ({ title }: Propstype) => {
             return (
               <div
                 key={`${product.id}-${index}`}
-                className="relative w-full max-w-55 overflow-hidden rounded-xl p-0 shadow-sm"
+                className="relative w-full max-w-60 overflow-hidden rounded-xl p-0 shadow-sm"
               >
                 {discount > 0 && (
                   <div className="absolute left-0 top-3 z-10 rounded-r-full rounded-l-none bg-[#D8A94E] px-3 py-1 text-xs font-semibold text-white hover:bg-[#D8A94E]">

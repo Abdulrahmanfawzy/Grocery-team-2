@@ -4,7 +4,7 @@ import Links from '@/components/ui/Link'
 
 const PromoBanners = () => {
   return (
-    <section className="container mx-auto  py-6 md:py-8">
+    <section className="container mx-auto max-w-7xl py-6 md:py-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
         {/* Left Banner - Free Delivery */}
         <div className="relative bg-[#BCB8B1] rounded-xl overflow-hidden min-h-56 sm:min-h-64 md:min-h-80 flex items-center">

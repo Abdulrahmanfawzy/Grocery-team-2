@@ -19,10 +19,10 @@ const NewProducts = ({title} : Propstype) => {
   )
 
   return (
-    <section className="w-full">
+    <section className="w-full max-w-[85%] mx-auto  ">
       <main className="container mx-auto flex flex-col gap-4 px-4">
       <div className="flex w-full flex-col gap-3 md:flex-row md:items-center md:justify-between">
-  <h2 className="text-2xl font-bold text-app-linera md:ml-10 md:text-3xl">
+  <h2 className="text-2xl font-bold text-app-linera md:ml-8 md:text-3xl">
     {title}
   </h2>
   <Tabs
