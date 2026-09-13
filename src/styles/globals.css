@@ -19,6 +19,7 @@
   --color-app-error: var(--app-error);
   --font-zain: var(--font-zain);
   --font-sora: 'Sora', sans-serif;
+  --background-app-web: var(--app-hovered-web);
 
   --color-app-main: var(--app-main);
   /* Shadcn vars */
@@ -83,6 +84,7 @@
   --app-hovered: #f7fcff;
   --app-linera: #253d4e;
   --app-error: #F35244;
+  --app-web: 
 
   /* Shadcn */
   --background: oklch(1 0 0);

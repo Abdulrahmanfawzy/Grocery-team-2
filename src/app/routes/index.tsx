@@ -9,6 +9,7 @@ import ForgotPassword from '@/auth/ForgotPassword';
 import VerifyOTP from '@/auth/VerifyOTP';
 import ResetPassword from '@/auth/ResetPassword';
 import Signup from '@/auth/Signup';
+import Category from '@/features/category';
 
 export function AppRoutes() {
   return (
@@ -25,6 +26,7 @@ export function AppRoutes() {
       <Route element={<MainLayout />}>
         <Route index element={<HomePage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path='/categories' element={<Category/> }/>
       </Route>
     </Routes>
   );
