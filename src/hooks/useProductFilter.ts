@@ -3,7 +3,6 @@ import { useSearchParams } from 'react-router-dom';
 export function useProductFilter() {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // قراءة القيم الحالية من الـ URL أو إرجاع القيم الافتراضية
   const searchQuery = searchParams.get('search') || '';
   const selectedCategory = searchParams.get('category') || 'all';
   const minPrice = searchParams.get('minPrice') || '';
@@ -12,7 +11,6 @@ export function useProductFilter() {
   const selectedProductType = searchParams.get('productType') || 'all';
   const availableProduct = searchParams.get('availableProduct') || 'all';   
 
-  // دوال لتحديث الـ URL لكل فلتر بدون إعادة تحميل الصفحة
   const setSearch = (query: string) => {
     setSearchParams((prev) => {
       if (query) prev.set('search', query);
@@ -68,19 +66,19 @@ const setPriceRange = (min: string, max: string) => {
   };
 
   return {
-    searchQuery,
-    selectedCategory,
-    selectedBrand,
-    selectedProductType,
-    availableProduct,
-    minPrice,
-    maxPrice,
-    setSearch,
-    setCategory,
-    setProductType,
-    setPriceRange,
-    setBrand,
-    setAvailableProduct
+  searchQuery, 
+  selectedCategory, 
+  selectedBrand, 
+  selectedProductType, 
+  setCategory, 
+  setBrand, 
+  setProductType, 
+  availableProduct, 
+  setAvailableProduct, 
+  setSearch,  
+  minPrice, 
+  maxPrice,
+  setPriceRange 
     
   };
 }

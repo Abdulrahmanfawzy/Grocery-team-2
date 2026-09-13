@@ -1,13 +1,12 @@
     import { useProductFilter } from '@/hooks/useProductFilter';
-    import { SearchIcon } from 'lucide-react';
     import { Link } from 'react-router-dom'; 
     import { useState, useEffect } from 'react';
     // 1. Mock Data تجريبية
     const MOCK_PRODUCTS = [
-    { id: 1, name: 'Fresh Peach', category: 'Vegetables', price: 32, image: '/Banner.jpg', brand: 'Brand A' , productType: 'Fresh' , availableProduct: 'in stock'   },
-    { id: 2, name: 'Organic Pineapple', category: 'Fruits', price: 45, image: '/Banner.jpg', brand: 'Brand B' , productType: 'Organic' , availableProduct: 'out of stock'  },
-    { id: 3, name: 'Fresh Broccoli', category: 'Vegetables', price: 20, image: '/Banner.jpg', brand: 'Brand C' , productType: 'frozen' , availableProduct: 'in stock'  },
-    { id: 4, name: 'Fresh Milk', category: 'Dairy', price: 15, image: '/Banner.jpg', brand: 'Brand A'  , productType: 'Fresh' , availableProduct: 'out of stock'  },
+    { id: 1, name: 'Fresh Peach', category: 'Vegetables', price: 32, image: '/Banner.jpg', brand: 'Brand A' , productType: 'Fresh' , availableProduct: 'in stock' , oldPrice: 100 },
+    { id: 2, name: 'Organic Pineapple', category: 'Fruits', price: 45, image: '/Banner.jpg', brand: 'Brand B' , productType: 'Organic' , availableProduct: 'out of stock', oldPrice: 200  },
+    { id: 3, name: 'Fresh Broccoli', category: 'Vegetables', price: 20, image: '/Banner.jpg', brand: 'Brand C' , productType: 'frozen' , availableProduct: 'in stock', oldPrice: 50  },
+    { id: 4, name: 'Fresh Milk', category: 'DaZiry', price: 15, image: '/Banner.jpg', brand: 'Brand A'  , productType: 'Fresh' , availableProduct: 'out of stock', oldPrice: 150  },
     ];
 
     export default function ProductList() {
@@ -210,7 +209,7 @@ return (
         </aside>
 
         {/* Products Grid Section */}
-        <main className="w-full lg:w-3/4">
+        <main className="w-full  lg:w-3/4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProducts.length > 0 ? (
               filteredProducts.map((product) => (
@@ -225,12 +224,15 @@ return (
                         In Stock
                       </span>
                     </div>
+                    <Link to={`/ProductDetails/${product.id}`}>
                     <img
                       src={product.image}
                       alt={product.name}
                       className="h-48 w-full object-cover rounded-md"
                     />
+                    </Link>
                   </div>
+                  
 
                   {/* Product Info */}
                   <div className="my-3">
