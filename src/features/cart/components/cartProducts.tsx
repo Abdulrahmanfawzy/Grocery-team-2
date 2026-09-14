@@ -29,14 +29,27 @@ const CartProducts = ({ products, setProducts }: CartProductsProps) => {
         : [];
     }));
   };
+  const deEcreaseQuantity = (productId: number) => {
+  setProducts((currentProducts) =>
+    currentProducts
+      .filter((product) => {
+        return product.id !== productId || product.quantity > 1;
+      })
+      .map((product) => {
+        return product.id === productId
+          ? { ...product, quantity: product.quantity - 1 }
+          : product;
+      })
+  );
+};
 
   return (
     <div className="w-full">
       <h4 className="text-[20px] font-medium text-app-black mt-6">Products In Cart</h4>
 
-      <div className="mt-4 w-full rounded-md border border-gray-200 bg-white">
-         <ScrollArea className="h-[300px] w-full sm:h-[420px]">
-        <div className="my-3 grid grid-cols-1 sm:grid-cols-2">
+      <div className="mt-4 w-full rounded-md border border-gray-200 bg-white ">
+         <ScrollArea className="h-37.5 w-full sm:h-75">
+        <div className=" my-3 grid grid-cols-1 sm:grid-cols-2">
           {/* Product */}
 
           {products.map((product, index) => (

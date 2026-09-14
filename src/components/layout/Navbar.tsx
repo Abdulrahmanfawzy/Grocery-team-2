@@ -54,7 +54,7 @@ export const Navbar = ({ name, Logo }: Propstype) => {
         <div className="flex shrink-0 items-center gap-4">
           <div className="hidden items-center gap-4 lg:flex">
             <Link
-              to="/profiledashboard"
+              to="/cart"
               className="flex items-center gap-2 text-sm font-medium text-gray-700 transition-colors hover:text-[#112D4E] sm:text-base"
             >
               <ShoppingCart className="h-5 w-5 text-[#112D4E]" />
