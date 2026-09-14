@@ -60,10 +60,12 @@ export const Navbar = ({ name, Logo }: Propstype) => {
               <ShoppingCart className="h-5 w-5 text-[#112D4E]" />
               My Cart
             </Link>
-            <Button size="lg" variant="primary" className="flex items-center gap-2">
-              <img src={ProfileIcon} alt="" width={20} />
-              <span>{name ? `${name} Profile` : 'Profile'}</span>
-            </Button>
+            <Link to="/profile">
+             <Button size="lg" variant="primary" className="flex items-center gap-2">
+             <img src={ProfileIcon} alt="" width={20} />
+             <span>{name ? `${name} Profile` : 'Profile'}</span>
+             </Button>
+           </Link>
           </div>
 
           {/* Mobile Menu Trigger */}
@@ -118,14 +120,16 @@ export const Navbar = ({ name, Logo }: Propstype) => {
                   </div>
 
                   {/* Profile Button */}
-                  <div className="mt-auto border-t pt-4">
-                    <Button
-                      variant="primary"
-                      className="flex w-full items-center justify-center gap-2 py-2.5"
-                    >
-                      <img src={ProfileIcon} alt="" className="h-4 w-4" />
-                      <span>{name ? `${name} Profile` : 'Profile'}</span>
-                    </Button>
+                  <div className="mt-auto border-t pt-4"> 
+                  <Link to="/profile" onClick={() => setOpen(false)}>
+                      <Button
+                        variant="primary"
+                       className="flex w-full items-center justify-center gap-2 py-2.5"
+                        >
+                       <img src={ProfileIcon} alt="" className="h-4 w-4" />
+                       <span>{name ? `${name} Profile` : 'Profile'}</span>
+                          </Button>
+                           </Link>
                   </div>
                 </div>
               </DrawerContent>
