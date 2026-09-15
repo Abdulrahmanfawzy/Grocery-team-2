@@ -2,6 +2,7 @@
 import {Footer, Navbar} from './index';
 import Logo from '@/assets/Logo.svg'
 import { Outlet } from 'react-router-dom';
+import { Toaster } from 'sonner';
 
 
 interface MainLayoutProps {
@@ -19,6 +20,7 @@ export function MainLayout({  }: MainLayoutProps) {
         </main>
       </div>
       <Footer Logo={Logo}  />
+       <Toaster />
     </div>
   )
 }

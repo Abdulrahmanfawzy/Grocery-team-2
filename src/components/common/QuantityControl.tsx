@@ -22,7 +22,7 @@ const QuantityControl = ({
         type="button"
         aria-label={`Decrease quantity of ${name}`}
         onClick={onDecrease}
-        className="flex h-6 w-6 items-center justify-center rounded hover:bg-app-hovered"
+        className="flex h-6 w-6 items-center justify-center rounded hover:bg-app-hovered cursor-pointer"
       >
         <img src={removeIcon} alt="" className="h-4 w-3.5" />
       </button>
@@ -35,7 +35,7 @@ const QuantityControl = ({
         type="button"
         aria-label={`Increase quantity of ${name}`}
         onClick={onIncrease}
-        className="flex h-6 w-6 items-center justify-center rounded hover:bg-app-hovered"
+        className="flex h-6 w-6 items-center justify-center rounded hover:bg-app-hovered cursor-pointer"
       >
         <img src={addIcon} alt="" className="h-4 w-3.5" />
       </button>

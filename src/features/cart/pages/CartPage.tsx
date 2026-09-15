@@ -4,7 +4,7 @@ import CartSummary from "../components/cartSummary"
 import MoreToExplore from "../components/moreToExplore";
 import CartSkeleton from "../components/cartSkeleton";
 import EmptyCart from "../components/emptyCart";
-import useGetCart from "../hooks/useGetProducts";
+import useGetCart from "../hooks/useGetCarts";
 
 
 
