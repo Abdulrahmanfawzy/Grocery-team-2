@@ -6,6 +6,7 @@ import MoreToExplore from "../components/moreToExplore";
 // import { cartProducts } from "../data/products";
 import useGetProducts from "../hooks/useGetProducts";
 import CartSkeleton from "../components/cartSkeleton";
+import EmptyCart from "../components/emptyCart";
 
 
 
@@ -31,6 +32,9 @@ if (isError) {
       ...item.product,
       quantity: item.quantity,
     })) ?? [];
+  if (products.length === 0) {
+  return <EmptyCart />;
+}  
   return (
     <div className="bg-white min-h-screen">
       <div className="container mx-auto px-6 sm:px-10 lg:px-16 py-6 lg:py-10 ">
