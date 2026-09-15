@@ -20,12 +20,12 @@ export const Navbar = ({ name, Logo }: Propstype) => {
   const [open, setOpen] = useState(false)
 
   return (
-    <header className="w-full bg-white font-sans pt-6 lg:pt-10">
-      <nav className="box-container flex justify-between items-center gap-4 border-b border-gray-100 px-4 pb-6 sm:px-6 lg:gap-6 lg:pb-10">
+    <header className="w-full max-w-[85%] mx-auto bg-white font-sans pt-4 lg:pt-4">
+      <nav className="container mx-auto flex justify-between items-center gap-4 border-b border-gray-100 px-4 pb-4 sm:px-6 lg:gap-6 ">
         {/* Logo + Desktop Navigation Links */}
         <div className="flex shrink-0 items-center gap-6 lg:gap-8">
-          <Link to="/" className="flex items-center">
-            <img src={Logo} alt="GroceryPlus Logo" className="h-8 w-auto sm:h-10" />
+          <Link to="/" className="flex items-center pb-2.5">
+            <img src={Logo} alt="GroceryPlus Logo" width={140} className="h-8  sm:h-10" />
           </Link>
           <div className="hidden items-center gap-4 lg:flex">
             <Link
@@ -57,10 +57,10 @@ export const Navbar = ({ name, Logo }: Propstype) => {
               to="/profiledashboard"
               className="flex items-center gap-2 text-sm font-medium text-gray-700 transition-colors hover:text-[#112D4E] sm:text-base"
             >
-              <ShoppingCart className="h-5 w-5 text-[#112D4E]" />
+              <ShoppingCart className="h-5 w-4 text-[#112D4E]" />
               My Cart
             </Link>
-            <Button size="lg" variant="primary" className="flex items-center gap-2">
+            <Button size="md" variant="primary" className="flex items-center gap-2">
               <img src={ProfileIcon} alt="" width={20} />
               <span>{name ? `${name} Profile` : 'Profile'}</span>
             </Button>
