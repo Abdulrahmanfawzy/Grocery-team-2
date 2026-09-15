@@ -14,6 +14,7 @@ import Signup from '@/features/auth/Signup';
 // Profile pages Imports
 import { PersonalInfo } from '@/profile/PersonalInfo';
 
+
 export function AppRoutes() {
   return (
     <Routes>
@@ -27,14 +28,15 @@ export function AppRoutes() {
 
       {/* Main App Routes (With Navbar & Footer) */}
       <Route element={<MainLayout />}>
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/cart" element={<CartPage />} />
-
         {/* Profile Routes */}
         <Route path="/profile" element={<ProfileLayout />}>
           <Route index element={<PersonalInfo />} />
           <Route path="personal-info" element={<PersonalInfo />} />
         </Route>
+        <Route index element={<HomePage />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/productlist" element={<ProductList />} />
+        <Route path="/productdetails/:id" element={<ProductDetails />} />
       </Route>
     </Routes>
   );
