@@ -1,21 +1,10 @@
 
-import axios from 'axios'
-
 import { useQuery } from '@tanstack/react-query';
-import type { CartResponse } from '../types/cart.types';
+import { fetchProductsCart } from '../services/cart.service';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL?.trim();
-const TOKEN = import.meta.env.VITE_TOKEN?.trim();
 
-const fetchProductsCart=async():Promise<CartResponse>=>{
-    const result = await axios.get<CartResponse>(`${BASE_URL}/cart`, {
-    headers: {
-      Authorization: `Bearer ${TOKEN}`,
-    },
-  });
-    return result.data;
-}
-const useGetProducts=()=> {
+
+const useGetCart=()=> {
     const query=useQuery({
         queryKey:['cart'],
         queryFn:fetchProductsCart
@@ -24,4 +13,4 @@ const useGetProducts=()=> {
   return query;
 }
 
-export default useGetProducts
+export default useGetCart

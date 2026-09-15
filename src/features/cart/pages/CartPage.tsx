@@ -1,12 +1,10 @@
 import { Breadcrumb } from "@/components/common/Breadcrumb"
 import CartProducts from "../components/cartProducts"
 import CartSummary from "../components/cartSummary"
-// import { useEffect, useState } from "react";
 import MoreToExplore from "../components/moreToExplore";
-// import { cartProducts } from "../data/products";
-import useGetProducts from "../hooks/useGetProducts";
 import CartSkeleton from "../components/cartSkeleton";
 import EmptyCart from "../components/emptyCart";
+import useGetCart from "../hooks/useGetProducts";
 
 
 
@@ -16,7 +14,7 @@ const CartPage = () => {
   data: cartData,
   isLoading,
   isError,
-} = useGetProducts();
+} = useGetCart();
 
 if (isLoading) {
   return <CartSkeleton/>;
@@ -32,6 +30,7 @@ if (isError) {
       ...item.product,
       quantity: item.quantity,
     })) ?? [];
+
   if (products.length === 0) {
   return <EmptyCart />;
 }  
