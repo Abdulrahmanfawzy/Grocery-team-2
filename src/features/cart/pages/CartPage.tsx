@@ -5,6 +5,7 @@ import CartSummary from "../components/cartSummary"
 import MoreToExplore from "../components/moreToExplore";
 // import { cartProducts } from "../data/products";
 import useGetProducts from "../hooks/useGetProducts";
+import CartSkeleton from "../components/cartSkeleton";
 
 
 
@@ -17,7 +18,7 @@ const CartPage = () => {
 } = useGetProducts();
 
 if (isLoading) {
-  return <div>Loading...</div>;
+  return <CartSkeleton/>;
 }
 
 if (isError) {
