@@ -1,14 +1,19 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { MainLayout } from '@/components/layout';
-import CartPage from '@/features/cart/pages/CartPage';
-import HomePage from '@/features/home';
 
 // Auth Pages Imports
-import Login from '@/auth/Login';
-import ForgotPassword from '@/auth/ForgotPassword';
-import VerifyOTP from '@/auth/VerifyOTP';
-import ResetPassword from '@/auth/ResetPassword';
-import Signup from '@/auth/Signup';
+import Signup from '@/features/auth/Signup';
+import Login from '@/features/auth/Login';
+import ForgotPassword from '@/features/auth/ForgotPassword';
+import VerifyOTP from '@/features/auth/VerifyOTP';
+import ResetPassword from '@/features/auth/ResetPassword';
+import ProductList from '@/pages/ProductList';
+import ProductDetails from '@/pages/ProductDetails';
+import Category from '@/features/category';
+import HomePage from '@/features/home';
+import ProfileLayout from '@/components/layout/ProfileLayout';
+import { PersonalInfo } from '@/profile/PersonalInfo';
+import CartPage from '@/features/cart/pages/CartPage';
 
 export function AppRoutes() {
   return (
@@ -23,8 +28,15 @@ export function AppRoutes() {
 
       {/* Main App Routes (Inside MainLayout) */}
       <Route element={<MainLayout />}>
+        <Route path="/profile" element={<ProfileLayout />}>
+          <Route index element={<PersonalInfo />} />
+          <Route path="personal-info" element={<PersonalInfo />} />
+        </Route>
         <Route index element={<HomePage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/productlist" element={<ProductList />} />
+        <Route path="/productdetails/:id" element={<ProductDetails />} />
+        <Route path='/categories' element={<Category />} />
       </Route>
     </Routes>
   );
