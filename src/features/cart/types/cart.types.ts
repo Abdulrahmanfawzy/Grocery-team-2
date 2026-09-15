@@ -34,3 +34,10 @@ export interface CartResponse {
   message: string;
   data: Cart;
 }
+
+// post item to cart
+export interface CartItemResponse{
+  success:boolean;
+  message:string;
+  data:Omit<CartItem,"product">;
+}

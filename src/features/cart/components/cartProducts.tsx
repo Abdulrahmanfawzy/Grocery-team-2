@@ -1,22 +1,22 @@
 
 
 
+import useAddCartItem from "../hooks/useAddCartItem";
 import type { Product } from "../types/cart.types";
 import ProductCard from "./productCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
 interface CartProductsProps {
   products: Product[];
-  // setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
+
 }
 const CartProducts = ({ products }: CartProductsProps) => {
- 
+   const {mutate,isPending} = useAddCartItem();
 
   const increaseQuantity = (productId: number) => {
-    // setProducts((currentProducts) => currentProducts.map((product) => (
-    //   product.id === productId
-    //     ? { ...product, quantity: product.quantity + 1 }
-    //     : product
-    // )));
+   mutate({
+    productId,
+    quantity:1
+   })
   };
 
   const decreaseQuantity = (productId: number) => {
@@ -63,7 +63,7 @@ const CartProducts = ({ products }: CartProductsProps) => {
               // inStock={product.inStock}
               showColumnDivider={index % 2 === 0}
               removeBottomBorder={index >= products.length - 2}
-              onIncrease={() => {}}
+              onIncrease={() => increaseQuantity(product.id)}
               onDecrease={() => {}}
             />
           ))}

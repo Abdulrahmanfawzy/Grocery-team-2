@@ -32,9 +32,9 @@ const ProductCard = ({
                 <div className="flex w-full min-w-0 items-center gap-2 p-1">
                     {/* Image */}
 
-                    <div className="flex w-[88px] shrink-0 flex-col items-center justify-center gap-2 sm:w-[100px]">
+                    <div className="flex w-22 shrink-0 flex-col items-center justify-center gap-2 sm:w-25">
                         <img src={image} alt={name} className="h-14 w-14 object-contain sm:h-16 sm:w-16" />
-                        <div className="flex h-[26px] max-w-full items-center justify-center rounded bg-app-black px-1 py-2 rounded-tl-[15px] rounded-br-[15px]">
+                        <div className="flex h-6.5 max-w-full items-center justify-center rounded bg-app-black px-1 py-2 rounded-tl-[15px] rounded-br-[15px]">
                             <p className="p-1 text-center text-[12px] leading-[150%] text-app-hovered font-regular">
                                 {/* {inStock ? "In Stock" : "Out Of Stock"} */}In Stock
                             </p>
@@ -58,7 +58,7 @@ const ProductCard = ({
                                 onDecrease={onDecrease} />
                             {/* Price */}
                             <p className="text-[18px] font-medium text-app-black sm:text-[20px]">
-                                £ {Number(price) * quantity}
+                                £ {(Number(price) * quantity).toFixed(2)}
                             </p>
                         </div>
 
