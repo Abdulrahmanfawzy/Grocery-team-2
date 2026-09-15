@@ -1,46 +1,47 @@
 
 
-import type { Product } from "../types/product.types";
+
+import type { Product } from "../types/cart.types";
 import ProductCard from "./productCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
 interface CartProductsProps {
   products: Product[];
-  setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
+  // setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
 }
-const CartProducts = ({ products, setProducts }: CartProductsProps) => {
+const CartProducts = ({ products }: CartProductsProps) => {
  
 
   const increaseQuantity = (productId: number) => {
-    setProducts((currentProducts) => currentProducts.map((product) => (
-      product.id === productId
-        ? { ...product, quantity: product.quantity + 1 }
-        : product
-    )));
+    // setProducts((currentProducts) => currentProducts.map((product) => (
+    //   product.id === productId
+    //     ? { ...product, quantity: product.quantity + 1 }
+    //     : product
+    // )));
   };
 
   const decreaseQuantity = (productId: number) => {
-    setProducts((currentProducts) => currentProducts.flatMap((product) => {
-      if (product.id !== productId) {
-        return [product];
-      }
+    // setProducts((currentProducts) => currentProducts.flatMap((product) => {
+    //   if (product.id !== productId) {
+    //     return [product];
+    //   }
 
-      return product.quantity > 1
-        ? [{ ...product, quantity: product.quantity - 1 }]
-        : [];
-    }));
+    //   return product.quantity > 1
+    //     ? [{ ...product, quantity: product.quantity - 1 }]
+    //     : [];
+    // }));
   };
   const deEcreaseQuantity = (productId: number) => {
-  setProducts((currentProducts) =>
-    currentProducts
-      .filter((product) => {
-        return product.id !== productId || product.quantity > 1;
-      })
-      .map((product) => {
-        return product.id === productId
-          ? { ...product, quantity: product.quantity - 1 }
-          : product;
-      })
-  );
+  // setProducts((currentProducts) =>
+  //   currentProducts
+  //     .filter((product) => {
+  //       return product.id !== productId || product.quantity > 1;
+  //     })
+  //     .map((product) => {
+  //       return product.id === productId
+  //         ? { ...product, quantity: product.quantity - 1 }
+  //         : product;
+  //     })
+  // );
 };
 
   return (
@@ -59,11 +60,11 @@ const CartProducts = ({ products, setProducts }: CartProductsProps) => {
               price={product.price}
               quantity={product.quantity}
               image={product.image}
-              inStock={product.inStock}
+              // inStock={product.inStock}
               showColumnDivider={index % 2 === 0}
               removeBottomBorder={index >= products.length - 2}
-              onIncrease={() => increaseQuantity(product.id)}
-              onDecrease={() => decreaseQuantity(product.id)}
+              onIncrease={() => {}}
+              onDecrease={() => {}}
             />
           ))}
         

@@ -1,10 +1,10 @@
-export interface Product {
+export interface ProductDummy {
   id: number;
   name: string;
   price: number;
   quantity: number;
   image: string;
-  inStock: boolean;
+  inStock?: boolean;
   oldPrice?: number;
   rating?: number;
   isNew?: boolean;

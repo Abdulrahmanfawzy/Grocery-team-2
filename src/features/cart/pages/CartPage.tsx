@@ -1,17 +1,35 @@
 import { Breadcrumb } from "@/components/common/Breadcrumb"
 import CartProducts from "../components/cartProducts"
 import CartSummary from "../components/cartSummary"
-import { useState } from "react";
-import sasuImage from "../../../assets/sagu.svg"
-import eggImage from "../../../assets/Eggs.svg"
+// import { useEffect, useState } from "react";
 import MoreToExplore from "../components/moreToExplore";
-import { cartProducts } from "../data/products";
+// import { cartProducts } from "../data/products";
+import useGetProducts from "../hooks/useGetProducts";
 
 
 
 
 const CartPage = () => {
-  const [products, setProducts] = useState(cartProducts);
+ const {
+  data: cartData,
+  isLoading,
+  isError,
+} = useGetProducts();
+
+if (isLoading) {
+  return <div>Loading...</div>;
+}
+
+if (isError) {
+  return <div>Something went wrong</div>;
+}
+
+  // Products coming from API
+  const products =
+    cartData?.data.items.map((item) => ({
+      ...item.product,
+      quantity: item.quantity,
+    })) ?? [];
   return (
     <div className="bg-white min-h-screen">
       <div className="container mx-auto px-6 sm:px-10 lg:px-16 py-6 lg:py-10 ">
@@ -23,9 +41,8 @@ const CartPage = () => {
         />
 
         {/* prodcuts cart */}
-        <CartProducts
-          products={products}
-          setProducts={setProducts}
+        <CartProducts products={products}
+          // setProducts={setProductsDummy}
         />
 
         {/* product sumamry */}
