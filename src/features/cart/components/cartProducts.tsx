@@ -2,7 +2,7 @@
 
 
 import useAddCartItem from "../hooks/useAddCartItem";
-import type { CartProduct, Product } from "../types/cart.types";
+import type { CartProduct } from "../types/cart.types";
 import ProductCard from "./productCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
 interface CartProductsProps {
@@ -38,11 +38,9 @@ const CartProducts = ({ products }: CartProductsProps) => {
               price={product.price}
               quantity={product.quantity}
               image={product.image}
-              // inStock={product.inStock}
               showColumnDivider={index % 2 === 0}
               removeBottomBorder={index >= products.length - 2}
-              onIncrease={() => increaseQuantity(product.id)}
-              // onDecrease={() => {}}
+              
             />
           ))}
         

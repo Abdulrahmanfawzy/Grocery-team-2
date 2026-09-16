@@ -16,9 +16,10 @@ const useUpdateCartItem=()=>{
         })=> updateCartItem(cartItemId,quantity),
         
 
-        onSuccess:(data)=>{
+        // adding async & await to be sutiable with spinner in loading 
+        onSuccess:async (data)=>{
             toast.success(data.message);
-            queryClient.invalidateQueries({
+            await queryClient.invalidateQueries({
                 queryKey:['cart'],
             })
         },

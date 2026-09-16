@@ -15,9 +15,9 @@ const useAddCartItem=()=>{
             quantity:number;
         })=> addCartItem(productId,quantity),
 
-        onSuccess:(data)=>{
+        onSuccess:async(data)=>{
             toast.success(data.message);
-            queryClient.invalidateQueries({
+            await queryClient.invalidateQueries({
                 queryKey:['cart'],
             })
         },
