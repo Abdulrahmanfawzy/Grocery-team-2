@@ -29,6 +29,7 @@ if (isError) {
     cartData?.data.items.map((item) => ({
       ...item.product,
       quantity: item.quantity,
+      cartItemId:item.id
     })) ?? [];
 
   if (products.length === 0) {

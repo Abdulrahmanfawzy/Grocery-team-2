@@ -2,11 +2,11 @@
 
 
 import useAddCartItem from "../hooks/useAddCartItem";
-import type { Product } from "../types/cart.types";
+import type { CartProduct, Product } from "../types/cart.types";
 import ProductCard from "./productCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
 interface CartProductsProps {
-  products: Product[];
+  products: CartProduct[];
 
 }
 const CartProducts = ({ products }: CartProductsProps) => {
@@ -19,18 +19,7 @@ const CartProducts = ({ products }: CartProductsProps) => {
    })
   };
 
-  const decreaseQuantity = (productId: number) => {
-    // setProducts((currentProducts) => currentProducts.flatMap((product) => {
-    //   if (product.id !== productId) {
-    //     return [product];
-    //   }
 
-    //   return product.quantity > 1
-    //     ? [{ ...product, quantity: product.quantity - 1 }]
-    //     : [];
-    // }));
-  };
- 
 
   return (
     <div className="w-full">
@@ -44,6 +33,7 @@ const CartProducts = ({ products }: CartProductsProps) => {
           {products.map((product, index) => (
             <ProductCard
               key={product.id}
+              cartItemId={product.cartItemId}
               name={product.name}
               price={product.price}
               quantity={product.quantity}
@@ -52,7 +42,7 @@ const CartProducts = ({ products }: CartProductsProps) => {
               showColumnDivider={index % 2 === 0}
               removeBottomBorder={index >= products.length - 2}
               onIncrease={() => increaseQuantity(product.id)}
-              onDecrease={() => {}}
+              // onDecrease={() => {}}
             />
           ))}
         

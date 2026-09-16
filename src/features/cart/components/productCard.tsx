@@ -1,7 +1,7 @@
 
 import QuantityControl from "@/components/common/QuantityControl";
 interface ProductCardProps {
-    
+    cartItemId:number;
     name: string;
     price: string;
     quantity: number;
@@ -10,10 +10,10 @@ interface ProductCardProps {
     showColumnDivider?: boolean;
     removeBottomBorder?: boolean;
     onIncrease: () => void;
-    onDecrease: () => void;
+    // onDecrease: () => void;
 }
 
-const ProductCard = ({
+const ProductCard = ({cartItemId,
     name,
     price,
     quantity,
@@ -22,7 +22,7 @@ const ProductCard = ({
     showColumnDivider = false,
     removeBottomBorder = false,
     onIncrease,
-    onDecrease,
+    // onDecrease,
 }: ProductCardProps) => {
     return (
         <div className={`relative flex min-h-27.5 w-full items-center gap-1 border-b border-[#D1D5DC] px-3 py-5 sm:px-4 ${showColumnDivider ? "after:absolute after:right-0 after:top-4 after:bottom-4 after:hidden after:w-px after:bg-[#D1D5DC] sm:after:block" : ""} ${removeBottomBorder ? "border-b-0" : ""}`}>
@@ -53,10 +53,13 @@ const ProductCard = ({
 
                             {/* Quantity  */}
                             {/* make it reusable */}
-                            <QuantityControl quantity={quantity}
+                            <QuantityControl 
+                                cartItemId={cartItemId}
+                                quantity={quantity}
                                 name={name}
                                 onIncrease={onIncrease}
-                                onDecrease={onDecrease} />
+                                // onDecrease={onDecrease} 
+                                />
                             {/* Price */}
                             <p className="text-[18px] font-medium text-app-black sm:text-[20px]">
                                 £ {(Number(price) * quantity).toFixed(2)}

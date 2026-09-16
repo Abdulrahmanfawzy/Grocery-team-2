@@ -2,26 +2,40 @@
 
 import trashIcon from "../../assets/remove.svg"
 import addIcon from "../../assets/plus.svg"
-import { Minus, Trash2 } from "lucide-react";
+import { Minus } from "lucide-react";
+import useUpdateCartItem from "@/features/cart/hooks/useUpdateCartItem";
 interface QuantityControlProps {
+  cartItemId:number;
   quantity: number;
   name: string;
-  onDecrease: () => void;
+  // onDecrease: () => void;
   onIncrease: () => void;
 }
 
 const QuantityControl = ({
+  cartItemId,
   quantity,
   name,
-  onDecrease,
+  // onDecrease,
   onIncrease,
 }: QuantityControlProps) => {
+     const {mutate,isPending,isError} = useUpdateCartItem();
+
+  const DecreaseQuantity = () => {
+   if (quantity > 1) {
+      mutate({
+        cartItemId,
+        quantity: quantity - 1,
+      });
+    }
+  };
+
   return (
     <div className="flex shrink-0 items-center justify-between gap-2 rounded-[10px] border border-app-silver p-2 sm:gap-4">
       <button
         type="button"
         aria-label={`Decrease quantity of ${name}`}
-        onClick={onDecrease}
+        onClick={()=>DecreaseQuantity()}
         className="flex h-6 w-6 items-center justify-center rounded hover:bg-app-hovered cursor-pointer"
       >
         {quantity === 1 ?  <img src={trashIcon} alt="" className="h-4 w-3.5" /> : <Minus className="h-4 w-3.5 text-app-main " />}
