@@ -44,10 +44,8 @@ if (isError) {
             , { label: "Cart" }]}
 
         />
-
         {/* prodcuts cart */}
         <CartProducts products={products}
-          // setProducts={setProductsDummy}
         />
 
         {/* product sumamry */}

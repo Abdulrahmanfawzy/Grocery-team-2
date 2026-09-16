@@ -15,9 +15,19 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer'
+import useGetCart from '@/features/cart/hooks/useGetCarts'
 
 export const Navbar = ({ name, Logo }: Propstype) => {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
+  // --------- calculate total quantity ---------------------------------
+  const { data } = useGetCart();
+
+  const totalItems =
+    data?.data.items.reduce(
+      (total, item) => total + item.quantity,
+      0
+    ) ?? 0;
+  // ------------------------------------------
 
   return (
     <header className="w-full max-w-[85%] mx-auto bg-white font-sans pt-4 lg:pt-4">
@@ -57,7 +67,17 @@ export const Navbar = ({ name, Logo }: Propstype) => {
               to="/cart"
               className="flex items-center gap-2 text-sm font-medium text-gray-700 transition-colors hover:text-[#112D4E] sm:text-base"
             >
-              <ShoppingCart className="h-5 w-4 text-[#112D4E]" />
+
+              {/* ----------display total count of all items inside cart---------- */}
+              <div className="relative">
+                <ShoppingCart className="h-5 w-5 text-[#112D4E]" />
+                
+                {totalItems > 0 && (
+                  <span className="absolute -right-2 -top-2 flex min-h-5 min-w-5 items-center justify-center rounded-full bg-[#112D4E] px-1 text-[10px] font-semibold leading-none text-white ring-2 ring-white">
+                    {totalItems > 99 ? "99+" : totalItems}
+                  </span>
+                )}
+              </div>
               My Cart
             </Link>
             <Link to="/profile">
@@ -113,7 +133,16 @@ export const Navbar = ({ name, Logo }: Propstype) => {
                         onClick={() => setOpen(false)}
                         className="flex items-center gap-3 border-b border-gray-50 py-2 text-sm font-medium hover:text-app-main"
                       >
-                        <ShoppingCart className="h-5 w-5 text-app-main" />
+                        {/* ----------display total count of all items inside cart in mobile---------- */}
+                        <div className="relative">
+                          <ShoppingCart className="h-5 w-5 text-[#112D4E]" />
+
+                          {totalItems > 0 && (
+                            <span className="absolute -right-2 -top-2 flex min-h-5 min-w-5 items-center justify-center rounded-full bg-[#112D4E] px-1 text-[10px] font-semibold leading-none text-white ring-2 ring-white">
+                              {totalItems > 99 ? "99+" : totalItems}
+                            </span>
+                          )}
+                        </div>
                         My Cart
                       </Link>
                     </div>

@@ -1,5 +1,6 @@
+import api from "@/utils/axios";
 import type { CartItemResponse, CartResponse } from "../types/cart.types";
-import api from "../utils/axios";
+
 
 export const fetchProductsCart=async():Promise<CartResponse>=>{
     const result = await api.get<CartResponse>("/cart");
