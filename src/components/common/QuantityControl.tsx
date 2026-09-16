@@ -1,8 +1,8 @@
 
 
-import removeIcon from "../../assets/remove.svg"
+import trashIcon from "../../assets/remove.svg"
 import addIcon from "../../assets/plus.svg"
-
+import { Minus, Trash2 } from "lucide-react";
 interface QuantityControlProps {
   quantity: number;
   name: string;
@@ -24,7 +24,7 @@ const QuantityControl = ({
         onClick={onDecrease}
         className="flex h-6 w-6 items-center justify-center rounded hover:bg-app-hovered cursor-pointer"
       >
-        <img src={removeIcon} alt="" className="h-4 w-3.5" />
+        {quantity === 1 ?  <img src={trashIcon} alt="" className="h-4 w-3.5" /> : <Minus className="h-4 w-3.5 text-app-main " />}
       </button>
 
       <span className="px-2 text-[16px] font-regular leading-[120%] text-app-black sm:px-4 sm:text-[18px]">

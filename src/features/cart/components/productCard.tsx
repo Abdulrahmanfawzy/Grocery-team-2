@@ -34,11 +34,12 @@ const ProductCard = ({
 
                     <div className="flex w-22 shrink-0 flex-col items-center justify-center gap-2 sm:w-25">
                         <img src={image} alt={name} className="h-14 w-14 object-contain sm:h-16 sm:w-16" />
-                        <div className="flex h-6.5 max-w-full items-center justify-center rounded bg-app-black px-1 py-2 rounded-tl-[15px] rounded-br-[15px]">
+                        {/* Remove in stock from ui */}
+                        {/* <div className="flex h-6.5 max-w-full items-center justify-center rounded bg-app-black px-1 py-2 rounded-tl-[15px] rounded-br-[15px]">
                             <p className="p-1 text-center text-[12px] leading-[150%] text-app-hovered font-regular">
-                                {/* {inStock ? "In Stock" : "Out Of Stock"} */}In Stock
+                                {inStock ? "In Stock" : "Out Of Stock"}
                             </p>
-                        </div>
+                        </div> */}
 
                     </div>
 

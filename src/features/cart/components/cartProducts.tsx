@@ -10,7 +10,7 @@ interface CartProductsProps {
 
 }
 const CartProducts = ({ products }: CartProductsProps) => {
-   const {mutate,isPending} = useAddCartItem();
+   const {mutate,isPending,isError} = useAddCartItem();
 
   const increaseQuantity = (productId: number) => {
    mutate({
@@ -30,19 +30,7 @@ const CartProducts = ({ products }: CartProductsProps) => {
     //     : [];
     // }));
   };
-  const deEcreaseQuantity = (productId: number) => {
-  // setProducts((currentProducts) =>
-  //   currentProducts
-  //     .filter((product) => {
-  //       return product.id !== productId || product.quantity > 1;
-  //     })
-  //     .map((product) => {
-  //       return product.id === productId
-  //         ? { ...product, quantity: product.quantity - 1 }
-  //         : product;
-  //     })
-  // );
-};
+ 
 
   return (
     <div className="w-full">
