@@ -20,6 +20,9 @@ const useAddCartItem=()=>{
             queryClient.invalidateQueries({
                 queryKey:['cart'],
             })
+        },
+        onError:(err)=>{
+            toast.error(err.message)
         }
     })
 }
