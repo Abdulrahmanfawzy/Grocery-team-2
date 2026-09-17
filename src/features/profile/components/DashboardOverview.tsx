@@ -3,13 +3,10 @@ import orderIcon from "../../../assets/orderIcon.svg"
 import pointStar from "../../../assets/pointStar.svg"
 import dollarIcon from "../../../assets/dollar.svg"
 
-interface IProps {
 
 
-
-}
-
-const DashboardOverview=({}:IProps)=> {
+const DashboardOverview=()=> {
+  
   return (
     <div className="bg-app-main w-full max-w-186 border-[0.8px] rounded-[8px] p-8 shadow-[-1px_0px_4px_0px_#01416240] gap-2 ">
         <h2 className="font-medium text-[#F7FCFF] text-[24px] leading-[150%] ">Welcome back, Sarah! </h2>
