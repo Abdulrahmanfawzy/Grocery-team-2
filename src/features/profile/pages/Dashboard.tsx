@@ -1,6 +1,6 @@
-import DashboardActivity from "../components/DashboardActivity"
-import DashboardOverview from "../components/DashboardOverview"
-import ShoppingInsights from "../components/ShoppingInsights"
+import DashboardActivity from "../components/Dashboard/DashboardActivity"
+import DashboardOverview from "../components/Dashboard/DashboardOverview"
+import ShoppingInsights from "../components/Dashboard/ShoppingInsights"
 
 interface IProps {
 
@@ -15,6 +15,7 @@ const Dashboard = ({ }: IProps) => {
       <DashboardOverview />
       <DashboardActivity />
       <ShoppingInsights />
+       
     </div>
   )
 }

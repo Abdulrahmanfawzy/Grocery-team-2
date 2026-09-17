@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { SidebarProfile } from '../components/SidebarProfile';
+import { SidebarProfile } from '../components/Dashboard/SidebarProfile';
 
 
 export default function ProfileLayout() {

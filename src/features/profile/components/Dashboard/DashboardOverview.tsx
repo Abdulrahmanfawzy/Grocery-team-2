@@ -1,7 +1,7 @@
 import WelcomeCard from "./WelcomeCard"
-import orderIcon from "../../../assets/orderIcon.svg"
-import pointStar from "../../../assets/pointStar.svg"
-import dollarIcon from "../../../assets/dollar.svg"
+import orderIcon from "../../../../assets/orderIcon.svg"
+import pointStar from "../../../../assets/pointStar.svg"
+import dollarIcon from "../../../../assets/dollar.svg"
 
 
 
