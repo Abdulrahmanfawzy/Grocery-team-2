@@ -1,21 +1,23 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { addCartItem } from "../services/cart.service"
+import { updateCartItem } from "../services/cart.service"
 import { toast } from "sonner";
 
 
 
-const useAddCartItem=()=>{
+const useUpdateCartItem=()=>{
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn:({
-            productId,
+            cartItemId,
             quantity,
         }:{
-            productId:number;
+            cartItemId:number;
             quantity:number;
-        })=> addCartItem(productId,quantity),
+        })=> updateCartItem(cartItemId,quantity),
+        
 
-        onSuccess:async(data)=>{
+        // adding async & await to be sutiable with spinner in loading 
+        onSuccess:async (data)=>{
             toast.success(data.message);
             await queryClient.invalidateQueries({
                 queryKey:['cart'],
@@ -26,4 +28,4 @@ const useAddCartItem=()=>{
         }
     })
 }
-export default useAddCartItem;
+export default useUpdateCartItem;
