@@ -1,5 +1,6 @@
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { MainLayout } from '@/components/layout';
+import AuthGuard from '@/features/auth/components/AuthGuard';
 
 // Auth Pages Imports
 import Signup from '@/features/auth/Signup';
@@ -18,13 +19,14 @@ import CartPage from '@/features/cart/pages/CartPage';
 export function AppRoutes() {
   return (
     <Routes>
-      {/* Auth Routes (Without MainLayout) */}
-      <Route path="/" element={<Navigate to="/signup" replace />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/forgot-password" element={<ForgotPassword />} />
-      <Route path="/verify-otp" element={<VerifyOTP />} />
-      <Route path="/reset-password" element={<ResetPassword />} />
+      {/* Auth Routes — guarded, redirect to home if already logged in */}
+      <Route element={<AuthGuard />}>
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/verify-otp" element={<VerifyOTP />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+      </Route>
 
       {/* Main App Routes (Inside MainLayout) */}
       <Route element={<MainLayout />}>

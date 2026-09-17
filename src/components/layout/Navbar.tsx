@@ -19,6 +19,8 @@ import useGetCart from '@/features/cart/hooks/useGetCarts'
 
 export const Navbar = ({ name, Logo }: Propstype) => {
   const [open, setOpen] = useState(false);
+  const [token] = useState(() => localStorage.getItem('auth_token'));
+
   // --------- calculate total quantity ---------------------------------
   const { data } = useGetCart();
 
@@ -80,10 +82,10 @@ export const Navbar = ({ name, Logo }: Propstype) => {
               </div>
               My Cart
             </Link>
-            <Link to="/profile">
+            <Link to={token ? '/profile' : '/login'}>
               <Button size="lg" variant="primary" className="flex items-center gap-2">
                 <img src={ProfileIcon} alt="" width={20} />
-                <span>{name ? `${name} Profile` : 'Profile'}</span>
+                <span>{token ? (name ? `${name} Profile` : 'Profile') : 'Login'}</span>
               </Button>
             </Link>
           </div>
@@ -150,13 +152,13 @@ export const Navbar = ({ name, Logo }: Propstype) => {
 
                   {/* Profile Button */}
                   <div className="mt-auto border-t pt-4">
-                    <Link to="/profile" onClick={() => setOpen(false)}>
+                    <Link to={token ? '/profile' : '/login'} onClick={() => setOpen(false)}>
                       <Button
                         variant="primary"
                         className="flex w-full items-center justify-center gap-2 py-2.5"
                       >
                         <img src={ProfileIcon} alt="" className="h-4 w-4" />
-                        <span>{name ? `${name} Profile` : 'Profile'}</span>
+                        <span>{token ? (name ? `${name} Profile` : 'Profile') : 'Login'}</span>
                       </Button>
                     </Link>
                   </div>

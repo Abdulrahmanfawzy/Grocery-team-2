@@ -1,8 +1,10 @@
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { toast } from 'sonner';
+import { useLogin, handleApiError } from './hooks/useAuth';
 
 const loginSchema = z.object({
   email: z
@@ -18,6 +20,9 @@ const loginSchema = z.object({
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function Login() {
+  const navigate = useNavigate();
+  const loginMutation = useLogin();
+
   const {
     control,
     handleSubmit,
@@ -31,16 +36,31 @@ export default function Login() {
   });
 
   const onSubmit = (data: LoginFormValues) => {
-    console.log('Logging in with:', data);
+    loginMutation.mutate(
+      {
+        email: data.email,
+        password: data.password,
+        device_name: 'web',
+      },
+      {
+        onSuccess: (response) => {
+          toast.success(response.message);
+          localStorage.setItem('auth_token', response.token);
+          localStorage.setItem('auth_user', JSON.stringify(response.user));
+          navigate('/');
+        },
+        onError: handleApiError,
+      }
+    );
   };
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-gray-100 p-4 font-sans">
       {/* Main Container */}
       <div className="flex w-full max-w-[1000px] overflow-hidden rounded-3xl bg-white shadow-md">
-        
+
         {/* Left Side */}
-        <div 
+        <div
           className="hidden w-1/2 items-center justify-center bg-[#003B5C] bg-cover bg-center p-8 lg:flex"
           style={{ backgroundImage: "url('/Rectangle 1.svg')" }}
         >
@@ -48,7 +68,7 @@ export default function Login() {
 
         {/* Right Side */}
         <div className="w-full p-8 sm:p-10 lg:w-1/2">
-          
+
           {/* Header */}
           <div className="mb-6 ">
             <h1 className="font-sora text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
@@ -128,9 +148,10 @@ export default function Login() {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full rounded-sm bg-gradient-to-b from-[#014162]/50 via-[#014162]/80 to-[#014162] py-3 text-base font-medium text-white shadow-md transition hover:bg-[#01304a] active:scale-[0.99]"
+              disabled={loginMutation.isPending}
+              className="w-full rounded-sm bg-gradient-to-b from-[#014162]/50 via-[#014162]/80 to-[#014162] py-3 text-base font-medium text-white shadow-md transition hover:bg-[#01304a] active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Continue
+              {loginMutation.isPending ? 'Logging in...' : 'Continue'}
             </button>
           </form>
 

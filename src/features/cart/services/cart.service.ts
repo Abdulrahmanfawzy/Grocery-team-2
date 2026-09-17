@@ -3,8 +3,20 @@ import type { CartItemResponse, CartResponse } from "../types/cart.types";
 
 
 export const fetchProductsCart=async():Promise<CartResponse>=>{
-    const result = await api.get<CartResponse>("/cart");
-    return result.data;
+    try {
+        const result = await api.get<CartResponse>("/cart");
+        return result.data;
+    } catch (error) {
+        const err = error as Error & { status?: number };
+        if (err.status === 404) {
+            return {
+                success: true,
+                message: "Cart is empty",
+                data: { id: 0, user_id: 0, created_at: "", items: [] },
+            };
+        }
+        throw error;
+    }
 }
 export const addCartItem = async(productId:number,quantity:number):Promise<CartItemResponse>=>{
     const result = await api.post('/cart/items',{
