@@ -1,4 +1,4 @@
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { MainLayout } from '@/components/layout';
 
 // Auth Pages Imports
@@ -19,7 +19,6 @@ export function AppRoutes() {
   return (
     <Routes>
       {/* Auth Routes (Without MainLayout) */}
-      <Route path="/" element={<Navigate to="/signup" replace />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
