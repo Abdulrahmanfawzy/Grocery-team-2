@@ -3,10 +3,10 @@ import {
   CircleDollarSign,
   Star,
 } from "lucide-react";
-import arrowUp from "../../../assets/Up-arrow.svg"
+import arrowUp from "../../../../assets/Up-arrow.svg"
 import InsightCard from "./InsightsCard";
-import dollarIcon from "../../../assets/dollar.svg"
-import orderIcon from "../../../assets/orderIcon.svg"
+import dollarIcon from "../../../../assets/dollar.svg"
+import orderIcon from "../../../../assets/orderIcon.svg"
 
 
 
