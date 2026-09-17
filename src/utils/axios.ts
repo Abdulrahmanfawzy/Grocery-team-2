@@ -32,8 +32,10 @@ api.interceptors.response.use(
       const validationErrors = errorData.errors;
 
       const apiError = new Error(message) as Error & {
+        status?: number;
         errors?: Record<string, string[]>;
       };
+      apiError.status = error.response.status;
       apiError.errors = validationErrors;
 
       return Promise.reject(apiError);
