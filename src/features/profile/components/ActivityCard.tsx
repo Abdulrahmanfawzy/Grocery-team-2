@@ -41,7 +41,7 @@ const ActivityCard = ({
                     <Button
                         size="sm"
                         variant="secondary"
-                        className="text-app-main! hover:text-white px-1.5 py-2"
+                        className="text-app-main! hover:text-white! px-1.5 py-2"
                         onClick={onView}
                     >
                         {topButtonText

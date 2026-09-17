@@ -31,7 +31,7 @@ const DashboardActivity=({}:IProps)=> {
     },];
 
   return (
-    <div className="mt-4 max-w-186 flex items-center justify-between gap-2 ">
+    <div className="mt-12 max-w-186 flex items-center justify-between gap-2 ">
        
 
       {activities.map((activity, index) => ( <ActivityCard key={index} {...activity} /> ))}
