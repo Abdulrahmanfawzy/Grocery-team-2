@@ -12,19 +12,19 @@ import {
   Settings 
 } from 'lucide-react';
 
-export function Sidebar() {
+export function SidebarProfile() {
   const location = useLocation();
 
   const menuItems = [
-    { label: 'Dashboard', path: '/profile/dashboard', icon: LayoutDashboard },
-    { label: 'Personal Info', path: '/profile', icon: User },
+    { label: 'Dashboard', path: '/profile', icon: LayoutDashboard },
+    { label: 'Personal Info', path: '/profile/personal-info', icon: User },
     { label: 'Payment & Wallet', path: '/profile/payment', icon: Wallet },
-    { label: 'Order History', path: '/profile/orders', icon: ShoppingBag },
+    { label: 'Order History', path: '/profile/order-history', icon: ShoppingBag },
     { label: 'Smart Lists', path: '/profile/smart-lists', icon: ListOrdered },
     { label: 'Addresses', path: '/profile/addresses', icon: MapPin },
-    { label: 'Security & Login', path: '/profile/security', icon: ShieldCheck },
-    { label: 'Loyalty & Rewards', path: '/profile/loyalty', icon: Award },
-    { label: 'Help & Support', path: '/profile/help', icon: HelpCircle },
+    { label: 'Security & Login', path: '/profile/security-login', icon: ShieldCheck },
+    { label: 'Loyalty & Rewards', path: '/profile/loyalty-rewards', icon: Award },
+    { label: 'Help & Support', path: '/profile/help-support', icon: HelpCircle },
     { label: 'Settings', path: '/profile/settings', icon: Settings },
   ];
 
@@ -60,8 +60,7 @@ export function Sidebar() {
         {menuItems.map((item) => {
           const Icon = item.icon;
           const isActive =
-            location.pathname === item.path ||
-            (item.path === '/profile' && location.pathname === '/profile/personal-info');
+            location.pathname === item.path;
 
           return (
             <Link
