@@ -25,7 +25,7 @@ const TopPurchaseItem=({  image,
 
       {/* Info */}
       <div className="flex flex-1 flex-col gap-1">
-        <p className="text-[14px] font-medium text-[#0A0A0A]">
+        <p className="wrap-break-word text-[14px] font-medium text-[#0A0A0A]">
           {name}
         </p>
 
@@ -35,7 +35,7 @@ const TopPurchaseItem=({  image,
       </div>
 
       {/* Button */}
-      <Button size="sm" onClick={onClick}>
+      <Button size="sm" className="shrink-0" onClick={onClick}>
         Add
       </Button>
     </div>

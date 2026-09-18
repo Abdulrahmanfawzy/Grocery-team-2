@@ -59,7 +59,7 @@ const categories = [
 
 const ShoppingInsights = () => {
   return (
-    <section className="w-full mt-4 rounded-[8px] border-[0.8px] border-[#D1D5DC] bg-white py-6 px-6">
+    <section className="mt-4 w-full rounded-[8px] border-[0.8px] border-[#D1D5DC] bg-white px-4 py-5 sm:px-6 sm:py-6">
       {/* Title */}
       <h2 className="mb-3 text-[20px] font-medium text-app-main leading-[150%]">
         Your Shopping Insights
@@ -89,7 +89,7 @@ const ShoppingInsights = () => {
           {categories.map((category) => (
             <div
               key={category.name}
-              className="flex items-center gap-2"
+              className="flex min-w-0 items-center gap-2"
             >
               {/* Progress Bar */}
               <div className="h-2 flex-1 overflow-hidden rounded-full bg-[#D9DEE2]">
@@ -104,12 +104,12 @@ const ShoppingInsights = () => {
               </div>
 
               {/* Category Name */}
-              <span className=" text-[16px] text-[#014162]">
+              <span className="w-20 shrink-0 truncate text-[12px] text-[#014162] sm:w-28 sm:text-[16px]">
                 {category.name}
               </span>
 
               {/* Percentage */}
-              <span className=" text-[16px] font-medium text-[#014162]">
+              <span className="w-16 shrink-0 text-right text-[12px] font-medium text-[#014162] sm:w-20 sm:text-[16px]">
                 ({category.percentage}%)
               </span>
             </div>

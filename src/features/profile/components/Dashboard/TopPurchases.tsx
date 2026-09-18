@@ -28,7 +28,7 @@ const TopPurchases = ({ }: IProps) => {
   },
 ];
     return (
-        <div className="border border-[#D1D5DC] rounded-[8px] p-6 gap-4 ">
+        <div className="rounded-[8px] border border-[#D1D5DC] p-4 sm:p-6">
             {/* heading */}
 
             <div className="flex items-center justify-between border-b border-b-[#D1D5DC] pb-4 ">

@@ -12,12 +12,12 @@ interface IProps {
 
 const Dashboard = ({ }: IProps) => {
   return (
-    <div className="max-w-186 flex flex-col gap-4">
+    <div className="flex w-full max-w-186 flex-col gap-4">
 
       <DashboardOverview />
       <DashboardActivity />
       <ShoppingInsights />
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 mt-4">
+      <div className="mt-4 grid grid-cols-1 gap-5 md:grid-cols-2">
         <RecentOrders />
         <TopPurchases />
         

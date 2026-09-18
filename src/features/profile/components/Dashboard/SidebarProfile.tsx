@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import tagIcon from "../../../../assets/tag.svg"
 import { 
   LayoutDashboard, 
   User, 
@@ -71,7 +72,7 @@ export function SidebarProfile() {
 
           <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-white rounded-full shadow-sm flex items-center justify-center">
             <img
-              src=""
+              src={tagIcon}
               alt="Gold Member"
               className="w-3 h-3 object-contain"
             />

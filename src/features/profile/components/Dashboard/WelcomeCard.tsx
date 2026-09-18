@@ -13,7 +13,7 @@ const WelcomeCard = ({
  
 }: WelcomeCardProps) => {
   return (
-    <div className=" w-full
+    <div className="w-full
         rounded-[10px]
         border-[1.5px]
         border-solid
@@ -22,7 +22,7 @@ const WelcomeCard = ({
         shadow-[2px_2px_4px_0_var(--silver)]
         transition duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02]  hover:shadow-[0_10px_24px_rgba(1,65,98,0.25)] motion-reduce:transition-none motion-reduce:hover:transform-none
         
-        sm:max-w-[190.86px]">
+        min-w-0">
       <img
         src={icon}
         alt=""

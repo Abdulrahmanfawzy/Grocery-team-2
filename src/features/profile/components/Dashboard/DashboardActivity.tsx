@@ -1,4 +1,4 @@
-import { Button } from "@/components"
+
 import { ShoppingCart} from 'lucide-react'
 import ActivityCard from "./ActivityCard";
 
@@ -31,7 +31,7 @@ const DashboardActivity=({}:IProps)=> {
     },];
 
   return (
-    <div className="mt-12 max-w-186 flex items-center justify-between gap-2 ">
+    <div className="mt-8 grid w-full max-w-186 grid-cols-1 gap-3 sm:grid-cols-2 md:mt-12">
        
 
       {activities.map((activity, index) => ( <ActivityCard key={index} {...activity} /> ))}
