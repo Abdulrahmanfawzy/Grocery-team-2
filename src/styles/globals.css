@@ -178,3 +178,56 @@
     @apply font-sans;
   }
 }
+
+
+/*  */
+@import "@fontsource-variable/geist";
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    background: #ffffff;
+    color: #374151;
+    font-family: "Geist", sans-serif;
+  }
+}
+
+@layer components {
+  .field-label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 9px;
+    font-weight: 500;
+    color: #6b7280;
+  }
+
+  .field-input {
+    width: 100%;
+    min-height: 28px;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    background: #fff;
+    padding: 5px 8px;
+    font-size: 9px;
+    color: #4b5563;
+    outline: none;
+    transition: border-color 150ms ease;
+  }
+
+  .field-input::placeholder {
+    color: #b4b8bf;
+  }
+
+  .field-input:focus {
+    border-color: #005174;
+  }
+}

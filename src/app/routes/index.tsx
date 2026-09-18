@@ -9,6 +9,9 @@ import ForgotPassword from '@/auth/ForgotPassword';
 import VerifyOTP from '@/auth/VerifyOTP';
 import ResetPassword from '@/auth/ResetPassword';
 import Signup from '@/auth/Signup';
+import { CheckoutPage } from '@/features/checkout/components/CheckoutPage';
+import { PaymentPage } from '@/features/checkout/components/PaymentPage';
+import { TrackOrderPage } from '@/features/checkout/components/TrackOrderPage';
 
 export function AppRoutes() {
   return (
@@ -25,6 +28,15 @@ export function AppRoutes() {
       <Route element={<MainLayout />}>
         <Route index element={<HomePage />} />
         <Route path="/cart" element={<CartPage />} />
+        {/* checkout routes */}
+        <Route path="/checkout/shipping" element={<CheckoutPage />} />
+        <Route path="/checkout/payment" element={<PaymentPage />} />
+        <Route path="/checkout/tracking" element={<TrackOrderPage />} />
+
+        <Route
+          path="*"
+          element={<Navigate to="/checkout/shipping" replace />}
+        />
       </Route>
     </Routes>
   );
