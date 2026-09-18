@@ -14,7 +14,7 @@ const CartSummary = ({ products }: CartSummaryProps) => {
     );
 
     return (
-        <div className="mt-8 mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div className="mt-6 mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
             <TotalAmount subtotal={subtotal} shipping={shipping} />
             <DeliveryDetails />
         </div>

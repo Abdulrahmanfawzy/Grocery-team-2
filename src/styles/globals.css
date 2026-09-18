@@ -7,7 +7,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-app-main: var(--app-main);
+  --color-app-main: var(--app-main);  
   --color-app-secondary: var(--app-secondary);
   --color-app-watermelon: var(--app-watermelon);
   --color-app-yellow: var(--app-yellow);
@@ -19,7 +19,6 @@
   --color-app-error: var(--app-error);
   --font-zain: var(--font-zain);
   --font-sora: 'Sora', sans-serif;
-  --background-app-web: var(--app-hovered-web);
 
   --color-app-main: var(--app-main);
   /* Shadcn vars */
@@ -71,8 +70,11 @@
 }
 
 :root {
+<<<<<<< Updated upstream
+=======
   --app-primary: #014162;
-  --app-secondary: #BCB8B1;
+  --app-secondary :#BCB8B1 ;
+>>>>>>> Stashed changes
   --app-main: oklch(59.754% 0.11465 170.114);
   --app-secondary: oklch(77.704% 0.17286 66.053);
   --app-watermelon: oklch(71.506% 0.17846 27.948);
@@ -86,10 +88,9 @@
   --app-hovered: #f7fcff;
   --app-linera: #253d4e;
   --app-error: #F35244;
-  --app-web:
 
-    /* Shadcn */
-    --background: oklch(1 0 0);
+  /* Shadcn */
+  --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -180,58 +181,5 @@
 
   html {
     @apply font-sans;
-  }
-}
-
-
-/*  */
-@import "@fontsource-variable/geist";
-@import "tailwindcss";
-
-@theme {
-  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
-}
-
-@layer base {
-  * {
-    box-sizing: border-box;
-  }
-
-  body {
-    margin: 0;
-    background: #ffffff;
-    color: #374151;
-    font-family: "Geist", sans-serif;
-  }
-}
-
-@layer components {
-  .field-label {
-    display: block;
-    margin-bottom: 4px;
-    font-size: 9px;
-    font-weight: 500;
-    color: #6b7280;
-  }
-
-  .field-input {
-    width: 100%;
-    min-height: 28px;
-    border: 1px solid #e5e7eb;
-    border-radius: 4px;
-    background: #fff;
-    padding: 5px 8px;
-    font-size: 9px;
-    color: #4b5563;
-    outline: none;
-    transition: border-color 150ms ease;
-  }
-
-  .field-input::placeholder {
-    color: #b4b8bf;
-  }
-
-  .field-input:focus {
-    border-color: #005174;
   }
 }

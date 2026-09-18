@@ -15,29 +15,17 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer'
-import useGetCart from '@/features/cart/hooks/useGetCarts'
 
 export const Navbar = ({ name, Logo }: Propstype) => {
-  const [open, setOpen] = useState(false);
-  const [token] = useState(() => localStorage.getItem('auth_token'));
-
-  // --------- calculate total quantity ---------------------------------
-  const { data } = useGetCart();
-
-  const totalItems =
-    data?.data.items.reduce(
-      (total, item) => total + item.quantity,
-      0
-    ) ?? 0;
-  // ------------------------------------------
+  const [open, setOpen] = useState(false)
 
   return (
-    <header className="w-full max-w-[85%] mx-auto bg-white font-sans pt-4 lg:pt-4">
-      <nav className="container mx-auto flex justify-between items-center gap-4 border-b border-gray-100 px-4 pb-4 sm:px-6 lg:gap-6 ">
+    <header className="w-full bg-white font-sans pt-6 lg:pt-10">
+      <nav className="box-container flex justify-between items-center gap-4 border-b border-gray-100 px-4 pb-6 sm:px-6 lg:gap-6 lg:pb-10">
         {/* Logo + Desktop Navigation Links */}
         <div className="flex shrink-0 items-center gap-6 lg:gap-8">
-          <Link to="/" className="flex items-center pb-2.5">
-            <img src={Logo} alt="GroceryPlus Logo" width={140} className="h-8  sm:h-10" />
+          <Link to="/" className="flex items-center">
+            <img src={Logo} alt="GroceryPlus Logo" className="h-8 w-auto sm:h-10" />
           </Link>
           <div className="hidden items-center gap-4 lg:flex">
             <Link
@@ -66,28 +54,18 @@ export const Navbar = ({ name, Logo }: Propstype) => {
         <div className="flex shrink-0 items-center gap-4">
           <div className="hidden items-center gap-4 lg:flex">
             <Link
-              to="/cart"
+              to="/profiledashboard"
               className="flex items-center gap-2 text-sm font-medium text-gray-700 transition-colors hover:text-[#112D4E] sm:text-base"
             >
-
-              {/* ----------display total count of all items inside cart---------- */}
-              <div className="relative">
-                <ShoppingCart className="h-5 w-5 text-[#112D4E]" />
-                
-                {totalItems > 0 && (
-                  <span className="absolute -right-2 -top-2 flex min-h-5 min-w-5 items-center justify-center rounded-full bg-[#112D4E] px-1 text-[10px] font-semibold leading-none text-white ring-2 ring-white">
-                    {totalItems > 99 ? "99+" : totalItems}
-                  </span>
-                )}
-              </div>
+              <ShoppingCart className="h-5 w-5 text-[#112D4E]" />
               My Cart
             </Link>
-            <Link to={token ? '/profile' : '/login'}>
-              <Button size="lg" variant="primary" className="flex items-center gap-2">
-                <img src={ProfileIcon} alt="" width={20} />
-                <span>{token ? (name ? `${name} Profile` : 'Profile') : 'Login'}</span>
-              </Button>
-            </Link>
+            <Link to="/profile">
+             <Button size="lg" variant="primary" className="flex items-center gap-2">
+             <img src={ProfileIcon} alt="" width={20} />
+             <span>{name ? `${name} Profile` : 'Profile'}</span>
+             </Button>
+           </Link>
           </div>
 
           {/* Mobile Menu Trigger */}
@@ -135,32 +113,23 @@ export const Navbar = ({ name, Logo }: Propstype) => {
                         onClick={() => setOpen(false)}
                         className="flex items-center gap-3 border-b border-gray-50 py-2 text-sm font-medium hover:text-app-main"
                       >
-                        {/* ----------display total count of all items inside cart in mobile---------- */}
-                        <div className="relative">
-                          <ShoppingCart className="h-5 w-5 text-[#112D4E]" />
-
-                          {totalItems > 0 && (
-                            <span className="absolute -right-2 -top-2 flex min-h-5 min-w-5 items-center justify-center rounded-full bg-[#112D4E] px-1 text-[10px] font-semibold leading-none text-white ring-2 ring-white">
-                              {totalItems > 99 ? "99+" : totalItems}
-                            </span>
-                          )}
-                        </div>
+                        <ShoppingCart className="h-5 w-5 text-app-main" />
                         My Cart
                       </Link>
                     </div>
                   </div>
 
                   {/* Profile Button */}
-                  <div className="mt-auto border-t pt-4">
-                    <Link to={token ? '/profile' : '/login'} onClick={() => setOpen(false)}>
+                  <div className="mt-auto border-t pt-4"> 
+                  <Link to="/profile" onClick={() => setOpen(false)}>
                       <Button
                         variant="primary"
-                        className="flex w-full items-center justify-center gap-2 py-2.5"
-                      >
-                        <img src={ProfileIcon} alt="" className="h-4 w-4" />
-                        <span>{token ? (name ? `${name} Profile` : 'Profile') : 'Login'}</span>
-                      </Button>
-                    </Link>
+                       className="flex w-full items-center justify-center gap-2 py-2.5"
+                        >
+                       <img src={ProfileIcon} alt="" className="h-4 w-4" />
+                       <span>{name ? `${name} Profile` : 'Profile'}</span>
+                          </Button>
+                           </Link>
                   </div>
                 </div>
               </DrawerContent>

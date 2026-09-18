@@ -8,7 +8,7 @@ const DeliveryDetails = () => {
                 Delivery Details & Promo Code
             </h3>
 
-            <div className="gap-4 flex flex-col h-53.5">
+            <div className="gap-4 flex flex-col h-[214px]">
                
 
                 <div className="rounded-[10px] border-[0.8px] border-[#DAD8D8] p-4  flex flex-col">
