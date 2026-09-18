@@ -8,9 +8,8 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
 import { Select } from '@/components/ui/Select';
+import { personalSchema, type PersonalInfoValues } from '../schemas/profile.schema';
 
-// Schema Import
-import { personalSchema, type PersonalInfoValues } from '@/features/auth/schemas/profile.schema';
 
 export function PersonalInfo() {
   const {
@@ -57,7 +56,7 @@ export function PersonalInfo() {
   ];
 
   return (
-    <div className="space-y-6 max-w-[755px]">
+    <div className="space-y-6 max-w-188.75">
       {/* 1. Page Header */}
       <div>
         <h1 className="text-[#000000] text-xl font-medium">Personal Information</h1>
