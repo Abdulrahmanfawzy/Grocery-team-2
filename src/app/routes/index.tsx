@@ -1,13 +1,8 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { MainLayout } from '@/components/layout';
-import AuthGuard from '@/features/auth/components/AuthGuard';
 
 // Auth Pages Imports
-import Login from '@/auth/Login';
-import ForgotPassword from '@/auth/ForgotPassword';
-import VerifyOTP from '@/auth/VerifyOTP';
-import ResetPassword from '@/auth/ResetPassword';
-import Signup from '@/auth/Signup';
+
 import { CheckoutPage } from '@/features/checkout/components/CheckoutPage';
 import { PaymentPage } from '@/features/checkout/components/PaymentPage';
 import { TrackOrderPage } from '@/features/checkout/components/TrackOrderPage';
@@ -23,6 +18,7 @@ import HomePage from '@/features/home';
 import ProfileLayout from '@/components/layout/ProfileLayout';
 import { PersonalInfo } from '@/profile/PersonalInfo';
 import CartPage from '@/features/cart/pages/CartPage';
+import AuthGuard from '@/features/auth/components/AuthGuard';
 
 export function AppRoutes() {
   return (
