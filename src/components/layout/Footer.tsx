@@ -8,9 +8,9 @@ import { footerSections } from '@/constants/LinksFooter'
 
 export const Footer = ({ Logo }: Propstype) => {
   return (
-    <footer className="w-full bg-hovered text-[#2C3E50] font-sans pt-12 ">
+    <footer className="w-full  bg-hovered text-[#2C3E50] font-sans pt-12 ">
       {/* Main Footer Content */}
-      <main className="container mx-auto px-6 sm:px-10 lg:px-16 pb-12">
+      <main className="container max-w-[85%] mx-auto  px-6 sm:px-10 lg:px-16 pb-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
           {/* Brand & Contact Section */}
           <div className="lg:col-span-5 flex flex-col space-y-6">
