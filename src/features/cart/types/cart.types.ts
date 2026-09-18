@@ -41,3 +41,9 @@ export interface CartItemResponse{
   message:string;
   data:Omit<CartItem,"product">;
 }
+
+
+
+export type CartProduct = Product & {
+  cartItemId: number;
+};
