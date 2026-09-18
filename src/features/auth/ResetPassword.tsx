@@ -1,8 +1,10 @@
 
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { toast } from 'sonner';
+import { useResetPassword, handleApiError } from './hooks/useAuth';
 
 const resetPasswordSchema = z
   .object({
@@ -22,6 +24,10 @@ type ResetPasswordFormValues = z.infer<typeof resetPasswordSchema>;
 
 export default function ResetPassword() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const challengeId = searchParams.get('challenge_id') || '';
+  const resetToken = searchParams.get('reset_token') || '';
+  const resetPasswordMutation = useResetPassword();
 
   const {
     control,
@@ -41,8 +47,21 @@ export default function ResetPassword() {
   const hasNumber = /\d/.test(watchNewPassword);
 
   const onSubmit = (data: ResetPasswordFormValues) => {
-    console.log('Password reset successfully with:', data);
-    navigate('/login');
+    resetPasswordMutation.mutate(
+      {
+        challenge_id: challengeId,
+        reset_token: resetToken,
+        password: data.newPassword,
+        password_confirmation: data.confirmPassword,
+      },
+      {
+        onSuccess: (response) => {
+          toast.success(response.message);
+          navigate('/login');
+        },
+        onError: handleApiError,
+      }
+    );
   };
 
   return (
@@ -165,9 +184,10 @@ export default function ResetPassword() {
             {/* Done Button */}
             <button
               type="submit"
-              className="mt-4 w-full rounded-xl bg-gradient-to-b from-[#014162]/80 via-[#014162]/95 to-[#014162] py-2.5 text-xs font-semibold text-white shadow-sm transition hover:opacity-95 active:scale-[0.99]"
+              disabled={resetPasswordMutation.isPending}
+              className="mt-4 w-full rounded-xl bg-gradient-to-b from-[#014162]/80 via-[#014162]/95 to-[#014162] py-2.5 text-xs font-semibold text-white shadow-sm transition hover:opacity-95 active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Done
+              {resetPasswordMutation.isPending ? 'Resetting...' : 'Done'}
             </button>
           </form>
 
