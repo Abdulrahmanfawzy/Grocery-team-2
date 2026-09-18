@@ -1,32 +1,45 @@
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { toast } from 'sonner';
+import { useRegister, handleApiError } from './hooks/useAuth';
 
-const signupSchema = z.object({
-  userName: z
-    .string()
-    .min(1, 'Username is required')
-    .min(3, 'Username must be at least 3 characters'),
-  email: z
-    .string()
-    .min(1, 'Email is required')
-    .email('Invalid email address'),
-  phone: z
-    .string()
-    .min(1, 'Phone number is required')
-    .min(8, 'Phone number must be at least 8 characters'),
-  password: z
-    .string()
-    .min(1, 'Password is required')
-    .min(6, 'Password must be at least 6 characters'),
-  remember: z.boolean().optional(),
-});
+const signupSchema = z
+  .object({
+    userName: z
+      .string()
+      .min(1, 'Username is required')
+      .min(3, 'Username must be at least 3 characters'),
+    email: z
+      .string()
+      .min(1, 'Email is required')
+      .email('Invalid email address'),
+    phone: z
+      .string()
+      .min(1, 'Phone number is required')
+      .min(8, 'Phone number must be at least 8 characters'),
+    password: z
+      .string()
+      .min(1, 'Password is required')
+      .min(6, 'Password must be at least 6 characters'),
+    confirmPassword: z.string().min(1, 'Please confirm your password'),
+    terms: z.boolean().refine((val) => val === true, {
+      message: 'You must agree to the terms',
+    }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  });
 
 type SignupFormValues = z.infer<typeof signupSchema>;
 
 export default function Signup() {
+  const navigate = useNavigate();
+  const registerMutation = useRegister();
+
   const {
     control,
     handleSubmit,
@@ -38,12 +51,30 @@ export default function Signup() {
       email: '',
       phone: '',
       password: '',
-      remember: false,
+      confirmPassword: '',
+      terms: false,
     },
   });
 
   const onSubmit = (data: SignupFormValues) => {
-    console.log('Signing up with:', data);
+    registerMutation.mutate(
+      {
+        name: data.userName,
+        email: data.email,
+        phone: data.phone,
+        password: data.password,
+        password_confirmation: data.confirmPassword,
+        terms: data.terms,
+        device_name: 'web',
+      },
+      {
+        onSuccess: (response) => {
+          toast.success(response.message);
+          navigate(`/verify-otp?challenge_id=${response.data.challenge_id}&type=register`);
+        },
+        onError: handleApiError,
+      }
+    );
   };
 
   return (
@@ -178,33 +209,63 @@ export default function Signup() {
               )}
             />
 
-            {/* Remember me */}
+            {/* Confirm Password Input */}
             <Controller
-              name="remember"
+              name="confirmPassword"
+              control={control}
+              render={({ field }) => (
+                <div>
+                  <div className="relative">
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400">
+                      <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </span>
+                    <input
+                      {...field}
+                      type="password"
+                      placeholder="Confirm Password"
+                      className="w-full rounded-sm border border-gray-200 py-2.5 pl-11 pr-4 text-xs text-gray-800 placeholder-gray-600 outline-none transition focus:border-[#014162] focus:ring-.5 focus:ring-[#014162]"
+                    />
+                  </div>
+                  {errors.confirmPassword && (
+                    <p className="mt-1 text-xs text-red-500">{errors.confirmPassword.message}</p>
+                  )}
+                </div>
+              )}
+            />
+
+            {/* Terms & Conditions */}
+            <Controller
+              name="terms"
               control={control}
               render={({ field: { value, onChange, ...field } }) => (
                 <div className="flex items-center gap-2 pt-1">
                   <input
                     {...field}
                     type="checkbox"
-                    id="remember"
+                    id="terms"
                     checked={value}
                     onChange={onChange}
                     className="h-4 w-4 rounded border-gray-300 text-[#014162] focus:ring-[#014162]"
                   />
-                  <label htmlFor="remember" className="cursor-pointer text-xs font-medium text-gray-600">
-                    Remember me
+                  <label htmlFor="terms" className="cursor-pointer text-xs font-medium text-gray-600">
+                    I agree to the Terms & Conditions
                   </label>
                 </div>
               )}
             />
+            {errors.terms && (
+              <p className="text-xs text-red-500">{errors.terms.message}</p>
+            )}
 
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full rounded-sm bg-gradient-to-b from-[#014162]/70 via-[#014162]/90 to-[#014162] py-2.5 text-sm font-medium text-white shadow-md transition hover:opacity-95 active:scale-[0.99]"
+              disabled={registerMutation.isPending}
+              className="w-full rounded-sm bg-gradient-to-b from-[#014162]/70 via-[#014162]/90 to-[#014162] py-2.5 text-sm font-medium text-white shadow-md transition hover:opacity-95 active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Continue
+              {registerMutation.isPending ? 'Creating account...' : 'Continue'}
             </button>
           </form>
 
