@@ -38,8 +38,9 @@ export function AppRoutes() {
       {/* Main App Routes (Inside MainLayout) */}
       <Route element={<MainLayout />}>
         <Route path="/profile" element={<ProfileLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="personal-info" element={<PersonalInfo />} />
+          <Route index element={<PersonalInfo />} />
+          <Route path="dashboard" element={<Dashboard />} />
+        
           <Route path="payment" element={<Payment />} />
           <Route path="order-history" element={<OrderHistory />} />
           <Route path="smart-lists" element={<SmartLists />} />

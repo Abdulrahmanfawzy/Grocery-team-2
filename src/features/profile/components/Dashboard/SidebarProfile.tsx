@@ -11,13 +11,15 @@ import {
   HelpCircle, 
   Settings 
 } from 'lucide-react';
+import { useState } from 'react';
 
 export function SidebarProfile() {
   const location = useLocation();
+   const [isOpen, setIsOpen] = useState(false);
 
   const menuItems = [
-    { label: 'Dashboard', path: '/profile', icon: LayoutDashboard },
-    { label: 'Personal Info', path: '/profile/personal-info', icon: User },
+    { label: 'Dashboard', path: '/profile/dashboard', icon: LayoutDashboard },
+    { label: 'Personal Info', path: '/profile', icon: User },
     { label: 'Payment & Wallet', path: '/profile/payment', icon: Wallet },
     { label: 'Order History', path: '/profile/order-history', icon: ShoppingBag },
     { label: 'Smart Lists', path: '/profile/smart-lists', icon: ListOrdered },
@@ -29,7 +31,34 @@ export function SidebarProfile() {
   ];
 
   return (
-    <aside className="w-64 bg-white border border-[#E5E7EB] rounded-xl p-5 shadow-sm h-fit">
+    <>
+      <button
+        onClick={() => setIsOpen(true)}
+        className="fixed right-[10%] top-[25%] z-30 flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-[0_2px_10px_rgba(0,0,0,0.18)] sm:hidden"
+      >
+        <span className="flex flex-col items-end gap-1">
+          <span className="h-0.5 w-4.5 rounded-full bg-[#014162]" />
+          <span className="h-0.5 w-4.5 rounded-full bg-[#014162]" />
+          <span className="h-0.5 w-3 rounded-full bg-[#014162]" />
+        </span>
+      </button>
+
+      {/* Overlay */}
+      {isOpen && (
+        <div
+          onClick={() => setIsOpen(false)}
+          className="fixed inset-0 z-40 bg-black/30 sm:hidden"
+        />
+      )}
+
+    
+   
+      <aside
+  className={`fixed left-0 top-0 z-50 h-full w-72.5 bg-white p-5 shadow-lg transition-transform sm:static sm:block sm:h-fit sm:w-64 sm:rounded-xl sm:border sm:border-[#E5E7EB] sm:p-5 sm:shadow-sm ${
+    isOpen ? "translate-x-0" : "-translate-x-full"
+  } sm:translate-x-0`}
+>
+
       {/* User Header Section matching Figma */}
       <div className="flex items-center gap-3 pb-5 border-b border-gray-100 mb-4">
        
@@ -79,5 +108,6 @@ export function SidebarProfile() {
         })}
       </nav>
     </aside>
+    </>
   );
 }
