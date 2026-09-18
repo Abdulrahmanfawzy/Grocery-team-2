@@ -10,14 +10,15 @@ const HomePage = () => {
   return (
     <div className='flex flex-col gap-20.5'>
       <HeroSection/>
-     <div className='flex flex-col gap-7'>
+     <div className='flex flex-col gap-7  '>
      <HotDeals title="Hot Deals"/>
      <NewProducts title="New Products"/>
      </div>
      <PromoBanners/>
      <ProductCard title="Daily Best Sells" />
-     <FeaturesSection/>
+      <FeaturesSection/>
     </div>
+    
   )
 }
 

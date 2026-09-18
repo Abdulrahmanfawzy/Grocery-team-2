@@ -2,6 +2,7 @@
 import {Footer, Navbar} from './index';
 import Logo from '@/assets/Logo.svg'
 import { Outlet } from 'react-router-dom';
+import { Toaster } from 'sonner';
 
 
 interface MainLayoutProps {
@@ -11,14 +12,15 @@ interface MainLayoutProps {
 export function MainLayout({  }: MainLayoutProps) {
 
   return (
-    <div className="flex min-h-screen flex-col bg-app-hovered ">
+    <div className="flex min-h-screen flex-col bg-app-hovered  mx-auto">
       <Navbar Logo ={Logo} />
       <div className="flex flex-1">
-        <main className="flex-1">
+        <main className="min-w-0 flex-1 ">
           <Outlet />
         </main>
       </div>
       <Footer Logo={Logo}  />
+       <Toaster />
     </div>
   )
 }
