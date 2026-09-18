@@ -1,5 +1,5 @@
-import { api } from "@/lib/axios";
 
+import api from "@/utils/axios";
 import type {
   Product,
   ProductFilters,

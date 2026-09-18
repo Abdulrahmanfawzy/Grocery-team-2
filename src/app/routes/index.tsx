@@ -6,7 +6,6 @@ import { MainLayout } from '@/components/layout';
 import { CheckoutPage } from '@/features/checkout/components/CheckoutPage';
 import { PaymentPage } from '@/features/checkout/components/PaymentPage';
 import { TrackOrderPage } from '@/features/checkout/components/TrackOrderPage';
-import Signup from '@/features/auth/Signup';
 import Login from '@/features/auth/Login';
 import ForgotPassword from '@/features/auth/ForgotPassword';
 import VerifyOTP from '@/features/auth/VerifyOTP';
@@ -28,6 +27,7 @@ import Security from '@/features/profile/pages/Security';
 import Loyalty from '@/features/profile/pages/Loyalty';
 import Help from '@/features/profile/pages/Help';
 import { Settings } from 'lucide-react';
+import Signup from '@/features/auth/Signup';
 
 export function AppRoutes() {
   return (
@@ -46,7 +46,7 @@ export function AppRoutes() {
         <Route path="/profile" element={<ProfileLayout />}>
           <Route index element={<PersonalInfo />} />
           <Route path="dashboard" element={<Dashboard />} />
-        
+
           <Route path="payment" element={<Payment />} />
           <Route path="order-history" element={<OrderHistory />} />
           <Route path="smart-lists" element={<SmartLists />} />

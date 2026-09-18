@@ -1,5 +1,5 @@
-import { api } from '../lib/axios';
 import type { CheckoutPayload, CheckoutResponse } from '@/features/checkout/types/checkout';
+import api from '@/utils/axios';
 
 
 export const checkoutApi = {
