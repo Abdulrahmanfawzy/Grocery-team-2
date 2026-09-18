@@ -97,7 +97,7 @@ export function SidebarProfile() {
               to={item.path}
               className={`flex items-center bg-[#F7FCFF] gap-3  px-3.5 py-2.5 rounded-sm  text-sm font-medium transition-all ${
                 isActive
-                  ? 'bg-gradient-to-b from-[#014162]/50 via-[#014162]/80 to-[#014162] text-white shadow-sm'
+                  ? 'bg-app-main text-white shadow-sm'
                   : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
               }`}
             >
