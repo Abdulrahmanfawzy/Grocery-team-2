@@ -1,3 +1,5 @@
+import OrderHistoryHeader from "../components/Orders/OrderHistoryHeader"
+
 interface IProps {
 
 
@@ -6,10 +8,10 @@ interface IProps {
 
 const OrderHistory=({}:IProps)=> {
   return (
-    <div>
-order his
-
-    </div>
+  
+    <main className="font-inter">
+      <OrderHistoryHeader />
+    </main>
   )
 }
 
