@@ -1,4 +1,5 @@
 import CardList from "../components/SmartList/CardList"
+import FavouriteItems from "../components/SmartList/FavouriteItems"
 import HeaderSection from "../components/SmartList/HeaderSection"
 import smartListData from "../data/smartListData"
 
@@ -10,9 +11,10 @@ interface IProps {
 
 const SmartLists = ({ }: IProps) => {
   return (
-    <section className="max-w-170.5 font-inter">
+    <section className="w-full max-w-170.5 font-inter">
       <HeaderSection />
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 mt-24">
+      {/* smart list */}
+      <div className="mt-8 mb-5 grid grid-cols-1 gap-4 sm:gap-6 md:mt-12 md:grid-cols-2">
         {smartListData.map((list) => (
           <CardList
             key={list.nameList}
@@ -23,6 +25,8 @@ const SmartLists = ({ }: IProps) => {
           />
         ))}
       </div>
+      {/* favourite Items */}
+      <FavouriteItems />
 
     </section>
   )
