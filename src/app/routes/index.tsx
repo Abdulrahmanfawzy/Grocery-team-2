@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { MainLayout } from '@/components/layout';
+import { ProtectedRoute } from '@/components/common';
 
 // Auth Pages Imports
 
@@ -57,7 +58,7 @@ export function AppRoutes() {
           <Route path="settings" element={<Settings />} />
         </Route>
         <Route index element={<HomePage />} />
-        <Route path="/cart" element={<CartPage />} />
+        <Route path="/cart" element={<ProtectedRoute><CartPage /></ProtectedRoute>} />
         {/* checkout routes */}
         <Route path="/checkout/shipping" element={<CheckoutPage />} />
         <Route path="/checkout/payment" element={<PaymentPage />} />
