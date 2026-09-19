@@ -1,5 +1,6 @@
 import dollarIcon from "../../../assets/dollar.svg"
 import OtherPaymentMethods from "../components/Payment/OtherPaymentMethods"
+import PaymentHistory from "../components/Payment/PaymentHistory"
 import SavedCards from "../components/Payment/SavedCards"
 interface IProps {
 
@@ -10,7 +11,7 @@ interface IProps {
 const Payment = ({ }: IProps) => {
   return (
     <>
-      <section className="flex w-full max-w-186 flex-col gap-5">
+      <section className="flex w-full max-w-186 flex-col gap-10">
         {/* header */}
         <div className="flex min-w-0 flex-col gap-2 sm:gap-3">
           <h2 className="text-lg font-medium leading-[150%] text-[#000000] sm:text-[20px]">Payment & Wallet</h2>
@@ -47,7 +48,8 @@ const Payment = ({ }: IProps) => {
             <OtherPaymentMethods />
           </div>
         </div>
-
+        {/* payment history */}
+        <PaymentHistory/>
 
       </section>
 
