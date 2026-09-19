@@ -1,3 +1,4 @@
+import { Button } from "@/components"
 import dollarIcon from "../../../assets/dollar.svg"
 import OtherPaymentMethods from "../components/Payment/OtherPaymentMethods"
 import PaymentHistory from "../components/Payment/PaymentHistory"
@@ -11,7 +12,7 @@ interface IProps {
 const Payment = ({ }: IProps) => {
   return (
     <>
-      <section className="flex w-full max-w-186 flex-col gap-10">
+      <section className="flex w-full max-w-186 flex-col gap-10 font-inter">
         {/* header */}
         <div className="flex min-w-0 flex-col gap-2 sm:gap-3">
           <h2 className="text-lg font-medium leading-[150%] text-[#000000] sm:text-[20px]">Payment & Wallet</h2>
@@ -49,7 +50,21 @@ const Payment = ({ }: IProps) => {
           </div>
         </div>
         {/* payment history */}
-        <PaymentHistory/>
+        <PaymentHistory />
+
+        {/* receipt & invoice */}
+        <div className="w-full rounded-lg border border-[#E5E7EB] bg-white p-4 sm:p-5">
+          {/* header */}
+          <div className="flex flex-col gap-2">
+            <h2 className="text-[20px] text-[black] font-medium leading-[150%] font-inter">Receipt & Invoice</h2>
+            <p className="text-[18px] text-[#4A5565]  leading-[120%] font-inter">Download PDF receipts for your orders</p>
+          </div>
+          <Button size="md" className="max-w-62.5 cursor-pointer mt-4 font-inter" >
+            Download All Recipts
+          </Button>
+        </div>
+
+
 
       </section>
 

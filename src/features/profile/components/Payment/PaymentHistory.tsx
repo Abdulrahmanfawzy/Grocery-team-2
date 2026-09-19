@@ -13,7 +13,7 @@ const PaymentHistory = ({ }: IProps) => {
     return (
         <section className="flex flex-col gap-6 border-[0.8px] border-[#DAD8D8] rounded-[8px] p-6  ">
             {/* heading */}
-            <h2 className="text-[20px] font-medium leading-[150%] text-app-black ">Payment History</h2>
+            <h2 className="text-[20px] font-medium leading-[150%] text-app-black font-inter ">Payment History</h2>
            
             {/* orders */}
             <div className="flex flex-col gap-4"> {
@@ -25,10 +25,10 @@ const PaymentHistory = ({ }: IProps) => {
                         isRefund={payment.isRefund}
                         status={payment.status} />))}
             </div>
-            <Button size="md" className="max-w-62.5 cursor-pointer" >
+            <Button size="md" className="max-w-62.5 cursor-pointer font-inter" >
                 View All Transactions
                 <ChevronRight />
-                </Button>
+            </Button>
 
 
 
