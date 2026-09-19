@@ -1,24 +1,34 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { MainLayout } from '@/components/layout';
+import { ProtectedRoute } from '@/components/common';
 
 // Auth Pages Imports
 
 import { CheckoutPage } from '@/features/checkout/components/CheckoutPage';
 import { PaymentPage } from '@/features/checkout/components/PaymentPage';
 import { TrackOrderPage } from '@/features/checkout/components/TrackOrderPage';
-import Signup from '@/features/auth/Signup';
 import Login from '@/features/auth/Login';
 import ForgotPassword from '@/features/auth/ForgotPassword';
 import VerifyOTP from '@/features/auth/VerifyOTP';
 import ResetPassword from '@/features/auth/ResetPassword';
-import ProductList from '@/pages/ProductList';
-import ProductDetails from '@/pages/ProductDetails';
+import ProductList from '@/features/products/pages/ProductList';
+import ProductDetails from '@/features/products/pages/ProductDetails';
 import Category from '@/features/category';
 import HomePage from '@/features/home';
-import ProfileLayout from '@/components/layout/ProfileLayout';
-import { PersonalInfo } from '@/profile/PersonalInfo';
+import ProfileLayout from '@/features/profile/layout/ProfileLayout';
+import { PersonalInfo } from '@/features/profile/pages/PersonalInfo';
 import CartPage from '@/features/cart/pages/CartPage';
 import AuthGuard from '@/features/auth/components/AuthGuard';
+import Dashboard from '@/features/profile/pages/Dashboard';
+import Payment from '@/features/profile/pages/Payment';
+import OrderHistory from '@/features/profile/pages/OrderHistory';
+import SmartLists from '@/features/profile/pages/SmartLists';
+import Addresess from '@/features/profile/pages/Addresess';
+import Security from '@/features/profile/pages/Security';
+import Loyalty from '@/features/profile/pages/Loyalty';
+import Help from '@/features/profile/pages/Help';
+import { Settings } from 'lucide-react';
+import Signup from '@/features/auth/Signup';
 
 export function AppRoutes() {
   return (
@@ -36,10 +46,19 @@ export function AppRoutes() {
       <Route element={<MainLayout />}>
         <Route path="/profile" element={<ProfileLayout />}>
           <Route index element={<PersonalInfo />} />
-          <Route path="personal-info" element={<PersonalInfo />} />
+          <Route path="dashboard" element={<Dashboard />} />
+
+          <Route path="payment" element={<Payment />} />
+          <Route path="order-history" element={<OrderHistory />} />
+          <Route path="smart-lists" element={<SmartLists />} />
+          <Route path="addresses" element={<Addresess />} />
+          <Route path="security-login" element={<Security />} />
+          <Route path="loyalty-rewards" element={<Loyalty />} />
+          <Route path="help-support" element={<Help />} />
+          <Route path="settings" element={<Settings />} />
         </Route>
         <Route index element={<HomePage />} />
-        <Route path="/cart" element={<CartPage />} />
+        <Route path="/cart" element={<ProtectedRoute><CartPage /></ProtectedRoute>} />
         {/* checkout routes */}
         <Route path="/checkout/shipping" element={<CheckoutPage />} />
         <Route path="/checkout/payment" element={<PaymentPage />} />

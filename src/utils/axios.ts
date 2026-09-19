@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL?.trim();
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 interface ApiErrorResponse {
   success: boolean;

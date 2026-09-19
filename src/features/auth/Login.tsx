@@ -1,5 +1,5 @@
 
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -21,6 +21,8 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function Login() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const redirectTo = searchParams.get('redirect') || '/';
   const loginMutation = useLogin();
 
   const {
@@ -47,7 +49,7 @@ export default function Login() {
           toast.success(response.message);
           localStorage.setItem('auth_token', response.token);
           localStorage.setItem('auth_user', JSON.stringify(response.user));
-          navigate('/');
+          navigate(`/${redirectTo}`);
         },
         onError: handleApiError,
       }
