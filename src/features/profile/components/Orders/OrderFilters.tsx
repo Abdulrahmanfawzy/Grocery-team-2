@@ -36,9 +36,9 @@ const OrderFilters = ({ }: IProps) => {
         },
     ];
     return (
-        <div className="grid md:grid-cols-3 gap-6 p-4">
+        <div className="grid grid-cols-1 gap-3 p-3 sm:grid-cols-2 sm:gap-4 sm:p-4 md:grid-cols-[minmax(0,1fr)_9rem_10.25rem]">
             {/* Search */}
-            <div className="relative">
+            <div className="relative min-w-0">
                 <Search
                     size={18}
                     className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6B7280]"
@@ -46,16 +46,16 @@ const OrderFilters = ({ }: IProps) => {
 
                 <Input
                     placeholder="Search Orders"
-                    className="pl-10 w-45.25!"
+                    className="w-full pl-10"
                 />
             </div>
             {/* Status */}
-            <Select className="max-w-34!  "
+            <Select className="w-full sm:max-w-none!"
                 options={statusOptions}
                 placeholder="All Status"
             />
             {/* Date */}
-            <Select className=" max-w-40.75! "
+            <Select className="w-full sm:max-w-none!"
                 options={daysOptions}
                 placeholder="Last 30 days"
             />
