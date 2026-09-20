@@ -12,7 +12,7 @@ interface IProps {
 const OrderHistory=({}:IProps)=> {
   return (
   
-    <main className="w-full max-w-170 px-3 font-inter sm:px-5 lg:px-0">
+    <main className="w-full px-3 font-inter sm:px-5 lg:px-0">
       <OrderHistoryHeader />
       <OrderFilters />
       

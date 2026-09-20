@@ -11,7 +11,7 @@ interface IProps {
 
 const SmartLists = ({ }: IProps) => {
   return (
-    <section className="w-full max-w-170.5 font-inter">
+    <section className="w-full font-inter">
       <HeaderSection 
       title="Smart Lists & Favorites"
        description="Organize your shopping with custom lists" btnName="+ Create New List" />

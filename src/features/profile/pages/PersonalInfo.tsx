@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { User, Mail, Phone, Plus, SquarePen } from 'lucide-react';
@@ -9,23 +9,54 @@ import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
 import { Select } from '@/components/ui/Select';
 import { personalSchema, type PersonalInfoValues } from '../schemas/profile.schema';
+import usePersonalInfo from '../hooks/usePersonalInfo';
+import CartSkeleton from '@/features/cart/components/cartSkeleton';
+import { ErrorState } from '@/components/common/ErrorState';
 
 
 export function PersonalInfo() {
+  const { data: response, isLoading, isError, error } = usePersonalInfo();
+  const personalInfo = response?.data;
+
   const {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<PersonalInfoValues>({
     resolver: zodResolver(personalSchema),
     defaultValues: {
-      firstName: 'Sarah',
-      lastName: 'Emad',
-      email: 'Sarahem@gmail.com',
-      phone: '+20 112 345 9876',
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
       language: 'en-US',
     },
   });
+
+  useEffect(() => {
+    if (personalInfo) {
+      reset({
+        firstName: 'Sarah',
+        lastName: 'Emad',
+        email: 'Sarahem@gmail.com',
+        phone: '+20 112 345 9876',
+        language: personalInfo.settings.language === 'ar' ? 'ar-EG' : 'en-US',
+      });
+      setNotifications({
+        orderConfirmation: personalInfo.notification_preferences.order_confirmation,
+        orderShipped: personalInfo.notification_preferences.order_shipped,
+        deliveryUpdates: personalInfo.notification_preferences.delivery_updates,
+        outOfStockAlerts: personalInfo.notification_preferences.out_of_stock_alerts,
+        cartReminders: personalInfo.notification_preferences.cart_reminders,
+        paymentBilling: personalInfo.notification_preferences.payment_billing_notifications,
+        accountSecurity: personalInfo.notification_preferences.account_security_alerts,
+        emailNotifications: personalInfo.notification_preferences.email_notifications,
+        smsNotifications: personalInfo.notification_preferences.sms_notifications,
+        pushNotifications: personalInfo.notification_preferences.push_notifications,
+      });
+    }
+  }, [personalInfo, reset]);
 
   // State 
   const [notifications, setNotifications] = useState({
@@ -55,8 +86,16 @@ export function PersonalInfo() {
     { value: 'fr-FR', label: 'French' },
   ];
 
+  if (isLoading) {
+    return <CartSkeleton />;
+  }
+
+  if (isError) {
+    return <ErrorState description={error.message} />;
+  }
+
   return (
-    <div className="space-y-6 max-w-188.75">
+    <div className="w-full space-y-6">
       {/* 1. Page Header */}
       <div>
         <h1 className="text-[#000000] text-xl font-medium">Personal Information</h1>

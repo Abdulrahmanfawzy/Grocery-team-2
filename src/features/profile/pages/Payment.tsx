@@ -12,7 +12,7 @@ interface IProps {
 const Payment = ({ }: IProps) => {
   return (
     <>
-      <section className="flex w-full max-w-186 flex-col gap-10 font-inter">
+      <section className="flex w-full flex-col gap-10 font-inter">
         {/* header */}
         <div className="flex min-w-0 flex-col gap-2 sm:gap-3">
           <h2 className="text-lg font-medium leading-[150%] text-[#000000] sm:text-[20px]">Payment & Wallet</h2>
