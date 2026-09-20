@@ -1,6 +1,6 @@
 import { MapPin, Mail } from 'lucide-react'
 import type { Propstype } from '@/types/global'
-import { Link } from 'react-router-dom' // ✅ تم تعديل الاستيراد
+import { Link } from 'react-router-dom' 
 import Facebook from '@/assets/Facebook.svg'
 import Instagram from '@/assets/Insta.svg'
 import LinkedIn from '@/assets/LinkedIn.svg'
@@ -10,7 +10,7 @@ export const Footer = ({ Logo }: Propstype) => {
   return (
     <footer className="w-full  bg-hovered text-[#2C3E50] font-sans pt-12 ">
       {/* Main Footer Content */}
-      <main className="container max-w-[85%] mx-auto  px-6 sm:px-10 lg:px-16 pb-12">
+      <main className="box-container  pb-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
           {/* Brand & Contact Section */}
           <div className="lg:col-span-5 flex flex-col space-y-6">

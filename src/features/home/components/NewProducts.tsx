@@ -1,20 +1,19 @@
 import { useEffect, useState } from 'react'
 import { Button } from '@/components'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { ShoppingCart, Star } from 'lucide-react'
+import { ShoppingCart } from 'lucide-react'
 import type { ProductHotDeal, Propstype } from '@/types/global'
-import RatingStars from '../ui/Stars'
+import RatingStars from '@/components/ui/Stars'
 import ProductSkeleton from './ProductSkeleton'
 import useNewProduct from '../hooks/useNewProduct'
 import { useCategory } from '@/features/category/hooks/useCategory'
 import ProductNotFound from './NotFound'
-import type { ICategory } from '@/features/category/types/types'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import useAddCartItem from '@/features/cart/hooks/useAddCartItem'
+import type { ICategory } from '@/features/category/types/types'
 
 const NewProducts = ({ title }: Propstype) => {
   //States
-
   const { data: categories = [] } = useCategory()
   const [activeTab, setActiveTab] = useState<number>(4)
   // Request NewProducts Data and Using AddToCart
@@ -43,9 +42,9 @@ const NewProducts = ({ title }: Propstype) => {
     )
   return (
     <section className="w-full  mx-auto  ">
-      <main className=" mx-auto flex flex-col gap-4 ">
-        <div className="flex w-full flex-col gap-3 md:flex-row md:items-center md:justify-between">
-          <h2 className="text-2xl font-bold text-app-linera md:text-3xl">{title}</h2>
+      <main className=" box-container flex flex-col gap-4 ">
+        <div className="flex w-full flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <h2 className="text-2xl font-bold text-app-linera text-center md:text-3xl">{title}</h2>
 
           <Tabs
             value={activeTab?.toString()}
@@ -55,7 +54,7 @@ const NewProducts = ({ title }: Propstype) => {
             {/* 3 tabs: 3 × 7rem + gaps + padding ≈ 22rem (28rem on md) */}
             <ScrollArea className="mx-auto w-88 max-w-full whitespace-nowrap md:w-md" dir="ltr">
               <TabsList className="inline-flex h-auto w-max justify-start gap-1 my-3">
-                {categories.map((category: ICategory) => (
+                {categories.map((category:ICategory) => (
                   <TabsTrigger
                     key={category.id}
                     value={category.id.toString()}
@@ -74,7 +73,7 @@ const NewProducts = ({ title }: Propstype) => {
           {data?.map((product: ProductHotDeal) => (
             <div
               key={product.id}
-              className="flex w-70 flex-col  gap-2 rounded-lg border border-gray-200 p-4"
+              className="flex  flex-col  gap-2 rounded-lg border border-gray-200 p-4"
             >
               <img
                 src={product.image[0]}
@@ -84,34 +83,25 @@ const NewProducts = ({ title }: Propstype) => {
               />
               <div className="flex flex-col gap-1">
                 <p className="text-sm font-normal text-gray-400">
-                  {product.category}
+                  {product.category.name_en}
                 </p>
                 <p className="text-[18px] font-normal text-app-main">
-                  {product.name}
+                  {product.name.split(" ").slice(0, 2).join(" ")}
                 </p>
               </div>
               <div className="flex items-start flex-col gap-2">
                 <div className="flex items-center gap-0.5">
-                  {Array.from({ length: 5 }).map((_, index) => (
-                    <Star
-                      key={index}
-                      className={`size-3.5 ${
-                        index < product.rating
-                          ? 'fill-app-yellow text-app-yellow'
-                          : 'text-gray-300'
-                      }`}
-                    />
-                  ))}
+                      <RatingStars rating={product.average_rating}/>
                 </div>
                 <p className="text-sm text-gray-500">
-                  By <span className="text-app-main">{product.vendor}</span>
+                  By <span className="text-app-main">{product.brand}</span>
                 </p>
               </div>
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-1.5">
-                  <p className="font-semibold text-app-main">${product.price}</p>
+                  <p className="font-semibold text-app-main">${product.discount_price}</p>
                   <p className="text-sm text-gray-400 line-through">
-                    ${product.originalPrice}
+                    ${product.price}
                   </p>
                 </div>
                 <Button
