@@ -1,31 +1,56 @@
 import { useState, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { User, Mail, Phone, Plus, SquarePen } from 'lucide-react';
+import { User, Mail, Phone, Plus, SquarePen, Check, X } from 'lucide-react';
 
-// UI Components
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
 import { Select } from '@/components/ui/Select';
+import { ToggleRow } from '../components/ToggleRow';
 import { personalSchema, type PersonalInfoValues } from '../schemas/profile.schema';
 import usePersonalInfo from '../hooks/usePersonalInfo';
+import useUser from '../hooks/useUser';
+import useUpdateUser from '../hooks/useUpdateUser';
 import CartSkeleton from '@/features/cart/components/cartSkeleton';
 import { ErrorState } from '@/components/common/ErrorState';
 
+const languageOptions = [
+  { value: 'en-US', label: 'English (US)' },
+  { value: 'ar-EG', label: 'Arabic' },
+  { value: 'fr-FR', label: 'French' },
+];
 
 export function PersonalInfo() {
   const { data: response, isLoading, isError, error } = usePersonalInfo();
+  const { data: userResponse, isLoading: isUserLoading } = useUser();
+  const updateUserMutation = useUpdateUser();
+
   const personalInfo = response?.data;
+  const user = userResponse?.data;
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [notifications, setNotifications] = useState({
+    orderConfirmation: false,
+    orderShipped: false,
+    deliveryUpdates: false,
+    outOfStockAlerts: false,
+    cartReminders: false,
+    paymentBilling: false,
+    accountSecurity: false,
+    emailNotifications: false,
+    smsNotifications: false,
+    pushNotifications: false,
+  });
 
   const {
     control,
     handleSubmit,
-    formState: { errors },
     reset,
+    formState: { errors, isDirty },
   } = useForm<PersonalInfoValues>({
     resolver: zodResolver(personalSchema),
-    defaultValues: {
+    values: {
       firstName: '',
       lastName: '',
       email: '',
@@ -34,15 +59,23 @@ export function PersonalInfo() {
     },
   });
 
+
+  useEffect(() => {
+    if (user && personalInfo) {
+      reset({
+        firstName: user.name || '',
+        lastName: user.name || '',
+        email: user.email || '',
+        phone: user.phone || '',
+        language:
+          personalInfo.settings.language === 'ar' ? 'ar-EG' : 'en-US',
+      });
+    }
+  }, [user, personalInfo, reset]);
+
+
   useEffect(() => {
     if (personalInfo) {
-      reset({
-        firstName: 'Sarah',
-        lastName: 'Emad',
-        email: 'Sarahem@gmail.com',
-        phone: '+20 112 345 9876',
-        language: personalInfo.settings.language === 'ar' ? 'ar-EG' : 'en-US',
-      });
       setNotifications({
         orderConfirmation: personalInfo.notification_preferences.order_confirmation,
         orderShipped: personalInfo.notification_preferences.order_shipped,
@@ -56,55 +89,34 @@ export function PersonalInfo() {
         pushNotifications: personalInfo.notification_preferences.push_notifications,
       });
     }
-  }, [personalInfo, reset]);
+  }, [personalInfo]);
 
-  // State 
-  const [notifications, setNotifications] = useState({
-    orderConfirmation: false,
-    orderShipped: true,
-    deliveryUpdates: false,
-    outOfStockAlerts: true,
-    cartReminders: false,
-    paymentBilling: true,
-    accountSecurity: false,
-    emailNotifications: false,
-    smsNotifications: true,
-    pushNotifications: false,
-  });
-
-  const toggleSwitch = (key: keyof typeof notifications) => {
+  const toggleNotification = (key: keyof typeof notifications) => {
     setNotifications((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
   const onSubmit = (data: PersonalInfoValues) => {
-    console.log('Submitted Personal Info:', data);
+    const name = `${data.firstName} ${data.lastName}`.trim();
+    updateUserMutation.mutate(
+      { name },
+      { onSuccess: () => setIsEditing(false) }
+    );
   };
 
-  const languageOptions = [
-    { value: 'en-US', label: 'English (US)' },
-    { value: 'ar-EG', label: 'Arabic (مصر)' },
-    { value: 'fr-FR', label: 'French' },
-  ];
-
-  if (isLoading) {
-    return <CartSkeleton />;
-  }
-
-  if (isError) {
-    return <ErrorState description={error.message} />;
-  }
+  if (isLoading || isUserLoading) return <CartSkeleton />;
+  if (isError) return <ErrorState description={error.message} />;
 
   return (
     <div className="w-full space-y-6">
-      {/* 1. Page Header */}
+      {/* Page Header */}
       <div>
         <h1 className="text-[#000000] text-xl font-medium">Personal Information</h1>
         <p className="text-[#4A5565] text-sm leading-tight">
-          Manage your personal details and preferences
+          Manage your personal details and preferences {!isUserLoading && userResponse?.data?.email}
         </p>
       </div>
 
-      {/* 2. Profile Picture Section */}
+      {/* Profile Picture */}
       <div className="space-y-3">
         <h2 className="text-[#000000] text-base font-medium">Profile Picture</h2>
         <div className="flex items-center gap-4">
@@ -126,20 +138,44 @@ export function PersonalInfo() {
         </div>
       </div>
 
-      {/* Main Form */}
+      {/* Form */}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        {/* 3. Basic Information Card */}
+        {/* Basic Information */}
         <div className="border border-[#DAD8D8] rounded-md p-6 space-y-6 bg-white">
           <div className="flex justify-between items-center">
             <h3 className="text-[#000000] text-lg font-medium">Basic Information</h3>
-            <Button
-              type="button"
-              variant="secondary"
-              className="bg-[#F0F0F0] text-[#0E1112] hover:bg-[#e4e4e4] gap-2 h-9 px-3"
-            >
-              <SquarePen className="h-4 w-4" />
-              <span>Edit</span>
-            </Button>
+            {isEditing ? (
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  className="bg-[#F0F0F0] text-[#0E1112] hover:bg-[#e4e4e4] gap-2 h-9 px-3"
+                  onClick={() => setIsEditing(false)}
+                  disabled={updateUserMutation.isPending}
+                >
+                  <X className="h-4 w-4" />
+                  <span>Cancel</span>
+                </Button>
+                <Button
+                  type="submit"
+                  className="bg-[--app-main] hover:bg-[#01334e] text-[#F7FCFF] gap-2 h-9 px-3"
+                  disabled={updateUserMutation.isPending || !isDirty}
+                >
+                  <Check className="h-4 w-4" />
+                  <span>{updateUserMutation.isPending ? 'Saving...' : 'Save'}</span>
+                </Button>
+              </div>
+            ) : (
+              <Button
+                type="button"
+                variant="secondary"
+                className="bg-[#F0F0F0] text-[#0E1112] hover:bg-[#e4e4e4] gap-2 h-9 px-3"
+                onClick={() => setIsEditing(true)}
+              >
+                <SquarePen className="h-4 w-4" />
+                <span>Edit</span>
+              </Button>
+            )}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -155,8 +191,9 @@ export function PersonalInfo() {
                     <Input
                       {...field}
                       id="firstName"
-                      placeholder="Sarah"
+                      placeholder="First name"
                       className="pl-9"
+                      disabled={!isEditing}
                     />
                   </div>
                 )}
@@ -178,8 +215,9 @@ export function PersonalInfo() {
                     <Input
                       {...field}
                       id="lastName"
-                      placeholder="Emad"
+                      placeholder="Last name"
                       className="pl-9"
+                      disabled={!isEditing}
                     />
                   </div>
                 )}
@@ -202,8 +240,9 @@ export function PersonalInfo() {
                       {...field}
                       id="email"
                       type="email"
-                      placeholder="Sarahem@gmail.com"
+                      placeholder="Email address"
                       className="pl-9"
+                      disabled={!isEditing}
                     />
                   </div>
                 )}
@@ -225,8 +264,9 @@ export function PersonalInfo() {
                     <Input
                       {...field}
                       id="phone"
-                      placeholder="+20 112 345 9876"
+                      placeholder="Phone number"
                       className="pl-9"
+                      disabled={!isEditing}
                     />
                   </div>
                 )}
@@ -238,7 +278,7 @@ export function PersonalInfo() {
           </div>
         </div>
 
-        {/* 4. Language Card */}
+        {/* Language */}
         <div className="border border-[#DAD8D8] rounded-md p-6 space-y-4 bg-white">
           <h3 className="text-[#000000] text-lg font-medium">Language</h3>
           <div className="space-y-2 max-w-[344px]">
@@ -262,7 +302,7 @@ export function PersonalInfo() {
           </div>
         </div>
 
-        {/* 5. Notification Preference Card */}
+        {/* Notification Preferences */}
         <div className="border border-[#DAD8D8] rounded-md p-6 space-y-6 bg-white">
           <div>
             <h3 className="text-[#000000] text-lg font-medium">Notification Preference</h3>
@@ -271,201 +311,77 @@ export function PersonalInfo() {
             </p>
           </div>
 
-          {/* Group 1: Order & Delivery Updates */}
+          {/* Order & Delivery Updates */}
           <div className="space-y-4">
-            <h4 className="text-base font-semibold text-gray-900">
-              Order & Delivery Updates
-            </h4>
+            <h4 className="text-base font-semibold text-gray-900">Order & Delivery Updates</h4>
             <div className="bg-[#F7FCFF] rounded-sm p-4 space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-gray-200/60">
-                <span className="text-sm font-medium text-gray-700">Order Confirmation</span>
-                <button
-                  type="button"
-                  onClick={() => toggleSwitch('orderConfirmation')}
-                  className={`w-11 h-6 flex items-center rounded-full p-1 transition-colors duration-200 ease-in-out ${
-                    notifications.orderConfirmation ? 'bg-[#014162]' : 'bg-gray-300'
-                  }`}
-                >
-                  <div
-                    className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-200 ease-in-out ${
-                      notifications.orderConfirmation ? 'translate-x-5' : 'translate-x-0'
-                    }`}
-                  />
-                </button>
-              </div>
-
-              <div className="flex items-center justify-between pb-3 border-b border-gray-200/60">
-                <span className="text-sm font-medium text-gray-700">Order Shipped</span>
-                <button
-                  type="button"
-                  onClick={() => toggleSwitch('orderShipped')}
-                  className={`w-11 h-6 flex items-center rounded-full p-1 transition-colors duration-200 ease-in-out ${
-                    notifications.orderShipped ? 'bg-[#014162]' : 'bg-gray-300'
-                  }`}
-                >
-                  <div
-                    className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-200 ease-in-out ${
-                      notifications.orderShipped ? 'translate-x-5' : 'translate-x-0'
-                    }`}
-                  />
-                </button>
-              </div>
-
-              <div className="flex items-center justify-between pb-3 border-b border-gray-200/60">
-                <span className="text-sm font-medium text-gray-700">Delivery Updates</span>
-                <button
-                  type="button"
-                  onClick={() => toggleSwitch('deliveryUpdates')}
-                  className={`w-11 h-6 flex items-center rounded-full p-1 transition-colors duration-200 ease-in-out ${
-                    notifications.deliveryUpdates ? 'bg-[#014162]' : 'bg-gray-300'
-                  }`}
-                >
-                  <div
-                    className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-200 ease-in-out ${
-                      notifications.deliveryUpdates ? 'translate-x-5' : 'translate-x-0'
-                    }`}
-                  />
-                </button>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-700">Out-of-Stock Alerts</span>
-                <button
-                  type="button"
-                  onClick={() => toggleSwitch('outOfStockAlerts')}
-                  className={`w-11 h-6 flex items-center rounded-full p-1 transition-colors duration-200 ease-in-out ${
-                    notifications.outOfStockAlerts ? 'bg-[#014162]' : 'bg-gray-300'
-                  }`}
-                >
-                  <div
-                    className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-200 ease-in-out ${
-                      notifications.outOfStockAlerts ? 'translate-x-5' : 'translate-x-0'
-                    }`}
-                  />
-                </button>
-              </div>
+              <ToggleRow
+                label="Order Confirmation"
+                checked={notifications.orderConfirmation}
+                onToggle={() => toggleNotification('orderConfirmation')}
+              />
+              <ToggleRow
+                label="Order Shipped"
+                checked={notifications.orderShipped}
+                onToggle={() => toggleNotification('orderShipped')}
+              />
+              <ToggleRow
+                label="Delivery Updates"
+                checked={notifications.deliveryUpdates}
+                onToggle={() => toggleNotification('deliveryUpdates')}
+              />
+              <ToggleRow
+                label="Out-of-Stock Alerts"
+                checked={notifications.outOfStockAlerts}
+                onToggle={() => toggleNotification('outOfStockAlerts')}
+                showBorder={false}
+              />
             </div>
           </div>
 
-          {/* Group 2: Account & Reminders */}
+          {/* Account & Reminders */}
           <div className="space-y-4">
-            <h4 className="text-base font-semibold text-gray-900">
-              Account & Reminders
-            </h4>
+            <h4 className="text-base font-semibold text-gray-900">Account & Reminders</h4>
             <div className="bg-[#F7FCFF] rounded-sm p-4 space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-gray-200/60">
-                <span className="text-sm font-medium text-gray-700">Cart Reminders</span>
-                <button
-                  type="button"
-                  onClick={() => toggleSwitch('cartReminders')}
-                  className={`w-11 h-6 flex items-center rounded-full p-1 transition-colors duration-200 ease-in-out ${
-                    notifications.cartReminders ? 'bg-[#014162]' : 'bg-gray-300'
-                  }`}
-                >
-                  <div
-                    className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-200 ease-in-out ${
-                      notifications.cartReminders ? 'translate-x-5' : 'translate-x-0'
-                    }`}
-                  />
-                </button>
-              </div>
-
-              <div className="flex items-center justify-between pb-3 border-b border-gray-200/60">
-                <span className="text-sm font-medium text-gray-700">
-                  Payment & Billing Notifications
-                </span>
-                <button
-                  type="button"
-                  onClick={() => toggleSwitch('paymentBilling')}
-                  className={`w-11 h-6 flex items-center rounded-full p-1 transition-colors duration-200 ease-in-out ${
-                    notifications.paymentBilling ? 'bg-[#014162]' : 'bg-gray-300'
-                  }`}
-                >
-                  <div
-                    className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-200 ease-in-out ${
-                      notifications.paymentBilling ? 'translate-x-5' : 'translate-x-0'
-                    }`}
-                  />
-                </button>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-700">
-                  Account Security Alerts
-                </span>
-                <button
-                  type="button"
-                  onClick={() => toggleSwitch('accountSecurity')}
-                  className={`w-11 h-6 flex items-center rounded-full p-1 transition-colors duration-200 ease-in-out ${
-                    notifications.accountSecurity ? 'bg-[#014162]' : 'bg-gray-300'
-                  }`}
-                >
-                  <div
-                    className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-200 ease-in-out ${
-                      notifications.accountSecurity ? 'translate-x-5' : 'translate-x-0'
-                    }`}
-                  />
-                </button>
-              </div>
+              <ToggleRow
+                label="Cart Reminders"
+                checked={notifications.cartReminders}
+                onToggle={() => toggleNotification('cartReminders')}
+              />
+              <ToggleRow
+                label="Payment & Billing Notifications"
+                checked={notifications.paymentBilling}
+                onToggle={() => toggleNotification('paymentBilling')}
+              />
+              <ToggleRow
+                label="Account Security Alerts"
+                checked={notifications.accountSecurity}
+                onToggle={() => toggleNotification('accountSecurity')}
+                showBorder={false}
+              />
             </div>
           </div>
 
-          {/* Group 3: Communication Channels */}
+          {/* Communication Channels */}
           <div className="space-y-4">
-            <h4 className="text-base font-semibold text-gray-900">
-              Communication Channels
-            </h4>
+            <h4 className="text-base font-semibold text-gray-900">Communication Channels</h4>
             <div className="bg-[#F7FCFF] rounded-sm p-4 space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-gray-200/60">
-                <span className="text-sm font-medium text-gray-700">Email Notifications</span>
-                <button
-                  type="button"
-                  onClick={() => toggleSwitch('emailNotifications')}
-                  className={`w-11 h-6 flex items-center rounded-full p-1 transition-colors duration-200 ease-in-out ${
-                    notifications.emailNotifications ? 'bg-[#014162]' : 'bg-gray-300'
-                  }`}
-                >
-                  <div
-                    className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-200 ease-in-out ${
-                      notifications.emailNotifications ? 'translate-x-5' : 'translate-x-0'
-                    }`}
-                  />
-                </button>
-              </div>
-
-              <div className="flex items-center justify-between pb-3 border-b border-gray-200/60">
-                <span className="text-sm font-medium text-gray-700">SMS Notifications</span>
-                <button
-                  type="button"
-                  onClick={() => toggleSwitch('smsNotifications')}
-                  className={`w-11 h-6 flex items-center rounded-full p-1 transition-colors duration-200 ease-in-out ${
-                    notifications.smsNotifications ? 'bg-[#014162]' : 'bg-gray-300'
-                  }`}
-                >
-                  <div
-                    className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-200 ease-in-out ${
-                      notifications.smsNotifications ? 'translate-x-5' : 'translate-x-0'
-                    }`}
-                  />
-                </button>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-700">Push Notifications</span>
-                <button
-                  type="button"
-                  onClick={() => toggleSwitch('pushNotifications')}
-                  className={`w-11 h-6 flex items-center rounded-full p-1 transition-colors duration-200 ease-in-out ${
-                    notifications.pushNotifications ? 'bg-[#014162]' : 'bg-gray-300'
-                  }`}
-                >
-                  <div
-                    className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-200 ease-in-out ${
-                      notifications.pushNotifications ? 'translate-x-5' : 'translate-x-0'
-                    }`}
-                  />
-                </button>
-              </div>
+              <ToggleRow
+                label="Email Notifications"
+                checked={notifications.emailNotifications}
+                onToggle={() => toggleNotification('emailNotifications')}
+              />
+              <ToggleRow
+                label="SMS Notifications"
+                checked={notifications.smsNotifications}
+                onToggle={() => toggleNotification('smsNotifications')}
+              />
+              <ToggleRow
+                label="Push Notifications"
+                checked={notifications.pushNotifications}
+                onToggle={() => toggleNotification('pushNotifications')}
+                showBorder={false}
+              />
             </div>
           </div>
         </div>
