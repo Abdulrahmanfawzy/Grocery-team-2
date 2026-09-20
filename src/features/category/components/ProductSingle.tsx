@@ -9,13 +9,8 @@ export default function ProductCard({
   name,
   category,
   image,
-<<<<<<< Updated upstream
-  rating,
-  originalPrice,
-=======
   average_rating,
   discount_price,
->>>>>>> Stashed changes
   price,
 }: ProductHotDeal) {
   const [quantity, setQuantity] = useState(1)
@@ -49,11 +44,7 @@ export default function ProductCard({
 
       {/* Image */}
       <div className="mb-4 flex h-40 w-full ">
-<<<<<<< Updated upstream
-        <img src={image} alt={name} className='h-full object-contain' />
-=======
         <img src={image[0]} alt={name} className="h-full object-contain" />
->>>>>>> Stashed changes
       </div>
 
       {/* Title + Price */}

@@ -2,53 +2,6 @@ import { useEffect, useState } from 'react'
 import { Button } from '@/components'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ShoppingCart, Star } from 'lucide-react'
-<<<<<<< Updated upstream
-import { hotDealsProducts } from '@/constants/ProductHotDeal';
-import type { Propstype } from '@/types/global';
-
-const categories = ['Fruits', 'Vegetables', 'Coffe & teas', 'Meat'] as const
-
-
-
-const NewProducts = ({title} : Propstype) => {
-  const [activeTab, setActiveTab] = useState<(typeof categories)[number]>(
-    'Fruits',
-  )
-
-  const products = hotDealsProducts.filter(
-    (product) => product.category === activeTab,
-  )
-
-  return (
-    <section className="w-full max-w-[85%] mx-auto  ">
-      <main className="container mx-auto flex flex-col gap-4 px-4">
-      <div className="flex w-full flex-col gap-3 md:flex-row md:items-center md:justify-between">
-  <h2 className="text-2xl font-bold text-app-linera md:ml-8 md:text-3xl">
-    {title}
-  </h2>
-  <Tabs
-    value={activeTab}
-    onValueChange={(value) =>
-      setActiveTab(value as (typeof categories)[number])
-    }
-    className="w-full md:w-auto"
-  >
-    <TabsList className="grid h-auto w-full grid-cols-2 gap-1 sm:grid-cols-4 md:inline-flex md:w-fit md:flex-nowrap md:justify-end">
-      {categories.map((category) => (
-        <TabsTrigger
-          key={category}
-          value={category}
-          className="h-9 w-full px-3 text-sm sm:text-base md:w-auto md:flex-none md:text-[18px]"
-        >
-          {category}
-        </TabsTrigger>
-      ))}
-    </TabsList>
-  </Tabs>
-</div>
-        <div className="Product flex flex-wrap justify-center gap-3.5">
-          {products.map((product) => (
-=======
 import type { ProductHotDeal, Propstype } from '@/types/global'
 import RatingStars from '../ui/Stars'
 import ProductSkeleton from './ProductSkeleton'
@@ -119,17 +72,12 @@ const NewProducts = ({ title }: Propstype) => {
         <div className="Product grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3.5">
           {isError && <ProductNotFound />}
           {data?.map((product: ProductHotDeal) => (
->>>>>>> Stashed changes
             <div
               key={product.id}
               className="flex w-70 flex-col  gap-2 rounded-lg border border-gray-200 p-4"
             >
               <img
-<<<<<<< Updated upstream
-                src={product.image}
-=======
                 src={product.image[0]}
->>>>>>> Stashed changes
                 alt={product.name}
                 width={500}
                 className="h-40 w-full object-contain "
