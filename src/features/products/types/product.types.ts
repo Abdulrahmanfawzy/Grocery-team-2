@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 export interface RatingUser {
   name: string;
   avatar: string | null;
@@ -12,31 +14,23 @@ export interface ProductRating {
 }
 
 export interface Product {
+  ratings: any;
   id: number;
-
-  category: {
-    id: number;
-    name_en: string;
-    name_ar: string;
-  };
-
   name: string;
   type: string;
   brand: string;
-
-  description: string;
+  description: string | null;
   how_to_use: string | null;
-
-  images: string[];
-
+  image: string[];
   quantity: number;
-
   price: string;
   discount_price: string | null;
-
   average_rating: number;
-
-  ratings: ProductRating[];
+  category: {
+    name_en: string;
+    id: number;
+    name: string;
+  };
 }
 
 export interface Pagination {
@@ -68,11 +62,12 @@ export interface ProductsResponse {
 }
 
 export interface ProductFilters {
-  category?: number;
+  category_id?: number;
   brand?: string;
   type?: string;
   min_price?: number;
   max_price?: number;
   search?: string;
   page?: number;
+  per_page?: number;
 }
