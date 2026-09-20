@@ -12,16 +12,16 @@ import useGetHotDealProducts from "../hooks/useHotDealProduct";
 import { ErrorState } from "@/components";
 import ExploreCardSkeleton from "./exploreCardSkeleton";
 const MoreToExplore = () => {
-   const { data, isLoading, isError,error }=useGetHotDealProducts();
-   const hotDealProducts = data?.data ?? [];
+  const { data, isLoading, isError, error } = useGetHotDealProducts();
+  const hotDealProducts = data?.data ?? [];
 
-     if (isLoading) {
+  if (isLoading) {
     return <ExploreCardSkeleton />;
   }
-    if (isError) {
-       return <ErrorState description={error.message} />;
-     }
-   
+  if (isError) {
+    return <ErrorState description={error.message} />;
+  }
+
   return (
     <section className="w-full max-w-full  overflow-hidden px-2 py-6 sm:px-4">
       <h2 className="mb-4 text-[20px] font-medium text-black sm:mb-6 sm:text-[24px]">
@@ -45,7 +45,7 @@ const MoreToExplore = () => {
               <ExploreCard
                 id={product.id}
                 name={product.name}
-                image={product.image[0]??''}
+                image={product.image[0] ?? ''}
                 price={product.discount_price}
                 oldPrice={product.price}
                 rating={product.average_rating}

@@ -1,6 +1,8 @@
 import { Button } from "@/components";
 import QuantityControl from "@/components/common/QuantityControl";
 import { ShoppingCart, Star } from "lucide-react";
+import useAddCartItem from "../hooks/useAddCartItem";
+import { useState } from "react";
 
 const badgeClassName = "flex h-[26px] items-center justify-center rounded-tl-[15px] rounded-br-[15px] px-2 py-1 text-xs font-medium text-white";
 const badgeStyle = {
@@ -11,16 +13,16 @@ const badgeStyle = {
 interface ExploreCardProps {
     id: number;
     name: string;
-    price: string|number;
+    price: string | number;
     image: string;
-    oldPrice?:string| number;
+    oldPrice?: string | number;
     rating?: number;
     inStock: boolean;
     discount?: number;
     isNew?: boolean;
 }
 
-const ExploreCard = ({id,
+const ExploreCard = ({ id,
     name,
     price,
     image,
@@ -31,6 +33,15 @@ const ExploreCard = ({id,
     discount,
     isNew,
 }: ExploreCardProps) => {
+    const [quantity, setQuantity] = useState(1);
+    const { mutate: addToCart, isPending } = useAddCartItem();
+    const handleAddToCart = () => {
+        addToCart({
+            productId: id,
+            quantity,
+        })
+
+    }
     return (
         <div className="relative w-87.5 md:w-full overflow-hidden rounded-[8px] border border-gray-200 bg-white p-4">
 
@@ -115,20 +126,24 @@ const ExploreCard = ({id,
                     type="button"
                     size="md"
                     variant="primary"
+                    disabled={!inStock || isPending}
+                    onClick={() => handleAddToCart()}
                     className="gap-2 rounded-[8px] bg-app-main px-3 text-[15px] font-normal text-white hover:bg-[#013650] sm:flex-none sm:px-4 sm:text-[16px]"
                 >
                     <ShoppingCart
                         className="h-4 w-4 sm:h-5 sm:w-5"
                         aria-hidden="true"
                     />
-                    <span className="truncate">Add To Cart</span>
+                    <span className="truncate">{isPending ? "Adding..." : "Add To Cart"}</span>
                 </Button>
 
                 <QuantityControl
                     cartItemId={id}
-                    quantity={1}
+                    quantity={quantity}
                     name={name}
-                    
+                    isLocal
+                    onQuantityChange={setQuantity}
+
                 />
 
             </div>
