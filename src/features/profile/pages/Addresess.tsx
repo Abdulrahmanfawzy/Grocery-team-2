@@ -11,7 +11,7 @@ interface IProps {
 
 const Addresess = ({ }: IProps) => {
   return (
-    <section className="w-full max-w-170.5 font-inter!">
+    <section className="w-full font-inter!">
       {/* header */}
       <HeaderSection title="Delivery Addresses" description="Manage your delivery locations and preferences" btnName="+ Add Address" />
       <AddressCard
