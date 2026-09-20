@@ -2,23 +2,23 @@ import { Button } from '@/components/ui'
 import { Progress } from '@/components/ui/progress'
 import type { ProductHotDeal, Propstype } from '@/types/global'
 import { ShoppingCart } from 'lucide-react'
-import RatingStars from '../ui/Stars'
 import useBestSelles from '../hooks/useBestSelles'
 import ProductSkeleton from './ProductSkeleton'
 import ProductNotFound from './NotFound'
 import useAddCartItem from '@/features/cart/hooks/useAddCartItem'
+import RatingStars from '@/components/ui/Stars'
 
 const DailyBest = ({ title }: Propstype) => {
   // Request Best Selles and AddToCart
-  const { data, isLoading , isError } = useBestSelles({limit:6})
-    const {mutate:addToCart}=useAddCartItem()
+  const { data, isLoading, isError } = useBestSelles({ limit: 6 })
+  const { mutate: addToCart } = useAddCartItem()
   //Functions
-  const HandelAddCart = (productId:number)=> {
-    addToCart({productId,quantity:1})
-    console.log(data?.id);
+  const HandelAddCart = (productId: number) => {
+    addToCart({ productId, quantity: 1 })
+    console.log(data?.id)
   }
   //Loading
-  if(isLoading) return <ProductSkeleton/>
+  if (isLoading) return <ProductSkeleton />
 
   return (
     <section className="w-full   ">
@@ -30,10 +30,10 @@ const DailyBest = ({ title }: Propstype) => {
           </p>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 gap-4 ">
-          {isError && <ProductNotFound/>}
+          {isError && <ProductNotFound />}
           {data?.slice(0, 6).map((product: ProductHotDeal) => {
             const discount = Math.round(
-              ((product.originalPrice - product.price) / product.originalPrice) * 100,
+              ((product.price - product.discount_price) / product.price) * 100,
             )
             const saleText =
               discount === null || discount === undefined ? 'sale 0%' : `sale ${discount}%`
@@ -45,7 +45,7 @@ const DailyBest = ({ title }: Propstype) => {
 
             return (
               <div
-                key={`${product.id}-${index}`}
+                key={`${product.id}`}
                 className="relative w-full max-w-60 overflow-hidden rounded-xl p-0 shadow-sm"
               >
                 {discount > 0 && (
@@ -64,7 +64,7 @@ const DailyBest = ({ title }: Propstype) => {
                 </div>
 
                 <div className="flex flex-col gap-1.5 px-4 pb-4 pt-2">
-                  <p className="text-xs text-gray-400">{product.category}</p>
+                  <p className="text-xs text-gray-400">{product.category.name_en}</p>
 
                   <p className="text-sm  font-normal h-10 text-app-main md:text-base md:font-medium lg:font-semibold  ">
                     {product.name.split(' ').slice(0, 2).join(' ')}
@@ -72,27 +72,22 @@ const DailyBest = ({ title }: Propstype) => {
 
                   <div className="flex items-center gap-1.5">
                     <div className="flex items-center gap-0.5">
-                      {Array.from({ length: 5 }).map((_, starIndex) => (
-                        <Star
-                          key={starIndex}
-                          className={`size-3.5 ${
-                            starIndex < product.rating
-                              ? 'fill-app-yellow text-app-yellow'
-                              : 'text-gray-300'
-                          }`}
-                        />
-                      ))}
+                      <RatingStars rating={product.average_rating} />
                     </div>
                     <span className="text-xs text-gray-400">({reviewCount})</span>
                   </div>
 
                   <p className="text-sm text-gray-500">
-                    By <span className="text-app-main">{product.vendor}</span>
+                    By <span className="text-app-main">{product.brand}</span>
                   </p>
 
                   <div className="flex items-center gap-2">
-                    <p className="text-lg font-bold text-app-main">${product.price}</p>
-                    <p className="text-sm text-gray-400 line-through">${product.originalPrice}</p>
+                    <p className="text-lg font-bold text-app-main">
+                      ${product.discount_price === null ? product.price : product.discount_price}
+                    </p>
+                    <p className="text-sm text-gray-400 line-through">
+                      ${product.discount_price === null ? 0 : product.discount_price}
+                    </p>
                   </div>
 
                   <div className="flex flex-col gap-1">
@@ -102,7 +97,10 @@ const DailyBest = ({ title }: Propstype) => {
                     </p>
                   </div>
 
-                  <Button className="mt-1 w-full gap-1.5 bg-[#0B3B5E] text-white hover:bg-[#0a3252] " onClick={() => HandelAddCart(product.id)}>
+                  <Button
+                    className="mt-1 w-full gap-1.5 bg-[#0B3B5E] text-white hover:bg-[#0a3252] "
+                    onClick={() => HandelAddCart(product.id)}
+                  >
                     <ShoppingCart className="size-4" />
                     Add to cart
                   </Button>

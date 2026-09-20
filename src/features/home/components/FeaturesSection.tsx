@@ -22,7 +22,7 @@ const features = [
 
 const FeaturesSection = () => {
   return (
-    <section className="border-b max-w-[85%] mx-auto border-gray-200">
+    <section className="border-b box-container border-gray-200">
       <div className="mx-auto w-full py-6 sm:py-8 md:py-10">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
           {features.map((feature) => (
