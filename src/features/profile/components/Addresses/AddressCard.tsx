@@ -18,12 +18,12 @@ const AddressCard = ({ icon: AddressIcon, label, address, instructions }: Addres
         </div>
 
         <div className="flex w-full gap-3 sm:w-auto">
-          <Button variant="secondary" className="flex-1 text-base! leading-[120%]! text-app-main! sm:flex-none">
-            <SquarePen className="mr-2 h-4! w-4! text-app-main" />
+          <Button variant="secondary" className="flex-1 text-base! leading-[120%]! text-app-main! hover:text-white! sm:flex-none">
+            <SquarePen className="mr-2 h-4! w-4!  " />
             Edit
           </Button>
-          <Button variant="secondary" className="flex-1 text-base! leading-[120%]! text-app-main! sm:flex-none">
-            <Trash className="mr-2 h-4! w-4! text-app-main" />
+          <Button variant="secondary" className="flex-1 text-base! leading-[120%]! text-app-main! hover:text-white! sm:flex-none">
+            <Trash className="mr-2 h-4! w-4! " />
             Cancel
           </Button>
         </div>

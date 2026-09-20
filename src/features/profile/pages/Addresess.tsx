@@ -1,6 +1,7 @@
 import { BriefcaseBusiness, House } from "lucide-react"
 import HeaderSection from "../components/SmartList/HeaderSection"
 import AddressCard from "../components/Addresses/AddressCard"
+import OrderDelivery from "../components/Addresses/OrderDelivery"
 
 interface IProps {
 
@@ -25,6 +26,8 @@ const Addresess = ({ }: IProps) => {
         address="Office 9, Floor 2, 26 Talaat Harb Street, Downtown Cairo, 11511"
         instructions="Ring doorbell. Leave at door if no answer."
       />
+
+      <OrderDelivery />
     </section>
   )
 }
