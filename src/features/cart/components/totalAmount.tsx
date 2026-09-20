@@ -1,4 +1,5 @@
 import { Button } from "@/components";
+import { useNavigate } from "react-router-dom";
 
 interface TotalAmountProps {
     subtotal: number;
@@ -6,6 +7,7 @@ interface TotalAmountProps {
 }
 
 const TotalAmount = ({ subtotal, shipping }: TotalAmountProps) => {
+    const navigate = useNavigate();
     const total = subtotal + shipping;
 
     return (
@@ -38,7 +40,8 @@ const TotalAmount = ({ subtotal, shipping }: TotalAmountProps) => {
                     <Button
                         type="button"
                         size="md"
-                        className="mt-3  rounded-[8px] bg-app-main px-4 text-sm text-white hover:bg-[#013650]"
+                        onClick={() => navigate("/checkout/payment")}
+                        className="mt-3 rounded-[8px] bg-app-main px-4 text-sm text-white hover:bg-[#013650]"
                     >
                         Go To Checkout
                     </Button>
