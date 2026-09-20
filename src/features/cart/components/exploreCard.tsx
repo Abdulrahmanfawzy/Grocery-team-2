@@ -11,16 +11,16 @@ const badgeStyle = {
 interface ExploreCardProps {
     id: number;
     name: string;
-    price: number;
+    price: string|number;
     image: string;
-    oldPrice?: number;
+    oldPrice?:string| number;
     rating?: number;
     inStock: boolean;
     discount?: number;
     isNew?: boolean;
 }
 
-const ExploreCard = ({
+const ExploreCard = ({id,
     name,
     price,
     image,
@@ -32,7 +32,7 @@ const ExploreCard = ({
     isNew,
 }: ExploreCardProps) => {
     return (
-        <div className="relative w-[350px] md:w-full overflow-hidden rounded-[8px] border border-gray-200 bg-white p-4">
+        <div className="relative w-87.5 md:w-full overflow-hidden rounded-[8px] border border-gray-200 bg-white p-4">
 
             {/* Product Image */}
             <div className="relative flex h-52 items-center gap-3 justify-center rounded-xl bg-white">
@@ -52,14 +52,14 @@ const ExploreCard = ({
                     )}
                     {/* Discount Badge */}
                     {discount !== undefined && (
-                        <span className={`${badgeClassName} w-[62px]`} style={badgeStyle}>
+                        <span className={`${badgeClassName} w-15.5`} style={badgeStyle}>
                             save{discount}%
                         </span>
                     )}
 
                     {/* New Badge */}
                     {isNew && (
-                        <span className={`${badgeClassName} w-[62px]`} style={badgeStyle}>
+                        <span className={`${badgeClassName} w-15.5`} style={badgeStyle}>
                             New
                         </span>
                     )}
@@ -125,10 +125,10 @@ const ExploreCard = ({
                 </Button>
 
                 <QuantityControl
+                    cartItemId={id}
                     quantity={1}
                     name={name}
-                    onIncrease={() => { }}
-                    onDecrease={() => { }}
+                    
                 />
 
             </div>
