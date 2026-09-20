@@ -84,7 +84,10 @@
   --app-hovered: #f7fcff;
   --app-linera: #253d4e;
   --app-error: #F35244;
+<<<<<<< Updated upstream
   --app-web: 
+=======
+>>>>>>> Stashed changes
 
   /* Shadcn */
   --background: oklch(1 0 0);

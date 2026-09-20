@@ -1,5 +1,10 @@
 import { Link } from 'react-router-dom';
 import type { ICategory } from '../types/types'
+<<<<<<< Updated upstream
+=======
+import { useCategory } from '../hooks/useCategory';
+import ProductSkeleton from '@/features/home/components/ProductSkeleton';
+>>>>>>> Stashed changes
 
 interface CategoryListProps {
   categories: ICategory[]
@@ -7,7 +12,20 @@ interface CategoryListProps {
   selectedId?: string | number
 }
 
+<<<<<<< Updated upstream
 export default function CategoryList({ categories, onSelect, selectedId }: CategoryListProps) {
+=======
+export default function CategoryList({  onSelect, selectedId  }: CategoryListProps) {
+  const {data , isLoading} = useCategory()
+  console.log(data);
+  
+    console.log(data);
+    
+  if(isLoading){
+    return <ProductSkeleton/>
+  }
+  
+>>>>>>> Stashed changes
   return (
     <div className="flex w-full justify-start sm:justify-center gap-3 sm:gap-5 md:gap-7 overflow-x-auto pb-2 px-4 sm:px-0 scrollbar-hide">
       {categories.map((category) => {
