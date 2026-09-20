@@ -27,18 +27,25 @@ export interface PaginationParams {
   search?: string
 }
 export interface Propstype {
-  name?: string ,
+  name?: string
   Logo?: string
   title?: string
 }
 export type ProductHotDeal = {
   id: number
-  image: string
-  category: string
   name: string
-  rating: number
-  vendor: string
+  category: {
+    id: number
+    name_en: string
+  }
+  description: string
+  brand: string
+  type: string
+  image: string[]
+  quantity: number
   price: number
-  originalPrice: number
+  discount_price: number
+  average_rating: number
+  total_sold?: number
 }
 export type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>

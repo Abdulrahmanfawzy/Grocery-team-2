@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Home from '@/assets/Home.svg'
 import Categories from '@/assets/Category.svg'
 import ProfileIcon from '@/assets/iconProfile.svg'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import SearchInput from '../ui/InputSearch'
 import { ShoppingCart, Menu, X } from 'lucide-react'
 import { Button } from '../ui'
@@ -18,8 +18,11 @@ import {
 import useGetCart from '@/features/cart/hooks/useGetCarts'
 
 export const Navbar = ({ name, Logo }: Propstype) => {
+  const [search ,setSearch]=useState("")
   const [open, setOpen] = useState(false);
   const [token] = useState(() => localStorage.getItem('auth_token'));
+    const navigate = useNavigate();
+
 
   // --------- calculate total quantity ---------------------------------
   const { data } = useGetCart();
@@ -32,8 +35,8 @@ export const Navbar = ({ name, Logo }: Propstype) => {
   // ------------------------------------------
 
   return (
-    <header className="w-full max-w-[85%] mx-auto bg-white font-sans pt-4 lg:pt-4">
-      <nav className="container mx-auto flex justify-between items-center gap-4 border-b border-gray-100 px-4 pb-4 sm:px-6 lg:gap-6 ">
+    <header className="w-full sticky top-0 z-50 bg-white font-sans pt-4 lg:pt-4">
+      <nav className=" box-container flex justify-between items-center gap-4 border-b  border-gray-100 pb-4   ">
         {/* Logo + Desktop Navigation Links */}
         <div className="flex shrink-0 items-center gap-6 lg:gap-8">
           <Link to="/" className="flex items-center pb-2.5">
