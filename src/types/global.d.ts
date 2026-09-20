@@ -33,15 +33,6 @@ export interface Propstype {
 }
 export type ProductHotDeal = {
   id: number
-<<<<<<< Updated upstream
-  image: string
-  category: string
-  name: string
-  rating: number
-  vendor: string
-  price: number
-  originalPrice: number
-=======
   name: string
   category: {
     id: number
@@ -56,6 +47,5 @@ export type ProductHotDeal = {
   discount_price: number
   average_rating: number
   total_sold?: number
->>>>>>> Stashed changes
 }
 export type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
