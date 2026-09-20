@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ShoppingCart, Star, Trash2 } from "lucide-react";
+
 import {
   Carousel,
   CarouselContent,
@@ -18,21 +20,47 @@ interface FrequentlyBoughtTogetherCarouselProps {
   handleCarouselReset: (itemId: number) => void;
 }
 
+const getImageUrl = (image?: string) => {
+  if (!image) return "";
+
+  if (image.includes("/storage/https://")) {
+    return image.replace(
+      "https://round-grocery.huma-volve.com/storage/https://",
+      "https://"
+    );
+  }
+
+  return image;
+};
+
 export function FrequentlyBoughtTogetherCarousel({
   products,
   carouselQuantities,
   handleCarouselQtyChange,
   handleCarouselReset,
 }: FrequentlyBoughtTogetherCarouselProps) {
-  const { mutate: addProductToCart, isPending } = useAddCartItem();
+  const { mutate: addProductToCart } = useAddCartItem();
+
+  const [pendingProductId, setPendingProductId] = useState<number | null>(
+    null
+  );
 
   const handleAddToCart = (item: Product) => {
     const currentQty = carouselQuantities[item.id] || 1;
 
-    addProductToCart({
-      productId: Number(item.id),
-      quantity: currentQty,
-    });
+    setPendingProductId(item.id);
+
+    addProductToCart(
+      {
+        productId: Number(item.id),
+        quantity: currentQty,
+      },
+      {
+        onSettled: () => {
+          setPendingProductId(null);
+        },
+      }
+    );
   };
 
   return (
@@ -41,18 +69,26 @@ export function FrequentlyBoughtTogetherCarousel({
         Frequently Bought Together
       </h2>
 
-      <Carousel className="relative w-full px-2 sm:px-10 md:px-12">
-        <CarouselContent className="-ml-3 sm:-ml-4">
-          {products.slice(0, 4).map((item) => {
+<Carousel
+  opts={{
+    align: "start",
+    loop: false,
+  }}
+  className="relative w-full px-2 sm:px-10 md:px-12"
+>
+  <CarouselContent className="-ml-3 sm:-ml-4">
+          {products.slice(0, 8).map((item) => {
             const currentQty = carouselQuantities[item.id] || 1;
+            const isAdding = pendingProductId === item.id;
+
             const price = Number(item.discount_price ?? item.price);
             const totalPrice = price * currentQty;
 
             return (
-              <CarouselItem
-                key={item.id}
-                className="basis-full pl-3 sm:basis-1/2 sm:pl-4 md:basis-1/3 lg:basis-1/4"
-              >
+<CarouselItem
+  key={item.id}
+  className="basis-full pl-3 sm:basis-1/2 sm:pl-4 md:basis-1/3 lg:basis-1/4"
+>
                 <div className="flex h-full flex-col justify-between rounded-lg border border-gray-200 bg-white p-2.5 shadow-sm sm:p-4">
                   {/* Product Info */}
                   <div>
@@ -65,13 +101,16 @@ export function FrequentlyBoughtTogetherCarousel({
                       </div>
                     )}
 
-                    {/* Image & Title Link */}
-                    <Link to={`/productdetails/${item.id}`} className="block">
-                      {item.images?.[0] && (
+                    {/* Image & Title */}
+                    <Link
+                      to={`/productdetails/${item.id}`}
+                      className="block"
+                    >
+                      {item.image?.[0] && (
                         <img
-                          src={item.images[0]}
+                          src={getImageUrl(item.image[0])}
                           alt={item.name}
-                          className="my-2 h-36 w-full object-cover sm:h-40 rounded-md transition-transform duration-300 hover:scale-105"
+                          className="my-2 h-36 w-full rounded-md object-cover transition-transform duration-300 hover:scale-105 sm:h-40"
                         />
                       )}
 
@@ -123,11 +162,12 @@ export function FrequentlyBoughtTogetherCarousel({
                     <button
                       type="button"
                       onClick={() => handleAddToCart(item)}
-                      disabled={isPending}
+                      disabled={isAdding}
                       className="flex flex-1 items-center justify-center rounded-md bg-[#004A6B] py-2 text-base font-semibold text-white transition-colors hover:bg-[#003852] disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       <ShoppingCart className="mr-1 h-5 w-5" />
-                      {isPending ? "Adding..." : "Add To Cart"}
+
+                      {isAdding ? "Adding..." : "Add To Cart"}
                     </button>
 
                     {/* Quantity Controls */}
@@ -161,7 +201,9 @@ export function FrequentlyBoughtTogetherCarousel({
 
                       <button
                         type="button"
-                        onClick={() => handleCarouselQtyChange(item.id, 1)}
+                        onClick={() =>
+                          handleCarouselQtyChange(item.id, 1)
+                        }
                         className="text-xl font-medium text-gray-500 hover:text-black"
                         aria-label="Increase quantity"
                       >
@@ -176,8 +218,15 @@ export function FrequentlyBoughtTogetherCarousel({
         </CarouselContent>
 
         {/* Navigation Arrows */}
-        <CarouselPrevious className="left-1 sm:-left-6 md:-left-12 z-10 bg-white/80 backdrop-blur-sm" />
-        <CarouselNext className="right-1 sm:-right-6 md:-right-12 z-10 bg-white/80 backdrop-blur-sm" />
+<CarouselPrevious
+  type="button"
+  className="left-0 z-20 bg-white shadow-md sm:-left-6 md:-left-10"
+/>
+
+<CarouselNext
+  type="button"
+  className="right-0 z-20 bg-white shadow-md sm:-right-6 md:-right-10"
+/>
       </Carousel>
     </div>
   );
