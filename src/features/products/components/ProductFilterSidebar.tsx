@@ -33,6 +33,8 @@ export default function ProductFilterSidebar({
   filters,
   onFilterChange,
 }: ProductFilterSidebarProps) {
+  // ==================== Search ====================
+
   const [searchValue, setSearchValue] = useState(
     filters.search ?? ""
   );
@@ -42,27 +44,38 @@ export default function ProductFilterSidebar({
     500
   );
 
+  // ==================== Categories ====================
+
   const {
     data: categoriesData,
     isLoading: isCategoriesLoading,
   } = useCategories();
 
-  const categories = categoriesData?.data ?? [];
-
   /*
-   * Search
+   * Make sure categories is always an array.
    *
-   * The user can type:
+   * If API returns:
    *
-   * Fresh Milk
-   * Organic Valley
-   * Vegetables
-   * Frozen
+   * {
+   *   data: [...]
+   * }
    *
-   * without changing the URL while typing.
+   * we use categoriesData.data
    *
-   * We only apply the search after 500ms.
+   * If data itself is already an array,
+   * we use categoriesData.
    */
+
+  const categories = Array.isArray(categoriesData?.data)
+    ? categoriesData.data
+    : Array.isArray(categoriesData)
+      ? categoriesData
+      : [];
+console.log("CATEGORY CLICK FILTER:", filters.category);
+console.log("CATEGORIES:", categories);
+
+  // ==================== Search Effect ====================
+
   useEffect(() => {
     const search = debouncedSearch.trim();
 
@@ -76,15 +89,14 @@ export default function ProductFilterSidebar({
         });
       }
 
+
       return;
     }
 
-    const normalizedSearch =
-      search.toLowerCase();
+    const normalizedSearch = search.toLowerCase();
 
-    /*
-     * Category
-     */
+    // ==================== Category Search ====================
+
     const matchedCategory = categories.find(
       (category) =>
         category.name_en?.toLowerCase() ===
@@ -93,20 +105,19 @@ export default function ProductFilterSidebar({
           normalizedSearch
     );
 
-    if (matchedCategory) {
-      onFilterChange({
-        ...filters,
-        search: undefined,
-        category: matchedCategory.id,
-        page: 1,
-      });
+if (matchedCategory) {
+  onFilterChange({
+    ...filters,
+    search: undefined,
+    category_id: matchedCategory.id,
+    page: 1,
+  });
 
-      return;
-    }
+  return;
+}
 
-    /*
-     * Brand
-     */
+    // ==================== Brand Search ====================
+
     const matchedBrand = BRANDS.find(
       (brand) =>
         brand.toLowerCase() === normalizedSearch
@@ -123,9 +134,8 @@ export default function ProductFilterSidebar({
       return;
     }
 
-    /*
-     * Product Type
-     */
+    // ==================== Product Type Search ====================
+
     const matchedType = TYPES.find(
       (type) =>
         type.toLowerCase() === normalizedSearch
@@ -142,15 +152,8 @@ export default function ProductFilterSidebar({
       return;
     }
 
-    /*
-     * Normal Search
-     *
-     * Example:
-     *
-     * Fresh Milk
-     * Apple Juice
-     * Organic Banana
-     */
+    // ==================== Normal Product Search ====================
+
     if (search !== (filters.search ?? "")) {
       onFilterChange({
         ...filters,
@@ -160,10 +163,8 @@ export default function ProductFilterSidebar({
     }
   }, [debouncedSearch]);
 
-  /*
-   * Sync input only when search is changed
-   * from outside the component.
-   */
+  // ==================== Sync Search ====================
+
   useEffect(() => {
     if (
       filters.search !== undefined &&
@@ -171,11 +172,18 @@ export default function ProductFilterSidebar({
     ) {
       setSearchValue(filters.search);
     }
+
+    if (
+      filters.search === undefined &&
+      searchValue !== ""
+    ) {
+      setSearchValue("");
+    }
   }, [filters.search]);
 
-  const handleBrandChange = (
-    brand: string
-  ) => {
+  // ==================== Brand ====================
+
+  const handleBrandChange = (brand: string) => {
     onFilterChange({
       ...filters,
       brand:
@@ -186,9 +194,9 @@ export default function ProductFilterSidebar({
     });
   };
 
-  const handleTypeChange = (
-    type: string
-  ) => {
+  // ==================== Type ====================
+
+  const handleTypeChange = (type: string) => {
     onFilterChange({
       ...filters,
       type:
@@ -199,18 +207,20 @@ export default function ProductFilterSidebar({
     });
   };
 
-  const handleCategoryChange = (
-    categoryId: number
-  ) => {
-    onFilterChange({
-      ...filters,
-      category:
-        filters.category === categoryId
-          ? undefined
-          : categoryId,
-      page: 1,
-    });
-  };
+  // ==================== Category ====================
+
+const handleCategoryChange = (categoryId: number) => {
+  onFilterChange({
+    ...filters,
+    category_id:
+      filters.category_id === categoryId
+        ? undefined
+        : categoryId,
+    page: 1,
+  });
+};
+
+  // ==================== Min Price ====================
 
   const handleMinPriceChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -231,6 +241,8 @@ export default function ProductFilterSidebar({
     }
   };
 
+  // ==================== Max Price ====================
+
   const handleMaxPriceChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -250,6 +262,8 @@ export default function ProductFilterSidebar({
     }
   };
 
+  // ==================== Clear Filters ====================
+
   const clearFilters = () => {
     setSearchValue("");
 
@@ -262,7 +276,8 @@ export default function ProductFilterSidebar({
     <aside className="w-full rounded-2xl bg-blue-50/60 p-5 shadow-sm">
       <div className="space-y-6">
 
-        {/* Header */}
+        {/* ==================== Header ==================== */}
+
         <div className="flex items-center justify-between border-b pb-4">
           <h2 className="text-xl font-bold text-black">
             Filters
@@ -277,9 +292,8 @@ export default function ProductFilterSidebar({
           </button>
         </div>
 
+        {/* ==================== Category ==================== */}
 
-
-        {/* Category */}
         <div>
           <h3 className="mb-3 text-base font-bold text-black">
             Category
@@ -289,39 +303,35 @@ export default function ProductFilterSidebar({
             <p className="text-sm text-gray-400">
               Loading categories...
             </p>
+          ) : categories.length === 0 ? (
+            <p className="text-sm text-gray-400">
+              No categories available.
+            </p>
           ) : (
             <div className="space-y-2.5">
-              {categories.map(
-                (category) => (
-                  <label
-                    key={category.id}
-                    className="flex cursor-pointer items-center gap-3 text-sm text-gray-700"
-                  >
-                    <input
-                      type="checkbox"
-                      checked={
-                        filters.category ===
-                        category.id
-                      }
-                      onChange={() =>
-                        handleCategoryChange(
-                          category.id
-                        )
-                      }
-                      className="h-4 w-4 accent-[#08ABFF]"
-                    />
+              {categories.map((category) => (
+                <label
+                  key={category.id}
+                  className="flex cursor-pointer items-center gap-3 text-sm text-gray-700"
+                >
+                  <input
+  type="checkbox"
+ checked={filters.category_id === category.id}
+  onChange={() => handleCategoryChange(category.id)}
+  className="h-4 w-4 accent-[#08ABFF]"
+/>
 
-                    <span>
-                      {category.name_en}
-                    </span>
-                  </label>
-                )
-              )}
+                  <span>
+                    {category.name_en}
+                  </span>
+                </label>
+              ))}
             </div>
           )}
         </div>
 
-        {/* Brand */}
+        {/* ==================== Brand ==================== */}
+
         <div>
           <h3 className="mb-3 text-base font-bold text-black">
             Brand
@@ -339,9 +349,7 @@ export default function ProductFilterSidebar({
                     filters.brand === brand
                   }
                   onChange={() =>
-                    handleBrandChange(
-                      brand
-                    )
+                    handleBrandChange(brand)
                   }
                   className="h-4 w-4 accent-[#08ABFF]"
                 />
@@ -352,7 +360,8 @@ export default function ProductFilterSidebar({
           </div>
         </div>
 
-        {/* Product Type */}
+        {/* ==================== Product Type ==================== */}
+
         <div>
           <h3 className="mb-3 text-base font-bold text-black">
             Product Type
@@ -383,7 +392,9 @@ export default function ProductFilterSidebar({
             ))}
           </div>
         </div>
-                {/* Search */}
+
+        {/* ==================== Search ==================== */}
+
         <div>
           <div className="mb-3 flex items-center gap-2">
             <span className="h-[3px] w-5 rounded-full bg-[#004A6B]" />
@@ -420,7 +431,8 @@ export default function ProductFilterSidebar({
           </p>
         </div>
 
-        {/* Price */}
+        {/* ==================== Price ==================== */}
+
         <div>
           <h3 className="mb-3 flex items-center gap-2 text-base font-bold text-black">
             <span className="h-[3px] w-5 rounded-full bg-[#004A6B]" />
@@ -441,9 +453,11 @@ export default function ProductFilterSidebar({
           <div className="relative h-6 w-full">
 
             {/* Background */}
+
             <div className="absolute top-1/2 h-1.5 w-full -translate-y-1/2 rounded-full bg-gray-200" />
 
             {/* Active Range */}
+
             <div
               className="absolute top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-[#08ABFF]"
               style={{
@@ -469,6 +483,7 @@ export default function ProductFilterSidebar({
             />
 
             {/* Min Price */}
+
             <input
               type="range"
               min={MIN_PRICE}
@@ -490,6 +505,7 @@ export default function ProductFilterSidebar({
                 -translate-y-1/2
                 appearance-none
                 bg-transparent
+
                 [&::-webkit-slider-thumb]:pointer-events-auto
                 [&::-webkit-slider-thumb]:h-5
                 [&::-webkit-slider-thumb]:w-5
@@ -499,6 +515,7 @@ export default function ProductFilterSidebar({
                 [&::-webkit-slider-thumb]:border-white
                 [&::-webkit-slider-thumb]:bg-[#08ABFF]
                 [&::-webkit-slider-thumb]:shadow-md
+
                 [&::-moz-range-thumb]:pointer-events-auto
                 [&::-moz-range-thumb]:h-5
                 [&::-moz-range-thumb]:w-5
@@ -509,6 +526,7 @@ export default function ProductFilterSidebar({
             />
 
             {/* Max Price */}
+
             <input
               type="range"
               min={MIN_PRICE}
@@ -530,6 +548,7 @@ export default function ProductFilterSidebar({
                 -translate-y-1/2
                 appearance-none
                 bg-transparent
+
                 [&::-webkit-slider-thumb]:pointer-events-auto
                 [&::-webkit-slider-thumb]:h-5
                 [&::-webkit-slider-thumb]:w-5
@@ -539,6 +558,7 @@ export default function ProductFilterSidebar({
                 [&::-webkit-slider-thumb]:border-white
                 [&::-webkit-slider-thumb]:bg-[#08ABFF]
                 [&::-webkit-slider-thumb]:shadow-md
+
                 [&::-moz-range-thumb]:pointer-events-auto
                 [&::-moz-range-thumb]:h-5
                 [&::-moz-range-thumb]:w-5
@@ -549,9 +569,7 @@ export default function ProductFilterSidebar({
             />
           </div>
         </div>
-
       </div>
     </aside>
   );
 }
-
