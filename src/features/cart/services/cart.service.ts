@@ -1,5 +1,6 @@
 import api from "@/utils/axios";
 import type { CartItemResponse, CartResponse } from "../types/cart.types";
+import type { IHotDealsResponse } from "../types/hotDeals.types";
 
 
 export const fetchProductsCart = async (): Promise<CartResponse> => {
@@ -36,4 +37,9 @@ export const updateCartItem = async (cartItemId: number, quantity: number): Prom
 export const deleteCartItem = async (cartItemId: number): Promise<CartResponse> => {
     const result = await api.delete(`/cart/items/${cartItemId}`)
     return result.data;
+}
+export const featchMoreToExploreProducts = async ():Promise<IHotDealsResponse> =>{
+    const result = await api.get(`/products/hot-deals?limit=10`)
+    return result.data;
+
 }

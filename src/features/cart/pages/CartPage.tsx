@@ -18,6 +18,8 @@ const CartPage = () => {
     error
   } = useGetCart();
 
+  
+
   if (isLoading) {
     return <CartSkeleton />;
   }
@@ -33,6 +35,8 @@ const CartPage = () => {
       quantity: item.quantity,
       cartItemId: item.id
     })) ?? [];
+
+  
 
   if (products.length === 0) {
     return <EmptyCart />;
