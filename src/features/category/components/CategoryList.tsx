@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import type { ICategory } from '../types/types'
+import { useCategory } from '../hooks/useCategory';
+import ProductSkeleton from '@/features/home/components/ProductSkeleton';
 
 interface CategoryListProps {
   categories: ICategory[]
@@ -7,10 +9,19 @@ interface CategoryListProps {
   selectedId?: string | number
 }
 
-export default function CategoryList({ categories, onSelect, selectedId }: CategoryListProps) {
+export default function CategoryList({  onSelect, selectedId  }: CategoryListProps) {
+  const {data , isLoading} = useCategory()
+  console.log(data);
+  
+    console.log(data);
+    
+  if(isLoading){
+    return <ProductSkeleton/>
+  }
+  
   return (
     <div className="flex w-full justify-start sm:justify-center gap-3 sm:gap-5 md:gap-7 overflow-x-auto pb-2 px-4 sm:px-0 scrollbar-hide">
-      {categories.map((category) => {
+      {data.map((category:ICategory) => {
         const isSelected = selectedId === category.id
 
         return (
@@ -23,13 +34,13 @@ export default function CategoryList({ categories, onSelect, selectedId }: Categ
             }`}
           >
             <img
-              src={category.Image}
-              alt={category.name}
+              src={category.image}
+              alt={category.name_en}
               width={40}
               className="w-7 sm:w-8 md:w-10 h-auto"
             />
             <span className="text-xs sm:text-sm font-normal leading-tight text-black line-clamp-2">
-              {category.name}
+              {category.name_en}
             </span>
           </Link>
         )

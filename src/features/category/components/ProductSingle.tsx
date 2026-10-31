@@ -2,18 +2,26 @@ import { useState } from 'react'
 import { ShoppingCart, Star, Trash2, Plus, Minus } from 'lucide-react'
 import type { ProductHotDeal } from '@/types/global'
 import { Button } from '@/components/ui'
+import useAddCartItem from '@/features/cart/hooks/useAddCartItem'
 
 export default function ProductCard({
+  id,
   name,
   category,
   image,
-  rating,
-  originalPrice,
+  average_rating,
+  discount_price,
   price,
 }: ProductHotDeal) {
   const [quantity, setQuantity] = useState(1)
 
-  const fullStars = Math.round(rating)
+  const fullStars = Math.round(average_rating)
+    const { mutate: addToCart } = useAddCartItem()
+  
+
+  const HandelAddCart = (productId:number) => {
+    addToCart({ productId, quantity: 1 })
+  }
 
   return (
     <div className="h-fit  min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-app-web p-4 shadow-sm">
@@ -23,7 +31,7 @@ export default function ProductCard({
           In Stock
         </span>
 
-        {originalPrice && (
+        {discount_price && (
           <span className="rounded-full  bg-app-main px-3 py-1 text-xs font-medium text-white">
             Sale
           </span>
@@ -36,23 +44,27 @@ export default function ProductCard({
 
       {/* Image */}
       <div className="mb-4 flex h-40 w-full ">
-        <img src={image} alt={name} className='h-full object-contain' />
+        <img src={image[0]} alt={name} className="h-full object-contain" />
       </div>
 
       {/* Title + Price */}
       <div className="mb-2 flex items-start o max-w-[70%] justify-between gap-3">
         <div className="min-w-0">
-          <h3 className="line-clamp-2 text-[12px] md:text-base font-medium text-slate-900">{name}</h3>
+          <h3 className="line-clamp-2 text-[12px] md:text-base font-medium text-slate-900">
+            {name}
+          </h3>
 
-          {category && <p className="mt-1 text-xs text-slate-400">{category}</p>}
+          {category && <p className="mt-1 text-xs text-slate-400">{category.name_en}</p>}
         </div>
 
         <div className=" text-right flex flex-col justify-center gap-3">
-          <span className=" font-bold text-[9px] py-0.5 md:text-base  text-slate-900">$ {price.toFixed(1)}</span>
-
-          {originalPrice && (
-            <p className=" text-[9px] md:text-base  text-slate-400 line-through">$ {originalPrice.toFixed(1)}</p>
-          )}
+          <span className=" font-bold text-[9px] py-0.5 md:text-base lg:text-sm  text-slate-900">
+            $ {price}{' '}
+          </span>
+          {/* 
+          {discount_price && (
+            <p className=" text-[9px] md:text-base  text-slate-400 line-through">$ {discount_price=== null ? price : discount_price}</p>
+          )} */}
         </div>
       </div>
 
@@ -68,12 +80,12 @@ export default function ProductCard({
           />
         ))}
 
-        <span className="ml-1 text-xs text-slate-400">({rating}/5)</span>
+        <span className="ml-1 text-xs text-slate-400">({average_rating}/5)</span>
       </div>
 
       {/* Actions */}
       <div className="flex flex-col md:flex-row  items-center gap-2 ">
-        <Button variant="primary" className="gap-2 text-sm w-full  md:text-base md:w-35  ">
+        <Button onClick={()=>HandelAddCart(id)} variant="primary" className="gap-2 text-sm w-full  md:text-base md:w-35  ">
           <ShoppingCart size={16} />
           <span className="text-[12px] md:block md:text-[12px] "> Add To Cart</span>
         </Button>
@@ -83,7 +95,7 @@ export default function ProductCard({
             <Button
               variant="secondary"
               size="sm"
-              className='hover:bg-gray-300 '
+              className="hover:bg-gray-300 "
               onClick={() => setQuantity((q) => (q <= 1 ? 0 : q - 1))}
               aria-label={quantity <= 1 ? 'Remove item' : 'Decrease quantity'}
             >
@@ -102,7 +114,7 @@ export default function ProductCard({
             aria-label="Increase quantity"
             className="text-app-main  hover:text-gray-300 hover:bg-gray-300"
           >
-            <Plus size={16} className='text-app-main' />
+            <Plus size={16} className="text-app-main" />
           </Button>
         </div>
       </div>
